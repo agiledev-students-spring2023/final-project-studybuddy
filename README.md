@@ -1,19 +1,24 @@
-# Project Repository
+# Study Buddy Project Repository
+## Project Description 
+Study Buddy is an application designed to help students connect and collaborate with others for exam preparation. By finding study partners who share the same course and exam schedule, students can form study groups and enhance their learning experience.
 
-This repository will be used for team projects.
+## Mission Statement
+Our vision is to provide students with an easy and efficient way to connect with each other, so they can succeed academically and feel more confident in their exam preparation.
 
-Several sets of instructions are included in this repository. They should each be treated as separate assignments with their own due dates and sets of requirements.
+## Core Team Members
+* Bishnu Dev[-Github Account](https://github.com/bordernone)
+* Lukelo Luoga [-Github Account](https://github.com/Kelo2000)
+* Paula [-Github Account] (Link)
+* Yewon [-Github Account] (Link) 
 
-1. See the [App Map & Wireframes](instructions-0a-app-map-wireframes.md) and [Prototyping](./instructions-0b-prototyping.md) instructions for the requirements of the initial user experience design of the app.
+## Project History
+The idea for Study Buddy came from our own experiences as students. We often found ourselves struggling to find study partners who were taking the same course and preparing for the same exams. We realized that there was a need for an application that would make it easy for students to connect with each other and form study groups. So, we decided to create Study Buddy.
 
-1. Delete the contents of this file and replace with the contents of a proper README.md, as described in the [project setup instructions](./instructions-0c-project-setup.md)
+## Contributing
+If you would like to contribute to Study Buddy, please read our CONTRIBUTING.md document. We welcome all contributions, including bug reports, feature requests, and pull requests.
 
-1. See the [Sprint Planning instructions](instructions-0d-sprint-planning.md) for the requirements of Sprint Planning for each Sprint.
+## Building and Testing
+Instructions for building and testing the project will be added once the project reaches that stage.
 
-1. See the [Front-End Development instructions](./instructions-1-front-end.md) for the requirements of the initial Front-End Development.
-
-1. See the [Back-End Development instructions](./instructions-2-back-end.md) for the requirements of the initial Back-End Development.
-
-1. See the [Database Integration instructions](./instructions-3-database.md) for the requirements of integrating a database into the back-end.
-
-1. See the [Deployment instructions](./instructions-4-deployment.md) for the requirements of deploying an app.
+## Additional Resources
+Additional resources will be added as we progress through the project
