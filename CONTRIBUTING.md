@@ -51,14 +51,9 @@ This is guide for contributors of StudyBuddy project.
 ~~~
 git clone https://github.com/agiledev-students-spring-2023/final-project-studybuddy.git
 ~~~
-2. Install all node packages for project (`npm install`)
+2. Change the working directory to front-end and run `npm install`. Do the same for back-end.
+3. Run the local dev environment using `npm start` for both front-end and back-end.
 
 
 ## How to build and test the project
-### Front-end
-1. Change directory to front-end (`cd front-end`)
-2. Build the front-end project and run (`npm start`)
-
-### Back-end
-1. Change directory to back-end (`cd front-end`)
-2. Build the front-end project and run (`npm start`)
+This information will be added as we make some progress on the development.
