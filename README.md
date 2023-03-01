@@ -9,6 +9,7 @@ Our vision is to provide students with an easy and efficient way to connect with
 * Bishnu Dev[-Github Account](https://github.com/bordernone)
 * Lukelo Luoga [-Github Account](https://github.com/Kelo2000)
 * Paula Seraphim [-Github Account](https://github.com/paulasera)
+
 * Yewon Song [-Github Account](https://github.com/sywu430) 
 
 ## Project History
@@ -21,4 +22,4 @@ If you would like to contribute to Study Buddy, please read our [CONTRIBUTING.md
 Instructions for building and testing the project will be added once the project reaches that stage.
 
 ## Additional Resources
-Additional resources will be added as we progress through the project
+Additional resources will be added as we progress through the project. 
