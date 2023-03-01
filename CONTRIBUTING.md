@@ -16,7 +16,7 @@ This is guide for contributors of StudyBuddy project.
 
 
 ## Daily standups
-* Daily standups will take place on Mondays and Thursdays, preferably after everyone finishes with their classes.
+* Daily standups will take place on Mondays, Wednesdays, Fridays , preferably after everyone finishes with their classes.
 * Members are expected to be present synchronously and each member will not cover for other members who do not participate.
 * A member who makes no progress on a task for two standups or more in a row will be reported to management.
 
