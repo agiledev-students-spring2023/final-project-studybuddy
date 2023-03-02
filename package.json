@@ -1,0 +1,25 @@
+{
+  "name": "final-project-studybuddy",
+  "version": "1.0.0",
+  "description": "Study Buddy is an application designed to help students connect and collaborate with others for exam preparation. By finding study partners who share the same course and exam schedule, students can form study groups and enhance their learning experience.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"front-end/src/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agiledev-students-spring-2023/final-project-studybuddy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agiledev-students-spring-2023/final-project-studybuddy/issues"
+  },
+  "homepage": "https://github.com/agiledev-students-spring-2023/final-project-studybuddy#readme",
+  "devDependencies": {
+    "prettier": "2.8.4"
+  },
+  "dependencies": {}
+}
