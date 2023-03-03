@@ -12,10 +12,11 @@ import UserProfile from './screens/UserProfile.jsx'
 import FilteredScreen from './screens/FilteredScreen.jsx'
 import ViewPost from './screens/ViewPost.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/global.css'
 
 function App() {
   return (
-    <div className="App">
+    <div className="App container mobileLayout">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
