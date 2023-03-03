@@ -11,6 +11,7 @@ import MessageChat from './screens/MessageChat.jsx'
 import UserProfile from './screens/UserProfile.jsx'
 import FilteredScreen from './screens/FilteredScreen.jsx'
 import ViewPost from './screens/ViewPost.jsx'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
