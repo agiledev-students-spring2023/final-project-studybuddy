@@ -16,7 +16,7 @@ import './css/global.css'
 
 function App() {
   return (
-    <div className="App container mobileLayout">
+    <div className="App container-fluid ps-0 pe-0">
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
