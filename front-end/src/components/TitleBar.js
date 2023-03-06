@@ -1,6 +1,8 @@
 import React from "react";
 
-function TitleBar() {
+function TitleBar(props) {
+    const title=props.title;
+    const backpage=props.backpage;
     return (
         <>
             <nav className="navbar navbar-expand navbar-light bg-light">
@@ -11,7 +13,7 @@ function TitleBar() {
                                 <a
                                     className="nav-link active"
                                     aria-current="page"
-                                    href="/"
+                                    href={backpage}
                                 >
                                     <h6 className="m-0">
                                         <i className="fas fa-arrow-circle-left" />{" "}
@@ -20,7 +22,7 @@ function TitleBar() {
                             </li>
                             <li className="nav-item">
                                 <p className="nav-link m-0">
-                                    <strong>Related Posts</strong>
+                                    <strong>{title}</strong>
                                 </p>
                             </li>
                             <li className="nav-item"></li>

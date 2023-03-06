@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import "./UserProfile.css"
 import Navbar from "../components/Navbar";
+import TitleBar from "../components/TitleBar";
 
 
 const  UserProfile= () => {
@@ -22,14 +23,7 @@ const  UserProfile= () => {
 
   return (  
     <div className='UserProfile'> 
-          <nav className="Back">
-                <a href="/filteredScreen" style={{
-                          color:"White",
-                          backgroundColor: 'Black',
-                          borderRadius: '5px',
-                          textDecoration: 'none'
-                  }}>Back</a>
-          </nav>
+      <TitleBar title="Profile" backpage="/filteredScreen" />
 
         <div className="UserInfo">
             <div>
