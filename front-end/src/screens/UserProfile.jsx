@@ -25,7 +25,7 @@ const  UserProfile= () => {
         <h1>My Account</h1>
         <a href="/Login" style={{
                     color:"White",
-                    backgroundColor: 'SlateBlue',
+                    backgroundColor: 'Black',
                     borderRadius: '10px'
              }}>Log out</a>
       </nav>
@@ -43,7 +43,7 @@ const  UserProfile= () => {
 
   
     <div className="Post">
-      <h2>My Posts</h2>
+      <h2>Posts</h2>
       <div className="Postgrid">
        {posts.map((post) => (
         <a key={post.id} href={`/posts/${post.id}`}>
