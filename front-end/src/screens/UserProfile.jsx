@@ -1,12 +1,13 @@
 import React from "react";
 import { useState } from "react";
 import "./UserProfile.css"
+import Navbar from "../components/Navbar";
 
 
 const  UserProfile= () => {
-  const [username,setUsername]=useState('Lukelo')
-  const [major, setMajor]=useState('Computer Engineering')
-  const [Profilepic,setProfilepic]=useState(`${process.env.PUBLIC_URL}/profilepic.jpg`)
+  const [username,setUsername]=useState('Buddy Name')
+  const [id, setUserid]=useState('10');
+  const [major, setMajor]=useState('Buddy Major ')
   const img='https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png'
 
   const [posts,setPost]=useState([
@@ -20,51 +21,52 @@ const  UserProfile= () => {
   ])
 
   return (  
-    <div className='UserProfile'>  
-      <nav className="Header">
-        <h1>My Account</h1>
-        <a href="/Login" style={{
-                    color:"White",
-                    backgroundColor: 'Black',
-                    borderRadius: '10px'
-             }}>Log out</a>
-      </nav>
+    <div className='UserProfile'> 
+          <nav className="Back">
+                <a href="/filteredScreen" style={{
+                          color:"White",
+                          backgroundColor: 'Black',
+                          borderRadius: '5px',
+                          textDecoration: 'none'
+                  }}>Back</a>
+          </nav>
 
-    <div className="Info">
-        <div>
-          <img src={img} className="Picture" />
+        <div className="UserInfo">
+            <div>
+              <img src={img} className="Picture" alt='ProfilePicture'/>
+            </div>
+            <div>
+              <p> {username}</p>
+               <p>{major}</p>
+            </div>            
         </div>
-        <div>
-          <p> {username}</p>
-        <p>{major}</p>
-        </div>
-        
-    </div>
 
-  
-    <div className="Post">
-      <h2>Posts</h2>
-      <div className="Postgrid">
-       {posts.map((post) => (
-        <a key={post.id} href={`/posts/${post.id}`}>
-          <div className="Post-preview">
-            <p>Subject: {post.Subject}</p>
-            <p>Date: {post.Date}</p>
-            <p>Mode: {post.Mode}</p>
+        <div className="Message">
+              <a href="/MessageChat" style={{
+                          color:"White",
+                          backgroundColor: 'Grey',
+                          textDecoration: 'none',
+                          }}>Direct Message
+                          </a>
           </div>
-        </a>
-      ))}
-      </div>
-    
-    </div>
-             
-      <div className="Footer">
-        <a href="/Home">Home</a>
-        <a href="/Chat">Chat</a>
-        <a href="/Profile">Profile</a>
 
-      </div>
+      
+        <div className="Post">
+            <h2>Posts</h2>
+            <div className="Postgrid">
+            {posts.map((post) => (
+              <a key={post.id} href={`/posts/${post.id}`}>
+                <div className="Post-preview">
+                  <p>Subject: {post.Subject}</p>
+                  <p>Date: {post.Date}</p>
+                  <p>Mode: {post.Mode}</p>
+                </div>
+              </a>
+            ))}
+            </div>  
+        </div>  
 
+        <Navbar user="Others"/>
     </div>
   );
 }
