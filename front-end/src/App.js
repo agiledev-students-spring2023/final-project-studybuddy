@@ -11,6 +11,7 @@ import MessageChat from './screens/MessageChat.jsx'
 import UserProfile from './screens/UserProfile.jsx'
 import FilteredScreen from './screens/FilteredScreen.jsx'
 import ViewPost from './screens/ViewPost.jsx'
+import Profile from './screens/Profile.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/global.css'
 
@@ -26,7 +27,8 @@ function App() {
           <Route path="/forgotPw" element={<ForgotPW />}/>
           <Route path="/messageList" element={<MessageList />}/>
           <Route path="/messageChat" element={<MessageChat />}/>
-          <Route path="/profile/:userId" element={<UserProfile />}/>
+          <Route path="/profile" element={<Profile />}/>
+          <Route path="/userprofile" element={<UserProfile />}/>
           <Route path="/uploadPost" element={<UploadPost />}/>
           <Route path="/filteredScreen" element={<FilteredScreen />}/>
           <Route path="/viewPost/:postId" element={<ViewPost />}/>
