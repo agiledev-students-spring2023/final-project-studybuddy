@@ -1,32 +1,43 @@
-*.UserProfile {
+*.Profile {
     padding: 10px 16px;
     margin: 20px 0;
     border-bottom: 1px solid #fafafa;
     text-align: center
   }
 
-  .UserInfo{
-   display: flex;
-   flex-direction: row;
-    align-items: left;
-    margin-left: 50px;
-    margin-top: 50px;
+.Header {
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    max-width: auto;
+    margin: 0 auto;
+    border-bottom: 1px solid #282323;
+    background-color: rgb(157, 157, 172);
+    justify-content: space-between;
+    border-radius: 20px;
   }
 
+  .Header h1 {
+    color: white;
+  }
+
+  .Header a {
+    margin-left: 200px;
+    text-decoration: none;
+    padding: 6px;  
+  }
+
+  .Info{
+    display: flex;
+    flex-direction:column; 
+    justify-content: space-between; 
+    margin-bottom: 50px;
+  }
  
-  .Message{
-    text-align: left;
-    margin-left: 50px;
-    margin-bottom: 30px;
-    margin-top: 25px;
-    
-
-  }
-  .Message a {
-    padding: 5px;
-    border-radius: 10px;
-    padding-inline: 10px;
-    
+  .Info p {
+    font-size: 20px;
+    color:black;
+    text-align: center;
   }
 
 
