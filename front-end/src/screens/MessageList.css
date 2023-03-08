@@ -1,0 +1,6 @@
+.message_card {
+    display: grid;
+    grid-template-columns: 100px 1fr 50px;
+    align-items: center;
+    padding: 15px;
+}
