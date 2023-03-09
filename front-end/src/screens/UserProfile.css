@@ -13,19 +13,19 @@
     margin-top: 50px;
   }
 
- 
   .Message{
     text-align: left;
     margin-left: 50px;
     margin-bottom: 30px;
     margin-top: 25px;
-    
-
   }
+
   .Message a {
     padding: 5px;
     border-radius: 10px;
     padding-inline: 10px;
+    color: black;
+    border: 1px solid rgb(9, 8, 8);
     
   }
 
@@ -38,7 +38,7 @@
   }
 
 
-  .Postgrid{
+  .Postgrid01{
     display: grid;
     grid-template-columns: 0.5fr 0.5fr 0.5fr;
     grid-auto-rows: minmax(200px, auto); 
@@ -48,21 +48,23 @@
     
   }
 
-
-  .Post h2{
+.Post01{
+  border: 1px solid rgb(212, 209, 209);
+}
+  .Post01 h2{
     font-size: 25px;
     color: rgb(62, 59, 59);
     margin-bottom: 20px;
     text-align: center
   }
 
-  .Postgrid a{
+  .Postgrid01 a{
   width: 100%;
   height: 100%;
   border-radius: 10px;
   border: 1px solid rgb(9, 8, 8);
   text-decoration: none;
-  color:white;
-  background-color: rgb(157, 157, 172)
+  color: black;
+  text-align: center;
 }
 
