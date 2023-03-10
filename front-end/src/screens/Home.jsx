@@ -8,7 +8,7 @@ export default function Home() {
         <Button variant="outline-secondary" href="/filters" size="lg" >Search Posts</Button> 
         <Button variant="outline-secondary" href="/uploadPost" size="lg" >Upload Post</Button>
         <Button variant="outline-secondary" href="/messageList" size="lg" >User Chat List</Button>
-        <Button variant="outline-secondary" href="/profile/:userId" size="lg" >User Profile</Button>
+        <Button variant="outline-secondary" href="/profile" size="lg" >User Profile</Button>
       </div>
     );
   } 
