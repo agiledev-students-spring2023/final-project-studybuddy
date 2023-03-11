@@ -11,7 +11,7 @@ const authLinks = [
     },
     {
         name: "Profile",
-        path: "/profile/1",
+        path: "/profile",
     },
 ];
 
