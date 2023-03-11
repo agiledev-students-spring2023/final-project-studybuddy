@@ -23,3 +23,8 @@ if [[ "$emailEnv" != "$emailGit" ]]; then
 	echo "GITHUB_EMAIL in .env does not match git config user.email"
 	exit 1
 fi
+
+cd front-end
+npm run format
+
+git add .

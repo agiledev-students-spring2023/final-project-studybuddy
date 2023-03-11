@@ -1,7 +1,5 @@
 import React from "react";
 
 export default function MessageChat() {
-    return (
-      <div>MessageChat</div>
-    );
-  }
+	return <div>MessageChat</div>;
+}
