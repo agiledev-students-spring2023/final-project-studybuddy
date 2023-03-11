@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+
+usernameEnv=$(grep -E "GITHUB_USERNAME=((.+\n)|((.+)$))" front-end/.env | cut -c 17-)
+emailEnv=$(grep -E "GITHUB_EMAIL=((.+\n)|((.+)$))" front-end/.env | cut -c 14-)
+
+usernameGit=$(git config user.name)
+emailGit=$(git config user.email)
+
+if [[ "$usernameEnv" != "$usernameGit" ]]; then
+	echo "GITHUB_USERNAME in .env does not match git config user.name"
+	exit 1
+fi
+
+if [[ "$emailEnv" != "$emailGit" ]]; then
+	echo "GITHUB_EMAIL in .env does not match git config user.email"
+	exit 1
+fi
+
+cd front-end
+npm run format
+
+git add .

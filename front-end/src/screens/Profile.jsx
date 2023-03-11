@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import "./Profile.css"
+import "./Profile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 
@@ -65,10 +65,7 @@ const  Profile= () => {
     </div>
              
       <Navbar user="Profile"/>
-
-    </div>
-  );
-}
- 
-
-  export default Profile;
+	  </div>
+	);
+};
+export default Profile;

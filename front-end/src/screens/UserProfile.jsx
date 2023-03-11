@@ -1,9 +1,15 @@
 import React from "react";
 import { useState } from "react";
-import "./UserProfile.css"
+import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 
+const UserProfile = () => {
+	const [username, setUsername] = useState("Buddy Name");
+	const [id, setUserid] = useState("10");
+	const [major, setMajor] = useState("Buddy Major ");
+	const img =
+		"https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
 
 const  UserProfile= () => {
   const username='Buddy Name';
@@ -63,7 +69,7 @@ const  UserProfile= () => {
         <Navbar user="Others"/>
     </div>
   );
+	}
 }
- 
 
   export default UserProfile;
