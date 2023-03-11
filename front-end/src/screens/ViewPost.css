@@ -1,0 +1,50 @@
+.profile{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    
+}
+
+.Post-info {
+    margin-bottom: 15px;
+    margin-top: 5px;
+    max-width: fit-content;
+    display: flex;
+    flex-direction: row;
+    
+}
+
+.Post-info p{
+   
+    border-radius: 5px;
+    border: 1px solid rgb(9, 8, 8);
+    margin: 5px;
+    font-size: small;
+    text-align: center;
+    
+}
+
+.Description{
+    border-radius: 10px;
+    border: 1px solid rgb(9, 8, 8);
+    padding:30px;
+    margin-bottom: 10px;
+}
+
+.custom-comments{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.form-floating.custom{
+    margin-right: 10px;
+    max-width: fit-content;
+ 
+}
+
+.Comments {
+    margin-bottom: 30px;
+    margin-top: 30px;
+  
+}

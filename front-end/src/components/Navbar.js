@@ -1,18 +1,18 @@
 import React from "react";
 
 const authLinks = [
-	{
-		name: "Home",
-		path: "/",
-	},
-	{
-		name: "Chat",
-		path: "/messageList",
-	},
-	{
-		name: "Profile",
-		path: "/profile/1",
-	},
+    {
+        name: "Home",
+        path: "/",
+    },
+    {
+        name: "Chat",
+        path: "/messageList",
+    },
+    {
+        name: "Profile",
+        path: "/profile",
+    },
 ];
 
 const unAuthLinks = [
