@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import "./Home.css"
 import Navbar from "../components/Navbar";
 
+
 export default function Home() {
     return (
       // <div className="screen">

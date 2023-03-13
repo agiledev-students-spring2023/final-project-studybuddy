@@ -1,7 +1,5 @@
 import React from "react";
 
 export default function ForgotHW() {
-    return (
-      <div>ForgotHW</div>
-    );
-  }
+	return <div>ForgotHW</div>;
+}
