@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import Image from 'react-bootstrap/Image'
 import Badge from "react-bootstrap/Badge"
 
-export default function MessagePreview({id, chat}) {
+export default function MessagePreview({ chat }) {
   const { preview, name, img_url, unread, chat_id } = chat
 
   const chat_url = `/messageChat/${chat_id}`

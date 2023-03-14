@@ -1,7 +1,39 @@
+.chat_me_container {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chat_other_container {
+    padding: 10px;
+    display: flex;
+}
+
 .chat_me {
     background-color: #B8C0FF;
+    
+    align-items: center;
+    display: flex;
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
 }
 
 .chat_other {
     background-color: #dcdcdd;
+
+    align-items: center;
+    display: flex;
+    height: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+}
+
+.chat_input_container {
+    padding: 0 10px 10px 10px;
+    flex-direction: row;
+    display: flex;
+    gap: 5px;
 }
