@@ -30,7 +30,6 @@
     border-radius: 5px;
 }
 
-
 .chat_input_container {
     padding: 10px;
     flex-direction: row;
@@ -64,4 +63,8 @@
 
 .cursor_pointer {
     cursor: pointer;
+    color: gray;
+    display: flex;
+    height: 100%;
+    padding-bottom: 10px;
 }
