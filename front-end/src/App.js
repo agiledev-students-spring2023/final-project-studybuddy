@@ -26,7 +26,7 @@ function App() {
 					<Route path="/filters" element={<Filters />} />
 					<Route path="/forgotPw" element={<ForgotPW />} />
 					<Route path="/messageList" element={<MessageList />} />
-					<Route path="/messageChat" element={<MessageChat />} />
+					<Route path="/messageChat/:chatId" element={<MessageChat />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/userprofile" element={<UserProfile />} />
 					<Route path="/uploadPost" element={<UploadPost />} />

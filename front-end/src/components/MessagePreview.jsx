@@ -6,8 +6,9 @@ import Badge from "react-bootstrap/Badge"
 export default function MessagePreview({id, chat}) {
   const { preview, name, img_url, unread, chat_id } = chat
 
+  const chat_url = `/messageChat/${chat_id}`
   return (
-    <Card className="m-3" >
+    <Card className="m-3" onClick={() => window.location.href=chat_url}>
       <div className="message_card">
       <Image src={img_url} roundedCircle thumbnail width={100}/>
       <Card.Body>
