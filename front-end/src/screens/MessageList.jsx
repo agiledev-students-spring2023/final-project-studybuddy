@@ -56,7 +56,7 @@ export default function MessageList() {
           All User Messages with Other Buddies
         </div>
         <div className="screen_body">
-          {chat_data.map((e,i) => <MessagePreview id={i} chat={e}/>)}
+          {chat_data.map((e,i) => <MessagePreview key={i} chat={e}/>)}
         </div>
         <Navbar user="Others"/>
       </div>
