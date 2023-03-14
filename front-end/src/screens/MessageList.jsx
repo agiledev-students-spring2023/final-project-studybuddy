@@ -21,6 +21,7 @@ export default function MessageList() {
           <MessagePreview preview={preview} name={name} img={img_url} unread = {6}/>
           <MessagePreview preview={preview} name={name} img={img_url} unread = {70}/>
           <MessagePreview preview={preview} name={name} img={img_url} unread = {30}/>
+          <MessagePreview preview={preview} name={name} img={img_url} unread = {7}/>
         </div>
         <Navbar user="Others"/>
       </div>
