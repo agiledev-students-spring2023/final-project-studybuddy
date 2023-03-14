@@ -1,13 +1,54 @@
 import React from "react";
 import MessagePreview from "../components/MessagePreview";
-import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import "./MessageList.css"
 
+const chat_data = [
+  {
+    preview: "Hello, my name is yewon",
+    name: "Yewon Song",
+    img_url: "https://picsum.photos/50/50",
+    unread: 10,
+    chat_id: 1
+  },
+  {
+    preview: "Where are you?",
+    name: "Daniel",
+    img_url: "https://picsum.photos/50/50",
+    unread: 5,
+    chat_id: 2
+  },
+  {
+    preview: "Welcome to my gym",
+    name: "Dongeun Mun",
+    img_url: "https://picsum.photos/50/50",
+    unread: 5,
+    chat_id: 3
+  },
+  {
+    preview: "I miss you.",
+    name: "Yeonjin Park",
+    img_url: "https://picsum.photos/50/50",
+    unread: 1,
+    chat_id: 4
+  },
+  {
+    preview: "Is this green?",
+    name: "Yesol Ha",
+    img_url: "https://picsum.photos/50/50",
+    unread: 0,
+    chat_id: 5
+  },
+  {
+    preview: "Follow me",
+    name: "Jaejun Jeon",
+    img_url: "https://picsum.photos/50/50",
+    unread: 1,
+    chat_id: 6
+  }
+]
+
 export default function MessageList() {
-    let preview = "Hello, my name is yewon"
-    let name = "Yewon Song"
-    let img_url = "https://picsum.photos/50/50"
 
     return (
       <div className="screen">
@@ -15,13 +56,7 @@ export default function MessageList() {
           All User Messages with Other Buddies
         </div>
         <div className="screen_body">
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {100}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {10}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {5}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {6}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {70}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {30}/>
-          <MessagePreview preview={preview} name={name} img={img_url} unread = {7}/>
+          {chat_data.map((e,i) => <MessagePreview id={i} chat={e}/>)}
         </div>
         <Navbar user="Others"/>
       </div>
