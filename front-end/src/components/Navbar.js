@@ -1,18 +1,18 @@
 import React from "react";
 
 const authLinks = [
-    {
-        name: "Home",
-        path: "/",
-    },
-    {
-        name: "Chat",
-        path: "/messageList",
-    },
-    {
-        name: "Profile",
-        path: "/profile",
-    },
+	{
+		name: "Home",
+		path: "/",
+	},
+	{
+		name: "Chat",
+		path: "/chatList",
+	},
+	{
+		name: "Profile",
+		path: "/profile",
+	},
 ];
 
 const unAuthLinks = [
@@ -44,7 +44,7 @@ function Navbar(props) {
 											className={
 												"nav-link " +
 												(window.location.pathname ===
-												link.path
+													link.path
 													? "active"
 													: "")
 											}
