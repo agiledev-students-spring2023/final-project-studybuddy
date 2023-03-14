@@ -12,10 +12,10 @@ const formatTime = ts => {
 }
 
 
-function Chat({ chat }) {
-    const {isMe, content, timestamp } = chat
-    const type = isMe ? "chat_me" : "chat_other"
-    const time = formatTime(timestamp)
+function ChatBubble({ chat }) {
+  const { isMe, content, timestamp } = chat
+  const type = isMe ? "chat_me" : "chat_other"
+  const time = formatTime(timestamp)
 
   return (
     <div className={`${type}_container`}>
@@ -25,4 +25,4 @@ function Chat({ chat }) {
   );
 }
 
-export default Chat;
+export default ChatBubble;

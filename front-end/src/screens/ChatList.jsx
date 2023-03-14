@@ -1,7 +1,7 @@
 import React from "react";
 import MessagePreview from "../components/MessagePreview";
 import Navbar from "../components/Navbar";
-import "./MessageList.css"
+import "./ChatList.css"
 
 const chat_data = [
   {
@@ -48,17 +48,17 @@ const chat_data = [
   }
 ]
 
-export default function MessageList() {
+export default function ChatList() {
 
-    return (
-      <div className="screen">
-        <div className="screen_header">
-          All User Messages with Other Buddies
-        </div>
-        <div className="screen_body">
-          {chat_data.map((e,i) => <MessagePreview key={i} chat={e}/>)}
-        </div>
-        <Navbar user="Others"/>
+  return (
+    <div className="screen">
+      <div className="screen_header">
+        All User Messages with Other Buddies
       </div>
-    );
-  }
+      <div className="screen_body">
+        {chat_data.map((e, i) => <MessagePreview key={i} chat={e} />)}
+      </div>
+      <Navbar user="Others" />
+    </div>
+  );
+}

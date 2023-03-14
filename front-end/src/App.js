@@ -6,8 +6,8 @@ import SignUp from "./screens/SignUp.jsx";
 import Filters from "./screens/Filters.jsx";
 import ForgotPW from "./screens/ForgotPW.jsx";
 import UploadPost from "./screens/UploadPost.jsx";
-import MessageList from "./screens/MessageList.jsx";
-import MessageChat from "./screens/MessageChat.jsx";
+import ChatList from "./screens/ChatList.jsx";
+import Chat from "./screens/Chat.jsx";
 import UserProfile from "./screens/UserProfile.jsx";
 import FilteredScreen from "./screens/FilteredScreen.jsx";
 import ViewPost from "./screens/ViewPost.jsx";
@@ -25,8 +25,8 @@ function App() {
 					<Route path="/signUp" element={<SignUp />} />
 					<Route path="/filters" element={<Filters />} />
 					<Route path="/forgotPw" element={<ForgotPW />} />
-					<Route path="/messageList" element={<MessageList />} />
-					<Route path="/messageChat/:chatId" element={<MessageChat />} />
+					<Route path="/chatList" element={<ChatList />} />
+					<Route path="/chat/:chatId" element={<Chat />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route path="/userprofile" element={<UserProfile />} />
 					<Route path="/uploadPost" element={<UploadPost />} />
