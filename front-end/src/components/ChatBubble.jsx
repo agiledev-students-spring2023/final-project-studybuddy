@@ -1,6 +1,7 @@
 import React from "react";
 
 const formatTime = ts => {
+  if (typeof (ts) === 'string') ts = Number(ts)
   let date = new Date(ts);
   let hours = date.getHours();
   let minutes = "0" + date.getMinutes();
@@ -18,8 +19,8 @@ function ChatBubble({ chat }) {
   const time = formatTime(timestamp)
 
   return (
-    <div className={`${type}_container`}>
-      <div className={type}>{content}</div>
+    <div className={`${type}_container bubble_container`}>
+      <div className={`chat_bubble ${type}`}>{content}</div>
       <div className="chat_time">{time}</div>
     </div>
   );

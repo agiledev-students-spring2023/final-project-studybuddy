@@ -17,7 +17,7 @@ export default function MessagePreview({ chat }) {
             {preview}
           </Card.Text>
         </Card.Body>
-        <Badge pill bg="danger">{unread}</Badge>
+        <Badge pill bg="danger">{unread > 0 ? unread : null}</Badge>
       </div>
     </Card>
   );

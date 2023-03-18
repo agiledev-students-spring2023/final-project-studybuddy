@@ -1,10 +1,6 @@
 .home_container {
 	display: flex;
-	/* justify-content: center; */
-	align-items: center;
 	flex-direction: column;
 	padding: 30px;
-	/* background-color: black; */
-	/* height: 100vh; */
-	/* gap: 10px !important; */
+	gap: 30px;
 }
