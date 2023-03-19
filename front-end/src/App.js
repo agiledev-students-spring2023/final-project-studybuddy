@@ -5,6 +5,7 @@ import Login from "./screens/Login.jsx";
 import SignUp from "./screens/SignUp.jsx";
 import Filters from "./screens/Filters.jsx";
 import ForgotPW from "./screens/ForgotPW.jsx";
+import ResetPW from "./screens/ResetPW.jsx";
 import UploadPost from "./screens/UploadPost.jsx";
 import ChatList from "./screens/ChatList.jsx";
 import Chat from "./screens/Chat.jsx";
@@ -25,6 +26,7 @@ function App() {
 					<Route path="/signUp" element={<SignUp />} />
 					<Route path="/filters" element={<Filters />} />
 					<Route path="/forgotPw" element={<ForgotPW />} />
+					<Route path="/resetPw" element={<ResetPW />} />
 					<Route path="/chatList" element={<ChatList />} />
 					<Route path="/chat/:chatId" element={<Chat />} />
 					<Route path="/profile" element={<Profile />} />
