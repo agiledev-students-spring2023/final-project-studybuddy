@@ -33,7 +33,7 @@ const FilteredItem = () => (
 export default function FilteredScreen() {
 	return (
 		<>
-			<TitleBar title="Related Post" backpage="/" />
+			<TitleBar title="Related Post" backpage="/filters" />
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
