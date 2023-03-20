@@ -29,14 +29,10 @@ export default function Filters() {
 
 		<div className="subject-container">
 			<h2> Subject </h2>
-			<input className="general-subject" type="text" name="general-subject" defaultValue="User Major"/>
+			<input className="general-subject" type="text" name="general-subject" defaultValue="User Major (Default)"/>
 			<br />
-			<select className="specific-subject" name="specific-subject">
-				<option value="math">Math</option>
-				<option value="science">Science</option>
-				<option value="english">English</option>
-				<option value="history">History</option>
-				<option value="other">Other</option>
+			<select className="specific-subject" name="specific-subject" defaultValue="subfield (optional)">
+				<option value="default">Optional Subfield</option>
 			</select>
 		</div>
 		<br />
