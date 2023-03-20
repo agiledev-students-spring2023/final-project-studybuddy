@@ -1,94 +1,98 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-import { MdSend } from "react-icons/md";
-import "./Chat.css"
-
-
-const dummy_messages = [
-  {
-    isMe: true,
-    content: "hi, there",
-    timestamp: 1678802699313
-  },
-  {
-    isMe: false,
-    content: "i want to ask when you wanna meet up",
-    timestamp: 1678802699313
-  },
-  {
-    isMe: true,
-    content: "tomorrow 2pm?",
-    timestamp: 1678802699313
-  },
-  {
-    isMe: false,
-    content: "great!",
-    timestamp: 1678802699313
-  },
-]
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import { MdArrowBack, MdSend } from "react-icons/md";
+import "./Chat.css";
+import axios from "axios";
 
 export default function Chat() {
-  const name = "Yewon Song"
-  const [messages, setMessages] = useState(dummy_messages);
-  const [input, setInput] = useState('')
+  const [name, setName] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+
+  const mockAPI_msgs =
+    "https://api.mockaroo.com/api/a96712c0?count=10&key=d834d8a0";
+  const mockAPI_name =
+    "https://api.mockaroo.com/api/3f600ed0?count=1&key=d834d8a0";
+
+  useEffect(() => {
+    // this function will be called just once.
+    async function fetchChatData() {
+      const { data } = await axios.get(mockAPI_msgs);
+      setMessages(data);
+    }
+    async function fetchName() {
+      const {
+        data: { name },
+      } = await axios.get(mockAPI_name);
+      setName(name);
+    }
+    fetchChatData();
+    fetchName();
+  }, []);
 
   const sendMessage = () => {
-    if (input.length === 0) return // empty input
+    if (input.length === 0) return; // empty input
 
     /* Message (isMe, content, timestamp) */
     const msg = {
       isMe: true,
       content: input,
-      timestamp: Date.now()
-    }
+      timestamp: Date.now(),
+    };
     window.scrollTo(0, document.body.scrollHeight);
     /* push new message */
-    const newMessages = messages.concat(msg)
-    setMessages(newMessages)
+    const newMessages = messages.concat(msg);
+    setMessages(newMessages);
 
     // TODO: send message to back-end
 
     /* reset input */
-    setInput('')
+    setInput("");
 
-    scrollToBottom()
-  }
+    scrollToBottom();
+  };
 
   const scrollToBottom = () => {
-    const element = document.getElementById('chat_body');
+    const element = document.getElementById("chat_body");
     element.scrollTop = element.scrollHeight;
-  }
+  };
 
-  const handleKeyDown = e => {
-    if (e.key === "Enter")
-      sendMessage()
-  }
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") sendMessage();
+  };
 
   const handleButtonClick = () => {
-    sendMessage()
-  }
+    sendMessage();
+  };
 
   return (
     <div className="chat_screen">
-      <div className="chat_screen_header">{name}</div>
+      <div className="chat_screen_header">
+        <MdArrowBack
+          className="cursor_pointer"
+          onClick={() => window.history.back()}
+        />
+        {name}{" "}
+      </div>
       <div className="chat_screen_body" id="chat_body">
-        {messages.map((e, i) => <ChatBubble key={i} chat={e} />)}
+        {messages.map((e, i) => (
+          <ChatBubble key={i} chat={e} />
+        ))}
       </div>
       <div className="chat_input_container">
         <Form.Control
           type="text"
           value={input}
           placeholder="Type message"
-          onChange={e => setInput(e.target.value)}
+          onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <Button variant="primary" onClick={handleButtonClick}>
+        <button className="btn_chatsend" onClick={handleButtonClick}>
           <MdSend />
-        </Button>
+        </button>
       </div>
     </div>
   );
 }
-
