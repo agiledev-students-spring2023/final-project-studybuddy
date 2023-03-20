@@ -1,93 +1,77 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
+import { addDays, format } from "date-fns/fp";
+import axios from "axios";
 
+const PostPreview = ({ id, major, title, date_time }) => (
+	<a href={`/viewPost/${id}`}>
+		<div className="Post-preview">
+			<p>{major}</p>
+			<p>{title}</p>
+			<p>{format("MMM dd, yyyy hh:mm a", new Date(date_time))}</p>
+		</div>
+	</a>
+
+);
+
+const UserName=({post})=>(
+	
+	<div className="UserInfo">
+						<div>
+							<img
+								src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"
+							
+								className="Picture"
+								alt="ProfilePicture"
+							/>
+						</div>
+						<div>
+							<h5> Kimble Iacovucci</h5>
+							<h5>Engineering</h5>
+						</div>
+	</div>
+)
 const UserProfile = () => {
-	const username = "Buddy Name";
-	const major = "Buddy Major ";
-	const img =
-		"https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
 
-	const [posts, setPost] = useState([
-		{
-			Subject: "Chemistry",
-			Date: "Jan 1st, 2022",
-			Mode: "In person",
-			body: "Let go study...",
-			userId: 1,
-			id: 1,
-		},
-		{
-			Subject: "Math",
-			Date: "May 1st, 2022",
-			Mode: "Online",
-			body: "Please join me...",
-			UserId: 1,
-			id: 2,
-		},
-		{
-			Subject: "CS101",
-			Date: "Aug 1st, 2022",
-			Mode: "In person",
-			body: "Looking for a study...",
-			UserId: 1,
-			id: 3,
-		},
-		{
-			Subject: "Biology",
-			Date: "Sept 1st, 2022",
-			Mode: "In person",
-			body: "Let go study...",
-			userId: 1,
-			id: 1,
-		},
-		{
-			Subject: "Data Structures",
-			Date: "May 1st, 2022",
-			Mode: "Online",
-			body: "Please join me...",
-			UserId: 1,
-			id: 2,
-		},
-		{
-			Subject: "Software Engineering",
-			Date: "Aug 1st, 2022",
-			Mode: "In person",
-			body: "Looking for a study...",
-			UserId: 1,
-			id: 3,
-		},
-		{
-			Subject: "Software Engineering",
-			Date: "Aug 1st, 2022",
-			Mode: "In person",
-			body: "Looking for a study...",
-			UserId: 1,
-			id: 3,
-		},
-	]);
+	const [posts, setPosts] = useState([]);
 
+	useEffect(() => {
+		loadFilteredPosts();
+	}, []);
+
+	const loadFilteredPosts = () => {
+		const options = {
+			method: "GET",
+			url: "https://my.api.mockaroo.com/posts.json",
+			params: { key: "fb86de30" },
+			headers: {
+				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
+			},
+		};
+
+		axios
+			.request(options)
+			.then(function (response) {
+				console.log(response.data);
+				setPosts(response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
+
+	
+	
 	return (
 		<div>
 			<TitleBar title="Profile" backpage="/filteredScreen" />
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
-					<div className="UserInfo">
-						<div>
-							<img
-								src={img}
-								className="Picture"
-								alt="ProfilePicture"
-							/>
-						</div>
-						<div>
-							<p> {username}</p>
-							<p>{major}</p>
-						</div>
-					</div>
+					 <UserName post={posts.find(item => item.id === 2)}/>
 
 					<div className="Message">
 						<a
@@ -104,13 +88,11 @@ const UserProfile = () => {
 						<h2>Posts</h2>
 						<div className="Postgrid01">
 							{posts.map((post) => (
-								<a key={post.id} href={"/viewPost/:postId"}>
-									<div className="Post-preview">
-										<h5>{post.Subject}</h5>
-										<p>{post.Date}</p>
-										<p>{post.Mode}</p>
-									</div>
-								</a>
+								<PostPreview major={post.major}
+								id={post.id}
+								title={post.title}
+								date_time={post.date_time}
+								/>
 							))}
 						</div>
 					</div>
