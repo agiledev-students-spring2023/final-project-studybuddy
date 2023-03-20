@@ -1,9 +1,9 @@
-import { Button } from "react-bootstrap";
+import axios from "axios";
+import { format } from "date-fns/fp";
 import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
-import axios from "axios";
-import { addDays, format } from "date-fns/fp";
 
 const SearchBtnWithFilter = () => (
 	<div className="row p-2 text-center mt-4">
@@ -58,7 +58,6 @@ export default function FilteredScreen() {
 		axios
 			.request(options)
 			.then(function (response) {
-				console.log(response.data);
 				setPosts(response.data);
 			})
 			.catch(function (error) {
