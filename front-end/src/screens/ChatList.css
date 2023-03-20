@@ -1,7 +1,7 @@
 .message_card {
-    display: grid;
-    grid-template-columns: 100px 1fr 30px;
-    align-items: center;
-    padding: 15px;
-    cursor: pointer;
+	display: grid;
+	grid-template-columns: 100px 1fr 30px;
+	align-items: center;
+	padding: 15px;
+	cursor: pointer;
 }

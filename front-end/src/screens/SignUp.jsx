@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const MAJORS = [
 	"Computer Science",
@@ -13,12 +14,15 @@ const MAJORS = [
 ];
 
 export default function SignUp() {
+	const navigate = useNavigate();
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data) => console.log(data);
+
+	const onSubmit = (data) => navigate("/Login");
 
 	return (
 		<>
