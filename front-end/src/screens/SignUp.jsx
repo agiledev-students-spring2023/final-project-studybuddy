@@ -1,24 +1,45 @@
-import React from "react";
-import Navbar from "../components/Navbar";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
-const MAJORS = [
-	"Computer Science",
-	"Computer Engineering",
-	"Electrical Engineering",
-	"Mechanical Engineering",
-	"Chemical Engineering",
-	"Civil Engineering",
-	"Biomedical Engineering",
-];
+import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 export default function SignUp() {
+	const navigate = useNavigate();
+	const [MAJORS, setMAJORS] = useState([]);
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data) => console.log(data);
+
+	useEffect(() => {
+		getMajors();
+	}, []);
+
+	const getMajors = async () => {
+		const options = {
+			method: "GET",
+			url: "https://my.api.mockaroo.com/majors.json",
+			params: { key: "fb86de30" },
+			headers: {
+				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
+			},
+		};
+
+		axios
+			.request(options)
+			.then(function (response) {
+				let majors = response.data.map((item) => item.name);
+				setMAJORS(majors);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
+
+	const onSubmit = (data) => navigate("/Login");
 
 	return (
 		<>

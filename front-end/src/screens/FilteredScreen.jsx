@@ -1,5 +1,7 @@
+import axios from "axios";
+import { format } from "date-fns/fp";
+import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import React from "react";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 
@@ -14,34 +16,69 @@ const SearchBtnWithFilter = () => (
 	</div>
 );
 
-const FilteredItem = () => (
+const FilteredItem = ({ major, title, date_time }) => (
 	<div className="row border p-1 pt-2 pb-2 m-1">
-		<p className="mb-1">Major of the Post's Buddy</p>
-		<h5 className="mb-1">Subject Topic / Field</h5>
-		<p className="m-0">Meeting Date and Time</p>
+		<p className="mb-1">{major}</p>
+		<h5 className="mb-1">{title}</h5>
+		<p className="m-0">
+			{format("MMM dd, yyyy hh:mm a", new Date(date_time))}
+		</p>
 		<div className="row pt-2 pb-2">
 			<div className="col-6 text-center">
-				<button className="btn btm-md btn-primary">View Profile</button>
+				<a href="/userprofile" className="btn btm-md btn-primary">
+					View Profile
+				</a>
 			</div>
 			<div className="col-6 text-center">
-				<button className="btn btn-md btn-secondary">Message</button>
+				<a href="/chat/1" className="btn btn-md btn-secondary">
+					Message
+				</a>
 			</div>
 		</div>
 	</div>
 );
 
 export default function FilteredScreen() {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		loadFilteredPosts();
+	}, []);
+
+	const loadFilteredPosts = () => {
+		const options = {
+			method: "GET",
+			url: "https://my.api.mockaroo.com/posts.json",
+			params: { key: "fb86de30" },
+			headers: {
+				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
+			},
+		};
+
+		axios
+			.request(options)
+			.then(function (response) {
+				setPosts(response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
+
 	return (
 		<>
-			<TitleBar title="Related Post" backpage="/" />
+			<TitleBar title="Related Post" backpage="/filters" />
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<SearchBtnWithFilter />
-					<FilteredItem />
-					<FilteredItem />
-					<FilteredItem />
-					<FilteredItem />
+					{posts.map((post) => (
+						<FilteredItem
+							major={post.major}
+							title={post.title}
+							date_time={post.date_time}
+						/>
+					))}
 				</div>
 			</div>
 

@@ -46,7 +46,7 @@ export default function Chat() {
     const newMessages = messages.concat(msg);
     setMessages(newMessages);
 
-    // TODO: send message to back-end
+		// TODO: send message to back-end
 
     /* reset input */
     setInput("");
