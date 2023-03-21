@@ -1,21 +1,32 @@
 import React from "react";
-import Button from 'react-bootstrap/Button';
-import Navbar from "../components/Navbar";
-import "./Home.css"
-
+import Button from "react-bootstrap/Button";
+import { MdChatBubble, MdPerson, MdSearch, MdUpload } from "react-icons/md";
+import "./Home.css";
 
 export default function Home() {
   return (
     <div className="screen">
       <div className="screen_header">Study Buddy</div>
       <div className="screen_body home_container">
-        <Button variant="outline-secondary" href="/filters" size="lg" >Search Posts</Button>
-        <Button variant="outline-secondary" href="/uploadPost" size="lg" >Upload Post</Button>
-        <Button variant="outline-secondary" href="/chatList" size="lg" >User Chat List</Button>
-        <Button variant="outline-secondary" href="/profile" size="lg" >User Profile</Button>
+        <div className="home_search_btn" onClick={() => window.location.href = '/filters'}>
+          <div className="search_text">Search Post</div>
+          <MdSearch />
+        </div>
+        <div className="home_btn_container">
+          <div className="home_profile_btn" onClick={() => window.location.href = '/profile'}>
+            Profile
+            <MdPerson className="home_icon" />
+          </div>
+          <div className="home_chat_btn" onClick={() => window.location.href = '/chatList'}>
+            Chats
+            <MdChatBubble className="home_icon" />
+          </div>
+          <div className="home_upload_btn" onClick={() => window.location.href = '/uploadPost'}>
+            Upload Post
+            <MdUpload className="home_icon" />
+          </div>
+        </div>
       </div>
-      <Navbar user="Others" />
     </div>
   );
 }
-
