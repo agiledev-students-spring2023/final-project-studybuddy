@@ -44,7 +44,7 @@ function Navbar(props) {
 											className={
 												"nav-link " +
 												(window.location.pathname ===
-													link.path
+												link.path
 													? "active"
 													: "")
 											}
