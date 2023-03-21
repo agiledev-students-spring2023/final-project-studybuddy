@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 
+// test to see if config is working
 const SearchBtnWithFilter = () => (
 	<div className="row p-2 text-center mt-4">
 		<div className="col-4 p-1">
