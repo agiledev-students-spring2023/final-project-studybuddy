@@ -13,6 +13,7 @@
 }
 
 .calendar-container {
+<<<<<<< Updated upstream
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,6 +25,19 @@
 
 .env-container {
     margin-bottom: 20px;
+=======
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #f5f5f5;
+	margin-bottom: 20px;
+	margin-top: 20px;
+}
+
+.env-container {
+	margin-bottom: 10px;
+>>>>>>> Stashed changes
 }
 
 .env-container * {
@@ -31,7 +45,12 @@
 }
 
 .subject-container * {
+<<<<<<< Updated upstream
     margin: 5px;
+=======
+	margin: 5px;
+	padding: 7px;
+>>>>>>> Stashed changes
 }
 
 .submit-filters {

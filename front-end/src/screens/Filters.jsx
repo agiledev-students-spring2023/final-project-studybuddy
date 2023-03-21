@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import Navbar from "../components/Navbar";
+import TitleBar from "../components/TitleBar";
 import './Filters.css';
 
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
 	return <div className="filters-container">
-		<h1> <strong> Filters </strong></h1>
-		<h4> find the perfect study buddy according to your availability </h4>
+		<TitleBar title="Filters" backpage="/" />
+		<div> <strong> find the perfect study buddy according to your availability </strong> </div>
 
 		<div className="calendar-container">
 			<h2> Meeting Date & Time </h2>
