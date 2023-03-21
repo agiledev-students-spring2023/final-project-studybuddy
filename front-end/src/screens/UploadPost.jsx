@@ -3,8 +3,11 @@ import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import "./UploadPost.css";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
 
 const UploadPost = () => {
+	const navigate = useNavigate();
 	const img =
 		"https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
 
@@ -13,7 +16,7 @@ const UploadPost = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data) => console.log(data);
+	const onSubmit = (data) => navigate("/viewpost/1");
 
 	return (
 		<div>
@@ -35,9 +38,28 @@ const UploadPost = () => {
 					<div className="row">
 						<div className="col-md-12">
 							<form onSubmit={handleSubmit(onSubmit)}>
+								{/* Date */}
 								<div className="form-floating mb-3 custom-01">
 									<input
 										type="date"
+										className={
+											"form-control " +
+											(errors.user_id ? "is-invalid" : "")
+										}
+										id="date"
+										placeholder="User ID"
+										{...register("user_id", {
+											required: true,
+										})}
+									/>
+									<label htmlFor="user_id">
+										Meeting Date
+									</label>
+								</div>
+								{/* Time */}
+								<div className="form-floating mb-3 custom-01">
+									<input
+										type="time"
 										className={
 											"form-control " +
 											(errors.user_id ? "is-invalid" : "")
