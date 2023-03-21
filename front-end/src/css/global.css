@@ -1,3 +1,7 @@
 .pageLayout {
 	padding-bottom: 70px;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}
