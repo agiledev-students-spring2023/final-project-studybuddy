@@ -68,7 +68,7 @@ const UserProfile = () => {
 	
 	return (
 		<div>
-			<TitleBar title="Profile" backpage="/filteredScreen" />
+			<div className="title-bar"> <TitleBar title="Profile" backpage="/filteredScreen" /> </div>
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">

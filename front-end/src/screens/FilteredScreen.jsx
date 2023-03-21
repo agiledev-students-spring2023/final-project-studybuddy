@@ -68,7 +68,7 @@ export default function FilteredScreen() {
 
 	return (
 		<>
-			<TitleBar title="Related Post" backpage="/filters" />
+			<div className="title-bar"> <TitleBar title="Related Post" backpage="/filters" /> </div>
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">

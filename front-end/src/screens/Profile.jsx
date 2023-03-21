@@ -63,7 +63,7 @@ const Profile = () => {
 
 	return (
 		<div>
-			<TitleBar title="My Account" backpage="/" />
+			<div className="title-bar"> <TitleBar title="My Account" backpage="/" /> </div>
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Logout">

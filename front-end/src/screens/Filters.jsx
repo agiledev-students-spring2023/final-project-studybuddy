@@ -7,7 +7,7 @@ import './Filters.css';
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
 	return <div className="filters-container">
-		<TitleBar title="Filters" backpage="/" />
+		<div className="title-bar"> <TitleBar title="Filters" backpage="/" /> </div>
 		<div> <strong> find the perfect study buddy according to your availability </strong> </div>
 
 		<div className="calendar-container">
