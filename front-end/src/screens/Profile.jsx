@@ -4,37 +4,35 @@ import "./Profile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import axios from "axios";
-import { addDays, format } from "date-fns/fp";
 
-const PostPreview = ({ id, major, title, date_time }) => (
+const PostPreview = ({ id,title }) => (
 	<a href={`/viewPost/${id}`}>
 		<div className="Post-preview">
-			<p>{major}</p>
-			<p>{title}</p>
-			<p>{format("MMM dd, yyyy hh:mm a", new Date(date_time))}</p>
+			<h5>{title}</h5>
 		</div>
 	</a>
 
 );
-const UserName=({post})=>(
+
+const UserName=({name, major, picture})=>(
 	
 	<div className="UserInfo">
 						<div>
 							<img
-								src="https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png"
-							
+								src={picture}
 								className="Picture"
 								alt="ProfilePicture"
 							/>
 						</div>
 						<div>
-							<h5> Kelila Eames</h5>
-							<h5>Computer Science</h5>
+							<h5> {name}</h5>
+							<h5>{major}</h5>
 						</div>
 	</div>
 )
 const Profile = () => {
 	const [posts, setPosts] = useState([]);
+	const [myaccount, setMyaccount]= useState([]);
 
 	useEffect(() => {
 		loadFilteredPosts();
@@ -55,6 +53,8 @@ const Profile = () => {
 			.then(function (response) {
 				console.log(response.data);
 				setPosts(response.data);
+				const object = response.data.find(obj => obj.id === 1);
+				setMyaccount(object);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -67,28 +67,18 @@ const Profile = () => {
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Logout">
-						<a
-							href="/Login"
-							style={{
-								color: "White",
-								backgroundColor: "#c8b6ff",
-								borderRadius: "10px",
-							}}
-						>
-							Log out
-						</a>
+						<a href="/Login">Log out</a>
 					</div>
 
-					<UserName post={posts.find(item => item.id === 2)}/>
+					<UserName name={myaccount.name} major={myaccount.major} picture={myaccount.profile_pic}/>
 
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
 							{posts.map((post) => (
-								<PostPreview major={post.major}
+								<PostPreview
 								title={post.title}
 								id={post.id}
-								date_time={post.date_time}
 								/>
 							))}
 						</div>
