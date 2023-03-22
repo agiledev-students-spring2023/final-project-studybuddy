@@ -25,21 +25,22 @@
 
 .Description {
 	border-radius: 10px;
-	border: 1px solid rgb(9, 8, 8);
 	padding: 30px;
 	margin-bottom: 10px;
-	background-color: #e6e6e6;
+	background-color: #BBD0FF;
 }
 
 .custom-comments {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+	
 }
 
 .form-floating.custom {
 	margin-right: 10px;
 	max-width: fit-content;
+	
 }
 
 .Comments {
@@ -50,7 +51,7 @@
 
 .usercomment {
 	border-radius: 10px;
-	background-color: #e6e6e6;
+	background-color: #c1c8ff;
 		
 }
 
