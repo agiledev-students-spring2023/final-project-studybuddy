@@ -20,7 +20,8 @@ const UploadPost = () => {
 
 	return (
 		<div>
-			<TitleBar title="Create Post" backpage="/" />
+			<div className="title-bar"> <TitleBar title="Create Post" backpage="/" /> </div> 
+			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="row text-center">

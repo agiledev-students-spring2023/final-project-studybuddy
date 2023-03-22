@@ -5,6 +5,12 @@
 	gap: 30px;
 }
 
+.screen_header {
+	font-weight: bolder;
+	font-size: 30px;
+	color: #616161;
+}
+
 .home_search_btn {
 	display: grid;
 	height: 50px;

@@ -55,7 +55,8 @@ const ViewPost = () => {
 
 	return (
 		<div className="View Post">
-			<TitleBar title="View Post" backpage="/filteredScreen" />
+			<div className="title-bar"> <TitleBar title="View Post" backpage="/filteredScreen" /> </div>
+			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="profile">
