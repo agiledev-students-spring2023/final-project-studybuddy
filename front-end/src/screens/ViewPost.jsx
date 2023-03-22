@@ -7,6 +7,7 @@ import {format} from "date-fns/fp";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
+import { useParams } from 'react-router-dom';
 
 
 const UserComments = ({username, usercomment}) => (
@@ -32,6 +33,7 @@ const Item = ({title, date_time }) => {
 const ViewPost = () => {
 	const [posts, setPosts] = useState([]);
 	const [input, setInput] = useState("");
+	const { profile, id } = useParams();
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
@@ -67,15 +69,18 @@ const ViewPost = () => {
 			});
 	};
 
-  const goBack = () => {
-    window.history.back();
-  };
+  let back;
 
+  if (posts.id === 1) {
+    back = '/profile';
+  } else {
+    back = '/userprofile';
+  }
 
 	return (
 		<div className="View Post">
 			
-			<TitleBar title="View Post" backpage={goBack} />
+			<TitleBar title="View Post" backpage={back} />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="profile">
