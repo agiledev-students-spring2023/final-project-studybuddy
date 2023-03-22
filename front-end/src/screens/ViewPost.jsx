@@ -2,10 +2,12 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import "./ViewPost.css";
-import { useForm } from "react-hook-form";
 import axios from "axios";
-import { addDays, format } from "date-fns/fp";
+import {format} from "date-fns/fp";
 import { useEffect, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { MdSend } from "react-icons/md";
+
 
 const UserComments = ({username, usercomment}) => (
 	<div className="usercomment">
@@ -17,15 +19,27 @@ const UserComments = ({username, usercomment}) => (
 	
 )
 
-const ViewPost = () => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm();
-	const onSubmit = (data) => console.log(data);
+const Item = ({title, date_time }) => {
+	return (
+	<div className="Post-info">
+		<p> {title} </p>
+		<p>{date_time} </p> 
+		{/* <p>{format("MMM dd, yyyy hh:mm a", new Date(date_time))}</p> */}
+	</div> 
 
+	);
+};
+const ViewPost = () => {
 	const [posts, setPosts] = useState([]);
+	const [input, setInput] = useState("");
+
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") setInput("");
+	  };
+	
+	  const handleButtonClick = () => {
+		setInput("");
+	  };
 
 	useEffect(() => {
 		loadFilteredPosts();
@@ -53,10 +67,15 @@ const ViewPost = () => {
 			});
 	};
 
+  const goBack = () => {
+    window.history.back();
+  };
+
+
 	return (
 		<div className="View Post">
-			<div className="title-bar"> <TitleBar title="View Post" backpage="/filteredScreen" /> </div>
-			<br />
+			
+			<TitleBar title="View Post" backpage={goBack} />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="profile">
@@ -67,16 +86,15 @@ const ViewPost = () => {
 								alt="ProfilePicture"
 							/>
 						</div>
-						<div>
+						<div className= "mydetails">
 							<h2 className="mb-1">{posts.name}</h2>
 							<h2 className="mb-1">{posts.major}</h2>
 						</div>
 					</div>
-					<div className="Post-info">
-						<p> {posts.title} </p>
-						<p>{posts.date_time} </p> 
-						{/* <p>{format("MMM dd, yyyy hh:mm a", new Date(posts.date_time))} </p>  */}
-					</div>
+					<Item
+							title={posts.title}
+							date_time={posts.date_time}
+						/>
 
 					<div className="Description">
 						<p>{posts.description}</p>
@@ -92,28 +110,17 @@ const ViewPost = () => {
 
 					{/* Enter comment section */}
 					<div className="custom-comments">
-						<form onSubmit={handleSubmit(onSubmit)}>
-							<div className="form-floating mb-3 custom">
-								<input
-									type="text"
-									className={
-										"form-control " +
-										(errors.user_id ? "is-invalid" : "")
-									}
-									id="user_id"
-									placeholder="User ID"
-									{...register("user_id", { required: true })}
-								/>
-								<label htmlFor="user_id">Enter Comment</label>
-							</div>
-						</form>
-
-						<div className="button">
-							<button className="btn btn-primary" type="submit">
-								{" "}
-								Send
-							</button>
-						</div>
+						
+					<Form.Control
+						type="text"
+						value={input}
+						placeholder="Enter Comment"
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={handleKeyDown}
+       				 />
+       			 <button className="btn_chatsend" onClick={handleButtonClick}>
+       				   <MdSend />
+        		</button>
 					</div>
 				</div>
 			</div>
