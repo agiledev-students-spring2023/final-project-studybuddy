@@ -20,14 +20,10 @@ app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming P
 // make 'public' directory publicly readable with static content
 app.use("/static", express.static("public"))
 
-// route for HTTP GET requests to the root document
-app.get("/", (req, res) => {
-  res.send("Home!")
-})
 
-//ADD routes here:
+const routes = require('./routes');
 
-
+app.use('/', routes);
 
 
 module.exports = app
