@@ -4,6 +4,14 @@ const app = express() // instantiate an Express object
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
 
+const cors = require("cors"); // package for 'cors' setting
+
+app.use(cors({
+    origin: "http://localhost:3000", // domain that approves to access / it will be our front-end domain
+    credentials: true, // add 'Access-Control-Allow-Credentials' to the responding header.   
+    optionsSuccessStatus: 200, // setting the responding status as 200. 
+}));
+
 // import some useful middleware
 const multer = require("multer") // middleware to handle HTTP POST requests with file uploads
 const axios = require("axios") // middleware for making requests to APIs
