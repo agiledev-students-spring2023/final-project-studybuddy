@@ -15,7 +15,7 @@
 	display: grid;
 	height: 50px;
 	border-radius: 25px;
-	background-color: #EEEEEE;
+	background-color: #eeeeee;
 	cursor: pointer;
 	font-size: 30px;
 	grid-template-columns: 1fr 30px;
@@ -25,7 +25,7 @@
 }
 
 .home_search_btn:hover {
-	background-color: #F5F5F5;
+	background-color: #f5f5f5;
 	color: #616161;
 }
 
@@ -43,7 +43,7 @@
 	border-radius: 10px;
 	align-items: center;
 	cursor: pointer;
-	background-color: #B8C0FF;
+	background-color: #b8c0ff;
 	font-size: 23px;
 	justify-content: center;
 	gap: 10px;
@@ -54,7 +54,7 @@
 	border-radius: 10px;
 	align-items: center;
 	cursor: pointer;
-	background-color: #FFD6FF;
+	background-color: #ffd6ff;
 	font-size: 23px;
 	justify-content: center;
 	gap: 10px;
@@ -65,7 +65,7 @@
 	border-radius: 10px;
 	align-items: center;
 	cursor: pointer;
-	background-color: #BBD0FF;
+	background-color: #bbd0ff;
 	font-size: 23px;
 	justify-content: center;
 	gap: 10px;
@@ -80,7 +80,6 @@
 .home_icon {
 	font-size: 30px;
 }
-
 
 .home_profile_btn:hover {
 	background-color: #c1c8ff;
