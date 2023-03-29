@@ -41,14 +41,7 @@ const UserProfile = () => {
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = {
-			method: "GET",
-			url: "https://my.api.mockaroo.com/posts.json",
-			params: { key: "fb86de30" },
-			headers: {
-				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
-			},
-		};
+		const options = 'http://localhost:4000/profile'
 
 		axios
 			.request(options)
