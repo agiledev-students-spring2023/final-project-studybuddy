@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const axios = require("axios")
 
 router.get('/', (req, res) => {
     const url = 'https://my.api.mockaroo.com/posts.json';
