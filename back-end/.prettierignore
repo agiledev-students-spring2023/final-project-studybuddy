@@ -1,0 +1,8 @@
+.circleci
+.github
+.husky
+node_modules
+ux-design
+*/node_modules
+build
+coverage

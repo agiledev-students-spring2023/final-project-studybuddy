@@ -8,8 +8,8 @@
 # To enable this hook, rename this file to "pre-commit".
 
 
-usernameEnv=$(grep -E "GITHUB_USERNAME=((.+\n)|((.+)$))" front-end/.env | cut -c 17-)
-emailEnv=$(grep -E "GITHUB_EMAIL=((.+\n)|((.+)$))" front-end/.env | cut -c 14-)
+usernameEnv=$(grep -E "GITHUB_USERNAME=((.+\n)|((.+)$))" .env | cut -c 17-)
+emailEnv=$(grep -E "GITHUB_EMAIL=((.+\n)|((.+)$))" .env | cut -c 14-)
 
 usernameGit=$(git config user.name)
 emailGit=$(git config user.email)
@@ -25,6 +25,10 @@ if [[ "$emailEnv" != "$emailGit" ]]; then
 fi
 
 cd front-end
+npm run format
+
+cd ..
+cd back-end
 npm run format
 
 git add .
