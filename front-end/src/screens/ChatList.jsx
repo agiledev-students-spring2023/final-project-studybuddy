@@ -6,12 +6,14 @@ import "./ChatList.css";
 
 export default function ChatList() {
 	const [chatList, setChatList] = useState([]);
+	const userId = 'sywu430' // todo: modify to real ID
 
 	useEffect(() => {
 		async function fetchChatListData() {
-			const mockAPI_url =
-				"https://api.mockaroo.com/api/e39d09a0?count=10&key=d834d8a0";
-			const { data } = await axios.get(mockAPI_url);
+			const chatListAPI_url =
+				`http://localhost:4000/chatList/${userId}`;
+			console.log('')
+			const { data } = await axios.get(chatListAPI_url);
 			setChatList(data);
 		}
 		fetchChatListData();

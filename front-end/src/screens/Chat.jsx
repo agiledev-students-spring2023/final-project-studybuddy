@@ -11,25 +11,20 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
-  const mockAPI_msgs =
-    "https://api.mockaroo.com/api/a96712c0?count=10&key=d834d8a0";
-  const mockAPI_name =
-    "https://api.mockaroo.com/api/3f600ed0?count=1&key=d834d8a0";
+  const chatAPI = 'http://localhost:4000/chat/123';
 
   useEffect(() => {
     // this function will be called just once.
     async function fetchChatData() {
-      const { data } = await axios.get(mockAPI_msgs);
-      setMessages(data);
-    }
-    async function fetchName() {
-      const {
-        data: { name },
-      } = await axios.get(mockAPI_name);
+      const { data } = await axios.get(chatAPI);
+      const { messages, name } = data
+      
+      setMessages(messages);
       setName(name);
     }
+
     fetchChatData();
-    fetchName();
+
   }, []);
 
   const sendMessage = () => {
