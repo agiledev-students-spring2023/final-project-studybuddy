@@ -3,31 +3,28 @@ import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import "./ViewPost.css";
 import axios from "axios";
-import {format} from "date-fns/fp";
+import { format } from "date-fns/fp";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 
-
-const UserComments = ({username, usercomment}) => (
+const UserComments = ({ username, usercomment }) => (
 	<div className="usercomment">
 		<div className="row p-1 pt-2 pb-2 m-1 ">
 			<h5 className="mb-1 text-left">{username}</h5>
 			<p className="mb-1 text-left">{usercomment}</p>
 		</div>
-		</div>
-	
-)
+	</div>
+);
 
-const Item = ({title, date_time }) => {
+const Item = ({ title, date_time }) => {
 	return (
-	<div className="Post-info">
-		<p> {title} </p>
-		<p>{date_time} </p> 
-		{/* <p>{format("MMM dd, yyyy hh:mm a", new Date(date_time))}</p> */}
-	</div> 
-
+		<div className="Post-info">
+			<p> {title} </p>
+			<p>{date_time} </p>
+			{/* <p>{format("MMM dd, yyyy hh:mm a", new Date(date_time))}</p> */}
+		</div>
 	);
 };
 const ViewPost = () => {
@@ -37,11 +34,11 @@ const ViewPost = () => {
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
-	  };
-	
-	  const handleButtonClick = () => {
+	};
+
+	const handleButtonClick = () => {
 		setInput("");
-	  };
+	};
 
 	useEffect(() => {
 		loadFilteredPosts();
@@ -61,7 +58,7 @@ const ViewPost = () => {
 			.request(options)
 			.then(function (response) {
 				console.log(response.data);
-				const object = response.data.find(obj => obj.id === 2);
+				const object = response.data.find((obj) => obj.id === 2);
 				setPosts(object);
 			})
 			.catch(function (error) {
@@ -69,17 +66,16 @@ const ViewPost = () => {
 			});
 	};
 
-  let back;
+	let back;
 
-  if (posts.id === 1) {
-    back = '/profile';
-  } else {
-    back = '/userprofile';
-  }
+	if (posts.id === 1) {
+		back = "/profile";
+	} else {
+		back = "/userprofile";
+	}
 
 	return (
 		<div className="View Post">
-			
 			<TitleBar title="View Post" backpage={back} />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
@@ -91,41 +87,42 @@ const ViewPost = () => {
 								alt="ProfilePicture"
 							/>
 						</div>
-						<div className= "mydetails">
+						<div className="mydetails">
 							<h2 className="mb-1">{posts.name}</h2>
 							<h2 className="mb-1">{posts.major}</h2>
 						</div>
 					</div>
-					<Item
-							title={posts.title}
-							date_time={posts.date_time}
-						/>
+					<Item title={posts.title} date_time={posts.date_time} />
 
 					<div className="Description">
 						<p>{posts.description}</p>
 					</div>
 					<div className="Comments">
-						{posts && posts.comments && posts.comments.map((data) => (
-						<UserComments
-							username={data.name}
-							usercomment={data.comment}
-						/>
-					))}
+						{posts &&
+							posts.comments &&
+							posts.comments.map((data) => (
+								<UserComments
+									username={data.name}
+									usercomment={data.comment}
+								/>
+							))}
 					</div>
 
 					{/* Enter comment section */}
 					<div className="custom-comments">
-						
-					<Form.Control
-						type="text"
-						value={input}
-						placeholder="Enter Comment"
-						onChange={(e) => setInput(e.target.value)}
-						onKeyDown={handleKeyDown}
-       				 />
-       			 <button className="btn_chatsend" onClick={handleButtonClick}>
-       				   <MdSend />
-        		</button>
+						<Form.Control
+							type="text"
+							value={input}
+							placeholder="Enter Comment"
+							onChange={(e) => setInput(e.target.value)}
+							onKeyDown={handleKeyDown}
+						/>
+						<button
+							className="btn_chatsend"
+							onClick={handleButtonClick}
+						>
+							<MdSend />
+						</button>
 					</div>
 				</div>
 			</div>

@@ -1,5 +1,10 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
+const { userLoginSchema } = require("../validators/user.validator");
+const { validate } = require("../middlewares/validator.middleware");
+const { loginController } = require("../controllers/user.controller");
+
+router.post("/login", validate(userLoginSchema), loginController);
 
 router.get('/', (req, res) => {
     const url = 'https://my.api.mockaroo.com/posts.json';
@@ -21,4 +26,5 @@ router.get('/', (req, res) => {
     });
 })
 
-module.exports = router
+
+module.exports = router;

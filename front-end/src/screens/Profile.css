@@ -2,7 +2,6 @@
 	margin-top: 10px;
 	text-align: right;
 	margin-bottom: 20px;
-	
 }
 
 .Logout a {
@@ -10,12 +9,12 @@
 	text-decoration: none;
 	padding: 6px;
 	color: white;
-	background-color:#c8b6ff;
+	background-color: #c8b6ff;
 	border-radius: 10px;
 }
 
 .Logout a:hover {
-	color: rgb(86, 86, 170)
+	color: rgb(86, 86, 170);
 }
 
 .UserInfo {
@@ -30,7 +29,6 @@
 	color: black;
 	text-align: left;
 	margin-left: 10px;
-	
 }
 
 .Picture {
@@ -39,7 +37,7 @@
 	height: 100px;
 	border-radius: 100px;
 	text-align: center;
-	border: 3px solid #FFD6FF;
+	border: 3px solid #ffd6ff;
 	margin-right: 10px;
 }
 
@@ -50,11 +48,9 @@
 	column-gap: 10px;
 	row-gap: 10px;
 	padding: 1em;
-	border: 1px solid #FFD6FF;
+	border: 1px solid #ffd6ff;
 	text-align: center;
-	
 }
-
 
 .Postgrid a {
 	width: 100%;
@@ -63,7 +59,7 @@
 	text-decoration: none;
 	color: rgb(137, 126, 126);
 	text-align: center;
-	background-color: #BBD0FF;
+	background-color: #bbd0ff;
 }
 
 .Post h2 {
@@ -72,16 +68,14 @@
 	margin-bottom: 20px;
 	text-align: center;
 	font-weight: 600;
-
 }
-  
+
 .Post-preview h5 {
 	color: black;
 	margin-top: 50%;
 	text-align: center;
 	font-weight: 450;
 	font-size: 15px;
-
 }
 
 .Postgrid a:hover {

@@ -20,7 +20,10 @@ const SearchBtnWithFilter = () => {
 					Search
 				</Button>
 			</div>
-			<div className="col-8 border p-1 cursor-pointer" onClick={() => navigate("/filters")}>
+			<div
+				className="col-8 border p-1 cursor-pointer"
+				onClick={() => navigate("/filters")}
+			>
 				CS, Agile..., March 12, Online
 			</div>
 		</div>
@@ -32,7 +35,10 @@ const FilteredItem = ({ major, title, date_time }) => {
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{major}</p>
-			<h5 className="mb-1 cursor-pointer" onClick={() => navigate("/viewPost/1")}>
+			<h5
+				className="mb-1 cursor-pointer"
+				onClick={() => navigate("/viewPost/1")}
+			>
 				{title}
 			</h5>
 			<p className="m-0">
@@ -65,7 +71,7 @@ export default function FilteredScreen() {
 		const options = {
 			method: "GET",
 			url: "https://my.api.mockaroo.com/posts.json",
-			params: { key: "fb86de30" }
+			params: { key: "fb86de30" },
 		};
 
 		axios
@@ -80,7 +86,10 @@ export default function FilteredScreen() {
 
 	return (
 		<>
-			<div className="title-bar"> <TitleBar title="Related Post" backpage="/filters" /> </div>
+			<div className="title-bar">
+				{" "}
+				<TitleBar title="Related Post" backpage="/filters" />{" "}
+			</div>
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">

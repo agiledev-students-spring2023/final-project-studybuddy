@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -12,7 +13,23 @@ export default function Login() {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = (data) => navigate("/");
+	const onSubmit = (data) => {
+		const { user_id, password } = data;
+		const url = "/user/login";
+		axios
+			.post(url, { username: user_id, password })
+			.then((res) => {
+				if (res.status === 200) {
+					localStorage.setItem("token", res.data.token);
+					navigate("/");
+				} else {
+					alert(res.data.message);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
 
 	return (
 		<>

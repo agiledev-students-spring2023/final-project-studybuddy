@@ -5,7 +5,6 @@ import "./UploadPost.css";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-
 const UploadPost = () => {
 	const navigate = useNavigate();
 	const img =
@@ -20,7 +19,10 @@ const UploadPost = () => {
 
 	return (
 		<div>
-			<div className="title-bar"> <TitleBar title="Create Post" backpage="/" /> </div> 
+			<div className="title-bar">
+				{" "}
+				<TitleBar title="Create Post" backpage="/" />{" "}
+			</div>
 			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
