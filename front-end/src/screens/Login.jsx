@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import URL from "../api/endpoints";
 import axios from "axios";
 
 export default function Login() {
@@ -15,7 +16,7 @@ export default function Login() {
 
 	const onSubmit = (data) => {
 		const { user_id, password } = data;
-		const url = "/user/login";
+		const url = URL.LOGIN;
 		axios
 			.post(url, { username: user_id, password })
 			.then((res) => {
@@ -28,6 +29,7 @@ export default function Login() {
 			})
 			.catch((err) => {
 				console.log(err);
+				alert(err.response.data.message);
 			});
 	};
 
