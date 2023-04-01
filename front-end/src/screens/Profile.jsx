@@ -33,7 +33,7 @@ const Profile = () => {
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = 'http://localhost:4000/profile'
+		const options = "http://localhost:4000/profile";
 
 		axios
 			.request(options)
