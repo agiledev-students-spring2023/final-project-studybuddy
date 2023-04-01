@@ -1,6 +1,6 @@
 const URL = {
-    LOGIN: '/auth/login',
-    FORGOT_PASSWORD: '/auth/forgot-password',
-}
+	LOGIN: "/auth/login",
+	FORGOT_PASSWORD: "/auth/forgot-password",
+};
 
-export default URL
+export default URL;
