@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const axios = require("axios");
-const { userLoginSchema } = require("../validators/user.validator");
-const { validate } = require("../middlewares/validator.middleware");
-const { loginController } = require("../controllers/user.controller");
 
-router.post("/login", validate(userLoginSchema), loginController);
 
 router.get('/:userId', (req, res) => {
     const userId = req.params.userId
