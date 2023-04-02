@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import "./Chat.css";
 import axios from "axios";
@@ -11,7 +10,9 @@ export default function Chat() {
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
 
-	const chatAPI = "http://localhost:4000/chat/123";
+	const chatId = "sw"
+	const userId = "yewon"
+	const chatAPI = `/_chat/${chatId}`;
 
 	useEffect(() => {
 		// this function will be called just once.
@@ -22,9 +23,13 @@ export default function Chat() {
 			setMessages(messages);
 			setName(name);
 		}
-
 		fetchChatData();
 	}, []);
+
+	const sendMessageToBack = async (input) => {
+		const { data: {success} } = await axios.put(chatAPI, { content: input, timestamp: Date.now(), senderId: userId })
+		console.log(success)
+	}
 
 	const sendMessage = () => {
 		if (input.length === 0) return; // empty input
@@ -41,6 +46,8 @@ export default function Chat() {
 		setMessages(newMessages);
 
 		// TODO: send message to back-end
+		console.log(input)
+		sendMessageToBack(input)
 
 		/* reset input */
 		setInput("");

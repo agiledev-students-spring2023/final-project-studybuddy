@@ -10,8 +10,7 @@ export default function ChatList() {
 
 	useEffect(() => {
 		async function fetchChatListData() {
-			const chatListAPI_url = `http://localhost:4000/chatList/${userId}`;
-			console.log("");
+			const chatListAPI_url = `/_chatList/${userId}`;
 			const { data } = await axios.get(chatListAPI_url);
 			setChatList(data);
 		}
