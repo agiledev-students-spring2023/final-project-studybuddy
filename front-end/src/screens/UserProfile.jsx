@@ -1,5 +1,6 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
+import {useParams} from "react-router-dom"
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
@@ -25,23 +26,21 @@ const UserName = ({ name, major, picture }) => (
 	</div>
 );
 const UserProfile = () => {
-	const [posts, setPosts] = useState([]);
+	const {userId}=useParams();
 	const [account, setAccount] = useState([]);
 
 	useEffect(() => {
-		loadFilteredPosts();
-	}, []);
+		loadFilteredPosts(userId);
+	}, [userId]);
 
-	const loadFilteredPosts = () => {
-		const options = "http://localhost:4000/profile";
+	const loadFilteredPosts = (userId) => {
+		const options = `/userprofile/${userId}`
 
 		axios
 			.request(options)
 			.then(function (response) {
 				console.log(response.data);
-				setPosts(response.data);
-				const object = response.data.find((obj) => obj.id === 1);
-				setAccount(object);
+				setAccount(response.data);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -77,8 +76,8 @@ const UserProfile = () => {
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
-							{posts.map((post) => (
-								<PostPreview id={post.id} title={post.title} />
+						{account && account.post && account.post.map((post) => (
+								<PostPreview title={post.title} id={post.postId} />
 							))}
 						</div>
 					</div>

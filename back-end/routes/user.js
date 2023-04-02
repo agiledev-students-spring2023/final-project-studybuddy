@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const axios = require("axios");
 
-router.get('/', (req, res) => {
-    const url = 'https://my.api.mockaroo.com/posts.json';
-    const key = 'fb86de30';
+
+router.get('/:userId', (req, res) => {
+    const userId = req.params.userId
+    const url = 'https://my.api.mockaroo.com/study_buddy_data.json';
+    const key = 'a015ead0';
   
     axios.get(url, {
       params: { key },
@@ -13,7 +16,8 @@ router.get('/', (req, res) => {
     })
     .then(response => {
       const data = response.data;
-      res.json(data);
+      const filteredData = data.find(item => item.id === parseInt(userId));
+      res.json(filteredData);
     })
     .catch(error => {
       console.log(error);
