@@ -3,8 +3,8 @@ const router = express.Router()
 const axios = require("axios")
 
 router.get('/', (req, res) => {
-    const url = 'https://my.api.mockaroo.com/posts.json';
-    const key = 'fb86de30';
+    const url = 'https://my.api.mockaroo.com/study_buddy_data.json';
+    const key = 'a015ead0';
   
     axios.get(url, {
       params: { key },

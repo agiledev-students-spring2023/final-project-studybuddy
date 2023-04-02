@@ -10,7 +10,7 @@ const sendChat = require('./sendChat.js')
 
 //ADD routes here:
 router.use('/', main) 
-router.use('/user', user)
+router.use('/userprofile', user)
 router.use('/profile', profile)
 router.use('/chat', chat)
 router.use('/chatList', chatList)

@@ -30,8 +30,9 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
-const FilteredItem = ({ major, title, date_time }) => {
+const FilteredItem = ({ id, major, title, date_time }) => {
 	const navigate = useNavigate();
+	const profile_url = `/userprofile/${id}`
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{major}</p>
@@ -46,7 +47,7 @@ const FilteredItem = ({ major, title, date_time }) => {
 			</p>
 			<div className="row pt-2 pb-2">
 				<div className="col-6 text-center">
-					<a href="/userprofile" className="btn btm-md btn-primary">
+					<a href={profile_url} className="btn btm-md btn-primary">
 						View Profile
 					</a>
 				</div>
@@ -96,6 +97,7 @@ export default function FilteredScreen() {
 					<SearchBtnWithFilter />
 					{posts.map((post) => (
 						<FilteredItem
+							id={post.id}
 							major={post.major}
 							title={post.title}
 							date_time={post.date_time}

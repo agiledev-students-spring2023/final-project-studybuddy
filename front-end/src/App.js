@@ -30,7 +30,7 @@ function App() {
 					<Route path="/chatList" element={<ChatList />} />
 					<Route path="/chat/:chatId" element={<Chat />} />
 					<Route path="/profile" element={<Profile />} />
-					<Route path="/userprofile" element={<UserProfile />} />
+					<Route path="/userprofile/:userId" element={<UserProfile />} />
 					<Route path="/uploadPost" element={<UploadPost />} />
 					<Route
 						path="/filteredScreen"

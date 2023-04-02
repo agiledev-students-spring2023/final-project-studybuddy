@@ -25,7 +25,6 @@ const UserName = ({ name, major, picture }) => (
 	</div>
 );
 const Profile = () => {
-	const [posts, setPosts] = useState([]);
 	const [myaccount, setMyaccount] = useState([]);
 
 	useEffect(() => {
@@ -33,13 +32,12 @@ const Profile = () => {
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = 'http://localhost:4000/profile'
+		const options = '/profile'
 
 		axios
 			.request(options)
 			.then(function (response) {
 				console.log(response.data);
-				setPosts(response.data);
 				const object = response.data.find((obj) => obj.id === 1);
 				setMyaccount(object);
 			})
@@ -69,8 +67,9 @@ const Profile = () => {
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
-							{posts.map((post) => (
-								<PostPreview title={post.title} id={post.id} />
+							{myaccount &&
+							myaccount.post && myaccount.post.map((post) => (
+								<PostPreview title={post.title} id={post.postId} />
 							))}
 						</div>
 					</div>
