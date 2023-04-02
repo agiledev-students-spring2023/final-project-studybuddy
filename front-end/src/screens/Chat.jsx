@@ -1,29 +1,34 @@
 import React, { useEffect, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import "./Chat.css";
 import axios from "axios";
+import Navbar from "../components/Navbar";
+import { useParams } from "react-router-dom";
 
 export default function Chat() {
-	const [name, setName] = useState("");
+	const [buddyName, setBuddyName] = useState("");
+	const [buddyId, setBuddyId] = useState("")
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
+	const { chatId } = useParams();
 
-	const chatAPI = "http://localhost:4000/chat/123";
+	const chatAPI = `http://localhost:4000/chat/${chatId}`;
 
 	useEffect(() => {
 		// this function will be called just once.
 		async function fetchChatData() {
 			const { data } = await axios.get(chatAPI);
-			const { messages, name } = data;
+			const { messages, name, userId } = data;
 
 			setMessages(messages);
-			setName(name);
+			setBuddyName(name);
+			setBuddyId(userId)
 		}
 
 		fetchChatData();
+		// eslint-disable-next-line
 	}, []);
 
 	const sendMessage = () => {
@@ -62,31 +67,38 @@ export default function Chat() {
 	};
 
 	return (
-		<div className="chat_screen">
+		<div className="screen">
 			<div className="chat_screen_header">
 				<MdArrowBack
-					className="cursor_pointer"
+					className="cursor_pointer back_icon_"
 					onClick={() => window.history.back()}
 				/>
-				{name}{" "}
+				<p class="cursor_pointer"
+					onClick={() => (window.location.href = `/userprofile/${buddyId}`)}>
+					{buddyName}
+				</p>
+				{" "}
 			</div>
-			<div className="chat_screen_body" id="chat_body">
-				{messages.map((e, i) => (
-					<ChatBubble key={i} chat={e} />
-				))}
+			<div className="chat_screen">
+				<div className="chat_screen_body" id="chat_body">
+					{messages.map((e, i) => (
+						<ChatBubble key={i} chat={e} />
+					))}
+				</div>
+				<div className="chat_input_container">
+					<Form.Control
+						type="text"
+						value={input}
+						placeholder="Type message"
+						onChange={(e) => setInput(e.target.value)}
+						onKeyDown={handleKeyDown}
+					/>
+					<button className="btn_chatsend" onClick={handleButtonClick}>
+						<MdSend />
+					</button>
+				</div>
 			</div>
-			<div className="chat_input_container">
-				<Form.Control
-					type="text"
-					value={input}
-					placeholder="Type message"
-					onChange={(e) => setInput(e.target.value)}
-					onKeyDown={handleKeyDown}
-				/>
-				<button className="btn_chatsend" onClick={handleButtonClick}>
-					<MdSend />
-				</button>
-			</div>
+			<Navbar user="Others" />
 		</div>
 	);
 }

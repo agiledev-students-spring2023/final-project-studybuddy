@@ -30,7 +30,7 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
-const FilteredItem = ({ id, major, title, date_time }) => {
+export const FilteredItem = ({ id, major, title, date_time }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${id}`
 	return (

@@ -1,9 +1,35 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import { MdChatBubble, MdPerson, MdSearch, MdUpload } from "react-icons/md";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { MdSearch } from "react-icons/md";
+import Navbar from "../components/Navbar";
+import { FilteredItem } from "./FilteredScreen";
 import "./Home.css";
 
 export default function Home() {
+	const [posts, setPosts] = useState([]);
+
+	useEffect(() => {
+		loadFilteredPosts();
+	}, []);
+
+	const loadFilteredPosts = () => {
+		const options = {
+			method: "GET",
+			url: "https://my.api.mockaroo.com/posts.json",
+			params: { key: "fb86de30" },
+		};
+
+		axios
+			.request(options)
+			.then(function (response) {
+				setPosts(response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
+
+
 	return (
 		<div className="screen">
 			<div className="screen_header">Study Buddy</div>
@@ -15,29 +41,16 @@ export default function Home() {
 					<div className="search_text">Search Post</div>
 					<MdSearch />
 				</div>
-				<div className="home_btn_container">
-					<div
-						className="home_profile_btn"
-						onClick={() => (window.location.href = "/profile")}
-					>
-						Profile
-						<MdPerson className="home_icon" />
-					</div>
-					<div
-						className="home_chat_btn"
-						onClick={() => (window.location.href = "/chatList")}
-					>
-						Chats
-						<MdChatBubble className="home_icon" />
-					</div>
-					<div
-						className="home_upload_btn"
-						onClick={() => (window.location.href = "/uploadPost")}
-					>
-						Upload Post
-						<MdUpload className="home_icon" />
-					</div>
-				</div>
+				{posts.map((post) => (
+					<FilteredItem
+						id={post.id}
+						major={post.major}
+						title={post.title}
+						date_time={post.date_time}
+						key={post.id}
+					/>
+				))}
+				<Navbar user="Others" />
 			</div>
 		</div>
 	);
