@@ -71,15 +71,3 @@
 	margin-left: 50px;
 	margin-top: 50px;
 }
-
-.Message {
-	text-align: left;
-	margin-left: 50px;
-	margin-bottom: 30px;
-	margin-top: 25px;
-}
-.Message a {
-	padding: 5px;
-	border-radius: 10px;
-	padding-inline: 10px;
-}

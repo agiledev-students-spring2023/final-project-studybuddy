@@ -1,3 +1,9 @@
+.Buddy {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
 .profile {
 	display: flex;
 	flex-direction: row;
@@ -48,4 +54,19 @@
 .usercomment {
 	border-radius: 10px;
 	background-color: #c1c8ff;
+}
+
+.MessageBuddy {
+	margin-bottom: 10px;
+	margin-top: 25px;
+	
+
+}
+
+.MessageBuddy a {
+	padding: 5px;
+	border-radius: 10px;
+	padding-inline: 10px;
+	color: white;
+	background-color: #c8b6ff;
 }
