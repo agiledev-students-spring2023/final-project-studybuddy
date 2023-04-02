@@ -14,7 +14,8 @@ export default function Chat() {
 	const [input, setInput] = useState("");
 	const { chatId } = useParams();
 
-	const chatAPI = `http://localhost:4000/chat/${chatId}`;
+	const chatAPI = `/_chat/${chatId}`;
+
 
 	useEffect(() => {
 		// this function will be called just once.
@@ -26,10 +27,14 @@ export default function Chat() {
 			setBuddyName(name);
 			setBuddyId(userId)
 		}
-
 		fetchChatData();
 		// eslint-disable-next-line
 	}, []);
+
+	const sendMessageToBack = async (input) => {
+		const { data: {success} } = await axios.put(chatAPI, { content: input, timestamp: Date.now(), senderId: userId })
+		console.log(success)
+	}
 
 	const sendMessage = () => {
 		if (input.length === 0) return; // empty input
@@ -46,6 +51,8 @@ export default function Chat() {
 		setMessages(newMessages);
 
 		// TODO: send message to back-end
+		console.log(input)
+		sendMessageToBack(input)
 
 		/* reset input */
 		setInput("");
