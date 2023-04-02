@@ -21,10 +21,21 @@ router.get('/:chatId', (req, res) => {
 
     // TODO: search chats in database by chatId
     
+    console.log(chatId)
     const response = {name: name, messages: messages}
     
     res.send(response)
 })
 
+router.put('/:chatId', (req, res) => {
+    const chatId = req.params.chatId
+    console.log(chatId)
+    console.log(req.body)
+    // TODO: create message data in database
+
+    const success = true
+    const response = { success }
+    res.send(response)
+})
 
 module.exports = router

@@ -13,8 +13,8 @@ const auth = require('./auth.js')
 router.use('/', main) 
 router.use('/userprofile', user)
 router.use('/profile', profile)
-router.use('/chat', chat)
-router.use('/chatList', chatList)
+router.use('/_chat', chat)
+router.use('/_chatList', chatList)
 router.use('/sendChat', sendChat)
 router.use("/auth", auth);
 
