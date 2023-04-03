@@ -14,6 +14,7 @@ export default function Chat() {
 	const [input, setInput] = useState("");
 	const { chatId } = useParams();
 
+	const userId = '1' // todo: get userId from login info 
 	const chatAPI = `/_chat/${chatId}`;
 
 
@@ -32,7 +33,7 @@ export default function Chat() {
 	}, []);
 
 	const sendMessageToBack = async (input) => {
-		const { data: {success} } = await axios.put(chatAPI, { content: input, timestamp: Date.now(), senderId: userId })
+		const { data: { success } } = await axios.put(chatAPI, { content: input, timestamp: Date.now(), senderId: userId })
 		console.log(success)
 	}
 
