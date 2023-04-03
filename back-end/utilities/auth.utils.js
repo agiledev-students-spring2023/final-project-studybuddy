@@ -29,7 +29,7 @@ const sendResetPassword = async (email, token) => {
 		from: process.env.ADMIN_EMAIL,
 		to: email,
 		subject: "Reset Your Password | Study Buddy",
-		text: `Please following the following link to reset your password: ${process.env.DOMAIN}/reset-password?token=${token}`,
+		text: `Please following the following link to reset your password: ${process.env.DOMAIN}/resetPw?token=${token}`,
 	};
 
     try {
