@@ -29,7 +29,6 @@ export default function Home() {
 			});
 	};
 
-
 	return (
 		<div className="screen">
 			<div className="screen_header">Study Buddy</div>

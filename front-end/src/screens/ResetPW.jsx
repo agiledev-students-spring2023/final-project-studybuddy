@@ -21,16 +21,20 @@ export default function ResetPW() {
 			alert("Passwords do not match!");
 			return;
 		} else {
-			axios.post(URL.RESET_PASSWORD, { password, token, username }).then((res) => {
-				if (res.status === 200) {
-					alert("Password reset successfully!");
-				} else {
-					alert("Password reset failed!");
-				}
-			}).catch((err) => {
-				err.response.data.message && alert(err.response.data.message);
-				console.error(err);
-			});
+			axios
+				.post(URL.RESET_PASSWORD, { password, token, username })
+				.then((res) => {
+					if (res.status === 200) {
+						alert("Password reset successfully!");
+					} else {
+						alert("Password reset failed!");
+					}
+				})
+				.catch((err) => {
+					err.response.data.message &&
+						alert(err.response.data.message);
+					console.error(err);
+				});
 		}
 	};
 

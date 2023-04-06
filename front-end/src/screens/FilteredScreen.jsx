@@ -32,7 +32,7 @@ const SearchBtnWithFilter = () => {
 
 export const FilteredItem = ({ id, major, title, date_time }) => {
 	const navigate = useNavigate();
-	const profile_url = `/userprofile/${id}`
+	const profile_url = `/userprofile/${id}`;
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{major}</p>
