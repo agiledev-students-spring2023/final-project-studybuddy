@@ -1,4 +1,4 @@
-const { sendResetPassword, generateResetToken } = require("../utilities/auth.utils");
+const { sendResetPasswordEmail, generateResetToken } = require("../utilities/auth.utils");
 
 const loginController = (req, res) => {
     const { username, password } = req.body;
@@ -16,7 +16,7 @@ const forgotPasswordController = async (req, res) => {
     // TODO: Save reset token to the database
 
     // Send email to the user
-    let success = await sendResetPassword(email, resetToken);
+    let success = await sendResetPasswordEmail(email, resetToken, username);
     if (success) {
         return res.status(200).json({ message: "Please check your email to reset your password." });
     } else {
@@ -24,7 +24,18 @@ const forgotPasswordController = async (req, res) => {
     }
 }
 
+const resetPasswordController = (req, res) => {
+    const { password, token, username } = req.body;
+
+    // TODO: Check if the token is valid
+
+    // TODO: Update the password in the database
+
+    return res.status(200).json({ message: "Password reset successfully" });
+}
+
 module.exports = {
     loginController,
     forgotPasswordController,
+    resetPasswordController,
 }
