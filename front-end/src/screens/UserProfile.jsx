@@ -1,6 +1,6 @@
 import React from "react";
-import { useState, useEffect} from "react";
-import {useParams} from "react-router-dom"
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
@@ -26,7 +26,7 @@ const UserName = ({ name, major, picture }) => (
 	</div>
 );
 const UserProfile = () => {
-	const {userId}=useParams();
+	const { userId } = useParams();
 	const [account, setAccount] = useState([]);
 
 	useEffect(() => {
@@ -34,7 +34,7 @@ const UserProfile = () => {
 	}, [userId]);
 
 	const loadFilteredPosts = (userId) => {
-		const options = `/userprofile/${userId}`
+		const options = `/userprofile/${userId}`;
 
 		axios
 			.request(options)
@@ -76,9 +76,14 @@ const UserProfile = () => {
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
-						{account && account.post && account.post.map((post) => (
-								<PostPreview title={post.title} id={post.postId} />
-							))}
+							{account &&
+								account.post &&
+								account.post.map((post) => (
+									<PostPreview
+										title={post.title}
+										id={post.postId}
+									/>
+								))}
 						</div>
 					</div>
 				</div>

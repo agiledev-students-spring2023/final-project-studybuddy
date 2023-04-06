@@ -16,7 +16,7 @@ const generateResetToken = (email, username) => {
     return randomChars;
 };
 
-const sendResetPassword = async (email, token) => {
+const sendResetPasswordEmail = async (email, token, username) => {
 	let transporter = nodemailer.createTransport({
 		service: "gmail",
 		auth: {
@@ -29,7 +29,7 @@ const sendResetPassword = async (email, token) => {
 		from: process.env.ADMIN_EMAIL,
 		to: email,
 		subject: "Reset Your Password | Study Buddy",
-		text: `Please following the following link to reset your password: ${process.env.DOMAIN}/resetPw?token=${token}`,
+		text: `Please following the following link to reset your password: ${process.env.DOMAIN}/resetPw?token=${token}&username=${username}`,
 	};
 
     try {
@@ -42,4 +42,4 @@ const sendResetPassword = async (email, token) => {
     return false;
 };
 
-module.exports = { generateResetToken, randomString, sendResetPassword };
+module.exports = { generateResetToken, randomString, sendResetPasswordEmail };

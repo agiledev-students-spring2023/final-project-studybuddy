@@ -32,7 +32,7 @@ const Profile = () => {
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = '/profile'
+		const options = "/profile";
 
 		axios
 			.request(options)
@@ -68,9 +68,13 @@ const Profile = () => {
 						<h2>Posts</h2>
 						<div className="Postgrid">
 							{myaccount &&
-							myaccount.post && myaccount.post.map((post) => (
-								<PostPreview title={post.title} id={post.postId} />
-							))}
+								myaccount.post &&
+								myaccount.post.map((post) => (
+									<PostPreview
+										title={post.title}
+										id={post.postId}
+									/>
+								))}
 						</div>
 					</div>
 				</div>

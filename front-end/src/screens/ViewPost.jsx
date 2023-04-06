@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserComments = ({ username, usercomment }) => (
 	<div className="usercomment">
@@ -25,7 +25,7 @@ const Item = ({ title, date_time }) => {
 	);
 };
 
-const TitleBar=(props) =>{
+const TitleBar = (props) => {
 	const title = props.title;
 	const back = props.backpage;
 	return (
@@ -38,7 +38,7 @@ const TitleBar=(props) =>{
 								<button
 									className="nav-link active"
 									onClick={back}
-									style={{ border:"none" }}
+									style={{ border: "none" }}
 								>
 									<h6 className="m-0">
 										<i className="fas fa-arrow-circle-left" />{" "}
@@ -57,12 +57,12 @@ const TitleBar=(props) =>{
 			</nav>
 		</>
 	);
-}
+};
 const ViewPost = () => {
 	const [posts, setPosts] = useState([]);
 	const [input, setInput] = useState("");
-	const {postId}=useParams();
-	const message_url = `/chat/${postId}`
+	const { postId } = useParams();
+	const message_url = `/chat/${postId}`;
 	const navigate = useNavigate();
 
 	const handleKeyDown = (e) => {
@@ -75,7 +75,7 @@ const ViewPost = () => {
 
 	const handleGoBack = () => {
 		navigate(-1);
-	  };
+	};
 
 	useEffect(() => {
 		loadFilteredPosts(postId);
@@ -98,7 +98,6 @@ const ViewPost = () => {
 				console.log(response.data);
 				const object = response.data.find((obj) => obj.id == postId);
 				setPosts(object);
-				
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -137,7 +136,7 @@ const ViewPost = () => {
 					</div>
 
 					<Item title={posts.title} date_time={posts.date_time} />
-					
+
 					<div className="Description">
 						<p>{posts.description}</p>
 					</div>
