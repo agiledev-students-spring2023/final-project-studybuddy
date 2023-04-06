@@ -5,7 +5,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserComments = ({ username, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -26,7 +26,7 @@ const Item = ({ title, date_time }) => {
 	);
 };
 
-const TitleBar=(props) =>{
+const TitleBar = (props) => {
 	const title = props.title;
 	const back = props.backpage;
 	return (
@@ -39,7 +39,7 @@ const TitleBar=(props) =>{
 								<button
 									className="nav-link active"
 									onClick={back}
-									style={{ border:"none" }}
+									style={{ border: "none" }}
 								>
 									<h6 className="m-0">
 										<i className="fas fa-arrow-circle-left" />{" "}
@@ -58,7 +58,7 @@ const TitleBar=(props) =>{
 			</nav>
 		</>
 	);
-}
+};
 const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [comments, setComments] = useState([]);
@@ -77,7 +77,7 @@ const ViewPost = () => {
 
 	const handleGoBack = () => {
 		navigate(-1);
-	  };
+	};
 
 	useEffect(() => {
 		loadFilteredPosts(postId);
@@ -138,7 +138,7 @@ const ViewPost = () => {
 					</div>
 
 					<Item title={post.title} date_time={post.date} />
-					
+
 					<div className="Description">
 						<p>{post.content}</p>
 					</div>
