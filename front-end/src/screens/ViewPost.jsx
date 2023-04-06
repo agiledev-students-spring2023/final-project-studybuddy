@@ -7,10 +7,11 @@ import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
 import { useParams,useNavigate } from "react-router-dom";
 
-const UserComments = ({ username, usercomment }) => (
+const UserComments = ({ username, usercomment, comdate }) => (
 	<div className="usercomment">
 		<div className="row p-1 pt-2 pb-2 m-1 ">
 			<h5 className="mb-1 text-left">{username}</h5>
+			<p className="mb-1 text-left">{comdate}</p>
 			<p className="mb-1 text-left">{usercomment}</p>
 		</div>
 	</div>
@@ -19,8 +20,8 @@ const UserComments = ({ username, usercomment }) => (
 const Item = ({ title, date_time }) => {
 	return (
 		<div className="Post-info">
-			<p> {title} </p>
-			<p>{date_time} </p>
+			<h2> {title} </h2>
+			<p> {date_time} </p>
 		</div>
 	);
 };
@@ -59,9 +60,10 @@ const TitleBar=(props) =>{
 	);
 }
 const ViewPost = () => {
-	const [posts, setPosts] = useState([]);
+	const [post, setPost] = useState([]);
+	const [comments, setComments] = useState([]);
 	const [input, setInput] = useState("");
-	const {postId}=useParams();
+	const {postId} = useParams();
 	const message_url = `/chat/${postId}`
 	const navigate = useNavigate();
 
@@ -83,22 +85,21 @@ const ViewPost = () => {
 
 	const loadFilteredPosts = (postId) => {
 		console.log(postId);
-		const options = {
-			method: "GET",
-			url: "https://my.api.mockaroo.com/posts.json",
-			params: { key: "fb86de30" },
-			headers: {
-				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
-			},
-		};
+		const options = `/viewpost/${postId}`;
 
 		axios
-			.request(options)
+			.get(options)
 			.then(function (response) {
 				console.log(response.data);
-				const object = response.data.find((obj) => obj.id == postId);
-				setPosts(object);
+				// const object = response.data.find((obj) => obj.id == postId);
+				// setPosts(object);
+				// organize the two retrieved objects (post and comments)
 				
+				const post = response.data.post;
+				const comments = response.data.comments;
+				
+				setPost(post);
+				setComments(comments);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -114,14 +115,14 @@ const ViewPost = () => {
 						<div className="profile">
 							<div className="mb-1">
 								<img
-									src={posts.profile_pic}
+									src= {'https://picsum.photos/id/64/300/300'}
 									className="Picture"
 									alt="ProfilePicture"
 								/>
 							</div>
 							<div className="mydetails">
-								<h2 className="mb-1">{posts.name}</h2>
-								<h2 className="mb-1">{posts.major}</h2>
+								<h3 className="mb-1">{post.author}</h3>
+								<h3 className="mb-1">{post.author_major}</h3>
 							</div>
 						</div>
 						<div className="MessageBuddy">
@@ -136,20 +137,30 @@ const ViewPost = () => {
 						</div>
 					</div>
 
-					<Item title={posts.title} date_time={posts.date_time} />
+					<Item title={post.title} date_time={post.date} />
 					
 					<div className="Description">
-						<p>{posts.description}</p>
+						<p>{post.content}</p>
 					</div>
 					<div className="Comments">
-						{posts &&
+						{/* {posts &&
 							posts.comments &&
 							posts.comments.map((data) => (
 								<UserComments
 									username={data.name}
 									usercomment={data.comment}
 								/>
-							))}
+							))} */}
+
+						{/* Unpack list of comments with their own information */}
+						{comments.map((comment) => (
+							<UserComments
+								username={comment.author}
+								usercomment={comment.content}
+								comdate = {comment.date}
+							/>
+						))}
+
 					</div>
 
 					{/* Enter comment section */}
