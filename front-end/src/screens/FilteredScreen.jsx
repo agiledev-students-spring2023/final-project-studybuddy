@@ -30,15 +30,16 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
-export const FilteredItem = ({ id, major, title, date_time }) => {
+export const FilteredItem = ({ id, major, title, date_time,isTrue }) => {
 	const navigate = useNavigate();
-	const profile_url = `/userprofile/${id}`;
+	const profile_url = `/userprofile/${id}`
+	const previous = isTrue ? '/filteredScreen' : '/';
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{major}</p>
 			<h5
 				className="mb-1 cursor-pointer"
-				onClick={() => navigate("/viewPost/1")}
+				onClick={() => navigate(`/viewPost/${id}` ,{state: {from: previous }} )}
 			>
 				{title}
 			</h5>
@@ -101,6 +102,7 @@ export default function FilteredScreen() {
 							major={post.major}
 							title={post.title}
 							date_time={post.date_time}
+							isTrue={true}
 							key={post.id}
 						/>
 					))}
