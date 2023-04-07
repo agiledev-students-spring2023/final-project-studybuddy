@@ -9,6 +9,7 @@ const chatList = require('./chatList.js')
 const sendChat = require('./sendChat.js')
 const auth = require('./auth.js')
 const viewpost = require('./viewPost.js')
+const filtered = require('./filter.js')
 
 //ADD routes here:
 router.use('/', main) 
@@ -19,5 +20,6 @@ router.use('/_chatList', chatList)
 router.use('/sendChat', sendChat)
 router.use("/auth", auth);
 router.use("/viewpost", viewpost)
+router.use("/filtered", filtered)
 
 module.exports = router

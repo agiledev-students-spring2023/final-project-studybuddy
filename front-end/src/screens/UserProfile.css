@@ -71,3 +71,14 @@
 	margin-left: 50px;
 	margin-top: 50px;
 }
+
+.user_profile_header {
+	text-align: center;
+	padding: 15px 20px 5px 20px;
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 1.2;
+	border-bottom: 1px solid #ced4da;
+	display: grid;
+	grid-template-columns: 50px 1fr 50px;
+}
