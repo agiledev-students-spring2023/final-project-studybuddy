@@ -5,13 +5,14 @@ import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
-const PostPreview = ({ id, title }) => (
-	<a href={`/viewPost/${id}`}>
+const PostPreview = ({ id, title, userid }) => (
+	<Link to={`/viewPost/${id}`} state={ {from: `/userprofile/${userid}`} }>
 		<div className="Post-preview">
 			<h5>{title}</h5>
 		</div>
-	</a>
+	</Link>
 );
 
 const UserName = ({ name, major, picture }) => (
@@ -47,6 +48,7 @@ const UserProfile = () => {
 			});
 	};
 
+	
 	return (
 		<div>
 			<div className="title-bar">
@@ -76,14 +78,9 @@ const UserProfile = () => {
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
-							{account &&
-								account.post &&
-								account.post.map((post) => (
-									<PostPreview
-										title={post.title}
-										id={post.postId}
-									/>
-								))}
+						{account && account.post && account.post.map((post) => (
+								<PostPreview title={post.title} id={post.postId} userid={account.id} key={post.postId} />
+							))}
 						</div>
 					</div>
 				</div>
