@@ -5,6 +5,8 @@ import { Button } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import "./FilteredScreen.css";
 
 // test to see if config is working
 const SearchBtnWithFilter = () => {
@@ -30,13 +32,16 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
-export const FilteredItem = ({ id, major, title, date_time,isTrue }) => {
+
+export const FilteredItem = ({ id, date_time, meeting_type, subject, topic, title }) => {
+
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${id}`
 	const previous = isTrue ? '/filteredScreen' : '/';
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-1">{major}</p>
+			<p className="mb-1">{subject}</p>
+			<p className="mb-0">{topic}</p>
 			<h5
 				className="mb-1 cursor-pointer"
 				onClick={() => navigate(`/viewPost/${id}` ,{state: {from: previous }} )}
@@ -44,8 +49,10 @@ export const FilteredItem = ({ id, major, title, date_time,isTrue }) => {
 				{title}
 			</h5>
 			<p className="m-0">
-				{format("MMM dd, yyyy hh:mm a", new Date(date_time))}
+				{/* {format("MMM dd, yyyy hh:mm a", new Date(date_time))} */}
+				{date_time}
 			</p>
+			<p className="m-0">{meeting_type}</p>
 			<div className="row pt-2 pb-2">
 				<div className="col-6 text-center">
 					<a href={profile_url} className="btn btm-md btn-primary">
@@ -64,20 +71,19 @@ export const FilteredItem = ({ id, major, title, date_time,isTrue }) => {
 
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
+	const { state } = useLocation();
+	const { date, time, env, subject, subfield } = state;
 
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = {
-			method: "GET",
-			url: "https://my.api.mockaroo.com/posts.json",
-			params: { key: "fb86de30" },
-		};
+
+		const options = `filtered/${date}/${time}/${env}/${subject}/${subfield}`;
 
 		axios
-			.request(options)
+			.get(options)
 			.then(function (response) {
 				setPosts(response.data);
 			})
@@ -99,11 +105,11 @@ export default function FilteredScreen() {
 					{posts.map((post) => (
 						<FilteredItem
 							id={post.id}
-							major={post.major}
-							title={post.title}
 							date_time={post.date_time}
-							isTrue={true}
-							key={post.id}
+							meeting_type={post.meeting_type}
+							subject={post.subject}
+							topic={post.topic}
+							title={post.title}
 						/>
 					))}
 				</div>

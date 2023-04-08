@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
-import TitleBar from "../components/TitleBar";
 import axios from "axios";
+import { MdArrowBack, MdSend } from "react-icons/md";
 import {Link} from "react-router-dom";
 
 const PostPreview = ({ id, title, userid }) => (
@@ -51,9 +51,11 @@ const UserProfile = () => {
 	
 	return (
 		<div>
-			<div className="title-bar">
-				{" "}
-				<TitleBar title="Profile" backpage="/filteredScreen" />{" "}
+			<div className="user_profile_header">
+				<MdArrowBack
+					className="cursor_pointer back_icon_"
+					onClick={() => window.history.back()}
+				/>
 			</div>
 
 			<div className="content-body">
