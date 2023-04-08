@@ -88,7 +88,7 @@ const ViewPost = () => {
 
 	const loadFilteredPosts = (postId) => {
 		console.log(postId);
-		const options = `/viewpost/${postId}`;
+		const options = `/post/${postId}`;
 
 		axios
 			.get(options)
