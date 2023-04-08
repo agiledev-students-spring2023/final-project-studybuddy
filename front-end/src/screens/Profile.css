@@ -43,28 +43,27 @@
 }
 
 .Pic {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }
 
-
 .form-control {
-  margin-top: 16px; 
+	margin-top: 16px;
 }
 
 .Pic button {
-  margin-top: 16px; 
-  border-radius: 5px;
-  background-color: rgb(154, 83, 190);
-  border: none;
+	margin-top: 16px;
+	border-radius: 5px;
+	background-color: rgb(154, 83, 190);
+	border: none;
 }
 
-.Mymodal button{
-padding: 5px;
-background-color: none;
-object-fit:fill;
+.Mymodal button {
+	padding: 5px;
+	background-color: none;
+	object-fit: fill;
 }
 .Postgrid {
 	display: grid;

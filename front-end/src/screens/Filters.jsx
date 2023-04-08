@@ -17,11 +17,23 @@ export default function Filters() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const date = document.querySelector(".react-calendar__tile--active").getElementsByTagName("abbr")[0].getAttribute("aria-label");
+		const date = document
+			.querySelector(".react-calendar__tile--active")
+			.getElementsByTagName("abbr")[0]
+			.getAttribute("aria-label");
 		const time = document.querySelector(".time-pref").value;
-		const online = document.querySelector(".env-container").getElementsByTagName("input")[0].checked;
-		const inPerson = document.querySelector(".env-container").getElementsByTagName("input")[1].checked;
-		const env = online && !inPerson ? "Online" : !online && inPerson ? "In Person" : "No Preference";
+		const online = document
+			.querySelector(".env-container")
+			.getElementsByTagName("input")[0].checked;
+		const inPerson = document
+			.querySelector(".env-container")
+			.getElementsByTagName("input")[1].checked;
+		const env =
+			online && !inPerson
+				? "Online"
+				: !online && inPerson
+				? "In Person"
+				: "No Preference";
 		const subject = document.querySelector(".general-subject").value;
 		const subfield = document.querySelector(".specific-subject").value;
 
@@ -31,8 +43,9 @@ export default function Filters() {
 		setSubject(subject);
 		setSubfield(subfield);
 
-		navigate("/filteredScreen", { state: { date, time, env, subject, subfield } });
-		
+		navigate("/filteredScreen", {
+			state: { date, time, env, subject, subfield },
+		});
 	};
 
 	return (
@@ -55,7 +68,12 @@ export default function Filters() {
 					<Calendar id="myCal" onChange={onChange} value={value} />
 				</div>
 				<br />
-				<input className="time-pref" type="time" name="time-pref" defaultValue={"00:00"} />
+				<input
+					className="time-pref"
+					type="time"
+					name="time-pref"
+					defaultValue={"00:00"}
+				/>
 			</div>
 
 			<div className="env-container">
@@ -85,7 +103,11 @@ export default function Filters() {
 				</select>
 			</div>
 			<br />
-			<a className="submit-filters" href="/filteredScreen"onClick={handleSubmit} >
+			<a
+				className="submit-filters"
+				href="/filteredScreen"
+				onClick={handleSubmit}
+			>
 				{" "}
 				Search{" "}
 			</a>
