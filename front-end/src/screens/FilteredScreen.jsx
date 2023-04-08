@@ -42,7 +42,7 @@ export const FilteredItem = ({
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${id}`;
-	const previous = isTrue ? '/filteredScreen' : '/';
+	const previous = isTrue ? "/filteredScreen" : "/";
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{subject}</p>
