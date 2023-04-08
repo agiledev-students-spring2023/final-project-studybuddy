@@ -5,7 +5,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 const UserComments = ({ username, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -20,13 +21,13 @@ const UserComments = ({ username, usercomment, comdate }) => (
 const Item = ({ title, date_time }) => {
 	return (
 		<div className="Post-info">
-			<h2> {title} </h2>
-			<p> {date_time} </p>
+			<p> {title} </p>
+			<p>{date_time} </p>
 		</div>
 	);
 };
 
-const TitleBar = (props) => {
+const TitleBar=(props) =>{
 	const title = props.title;
 	const back = props.backpage;
 	return (
@@ -39,7 +40,7 @@ const TitleBar = (props) => {
 								<button
 									className="nav-link active"
 									onClick={back}
-									style={{ border: "none" }}
+									style={{ border:"none" }}
 								>
 									<h6 className="m-0">
 										<i className="fas fa-arrow-circle-left" />{" "}
@@ -62,10 +63,12 @@ const TitleBar = (props) => {
 const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [comments, setComments] = useState([]);
-	const [input, setInput] = useState("");
-	const {postId} = useParams();
+	const {postId}=useParams();
 	const message_url = `/chat/${postId}`
+	const [input, setInput] = useState("");
 	const navigate = useNavigate();
+	const location = useLocation();
+	const previousPath = location.state?.from || "/";
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
@@ -76,8 +79,8 @@ const ViewPost = () => {
 	};
 
 	const handleGoBack = () => {
-		navigate(-1);
-	};
+		navigate(previousPath);
+	  };
 
 	useEffect(() => {
 		loadFilteredPosts(postId);

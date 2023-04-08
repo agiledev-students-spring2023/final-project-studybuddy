@@ -12,6 +12,7 @@
     "format": "^0.2.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
+    "react-bootstrap-icons": "^1.10.3",
     "react-burger-menu": "^3.0.9",
     "react-calendar": "^4.0.0",
     "react-dom": "^18.2.0",

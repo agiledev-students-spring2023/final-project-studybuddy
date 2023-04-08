@@ -46,6 +46,7 @@ export default function Home() {
 						major={post.major}
 						title={post.title}
 						date_time={post.date_time}
+						istrue={false}
 						key={post.id}
 					/>
 				))}

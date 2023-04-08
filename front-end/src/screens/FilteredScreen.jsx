@@ -32,16 +32,19 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
+
 export const FilteredItem = ({ id, date_time, meeting_type, subject, topic, title }) => {
+
 	const navigate = useNavigate();
-	const profile_url = `/userprofile/${id}`;
+	const profile_url = `/userprofile/${id}`
+	const previous = isTrue ? '/filteredScreen' : '/';
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{subject}</p>
 			<p className="mb-0">{topic}</p>
 			<h5
 				className="mb-1 cursor-pointer"
-				onClick={() => navigate("/viewPost/1")}
+				onClick={() => navigate(`/viewPost/${id}` ,{state: {from: previous }} )}
 			>
 				{title}
 			</h5>
