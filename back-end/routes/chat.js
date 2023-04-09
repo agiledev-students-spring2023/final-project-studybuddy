@@ -1,44 +1,19 @@
 const express = require('express')
+const { fetch_chatList, search_chatId } = require('../controllers/chat.controller')
 const router = express.Router()
 
+const user_id = 'u001' // (sprint3 todo)
 
-const messages = [
-    { isMe: true, content: 'hi', timestamp: Date.now() },
-    { isMe: false, content: 'how are you', timestamp: Date.now() },
-    { isMe: true, content: 'good', timestamp: Date.now() },
-    { isMe: false, content: 'when do you wannt meet', timestamp: Date.now() },
-    { isMe: true, content: 'tmr 6?', timestamp: Date.now() },
-    { isMe: true, content: 'what do you wanna study', timestamp: Date.now() },
-    { isMe: false, content: 'cs 202', timestamp: Date.now() },
-    { isMe: true, content: 'omg sure', timestamp: Date.now() },
-    { isMe: false, content: 'lets go', timestamp: Date.now() },
-    { isMe: true, content: 'see u tmr', timestamp: Date.now() }
-]
-const userId = "1"
-const name = 'yewon'
-// localshost:4000/chat/123
-router.get('/:chatId', (req, res) => {
-    const chatId = req.params.chatId
-
-    // TODO: search chats in database by chatId
-    const response = {
-        name,
-        messages,
-        userId
-    }
-
-    res.send(response)
+router.get('/chatList', async (req, res) => {
+    const chatList = await fetch_chatList(user_id)
+    res.send(chatList)
 })
 
-router.put('/:chatId', (req, res) => {
-    const chatId = req.params.chatId
-    console.log(chatId)
+router.post('/', async (req, res) => {
     console.log(req.body)
-    // TODO: create message data in database
-
-    const success = true
-    const response = { success }
-    res.send(response)
+    const chat_id = await search_chatId(user_id, req.body.buddy_id)
+    res.send(chat_id)
 })
+
 
 module.exports = router
