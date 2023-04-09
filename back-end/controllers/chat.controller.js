@@ -8,28 +8,34 @@ const messages = require('../dummy_data/message.json')
 // input: user_id
 // output: [chat]
 const fetch_chatList = (user_id) => {
-    chatList = []
-    for (var i = 0; i< chats.length; i++ ) {
+    const chatList = []
+    for (var i = 0; i < chats.length; i++) {
         const chat = chats[i]
-        if (chat.members.includes(user_id) ) {
-            
-            // chats[i].push()
+        if (chat.members.includes(user_id)) {
             let buddy_id
-            for(var j = 0; j < 2; j++ ) {
+            for (var j = 0; j < 2; j++) {
                 if (chat.members[j] != user_id) {
                     buddy_id = chat.members[j]
                 }
             }
-            for (var j = 0 ; j < users.length ; j++ ) {
-                if (users[j].id ===buddy_id ) {
+            for (var j = 0; j < users.length; j++) {
+                if (users[j].id === buddy_id) {
                     chat.name = users[j].name
                     chat.img_url = users[j].profile
-                } 
+                }
             }
+            const msg_list = []
+            for (var j = 0; j < messages.length; j++) {
+                // - search message list in message database by chatId
+                if (messages[j].chat_id == chat.id) {
+                    msg_list.push(messages[j])
+                }
+            }
+            chat.preview = msg_list[msg_list.length - 1].content
             chat.unread = 10
             chatList.push(chat)
         }
-        
+
     }
     return chatList
     // - [x] chat db에서 user_id로 chat list 찾기
@@ -46,10 +52,9 @@ const fetch_chatList = (user_id) => {
 // input: user_id, buddy_id
 // output: chat_id
 const search_chatId = (user_id, buddy_id) => {
-    console.log(user_id, buddy_id)
     // check there is chat with buddy
-    for (var i = 0 ; i < chats.length; i++ ) {
-        if (chats[i].members.includes(user_id) && chats[i].members.includes(buddy_id) ) {
+    for (var i = 0; i < chats.length; i++) {
+        if (chats[i].members.includes(user_id) && chats[i].members.includes(buddy_id)) {
             return chats[i].id
         }
     }

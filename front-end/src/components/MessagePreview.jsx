@@ -4,9 +4,9 @@ import Image from "react-bootstrap/Image";
 import Badge from "react-bootstrap/Badge";
 
 export default function MessagePreview({ chat }) {
-	const { preview, name, img_url, unread, chat_id } = chat;
+	const { preview, name, img_url, unread, id } = chat;
 
-	const chat_url = `/chat/${chat_id}`;
+	const chat_url = `/chat/${id}`;
 	return (
 		<Card className="m-3" onClick={() => (window.location.href = chat_url)}>
 			<div className="message_card">

@@ -1,14 +1,17 @@
 const assert = require('assert')
+const { search_chatId } = require('../controllers/chat.controller')
+const { fetch_msgList } = require('../controllers/message.controller')
 
-const addfunc = (a, b) => {
-    return a + b
-}
+describe('chat test', () => {
+    describe('chat/message', () => {
+        it('search chatId and validate', () => {
+            const user_id = '1'
+            const buddy_id = '2'
 
-describe('test', () => {
-    describe('test add', () => {
-        it('check addition', () => {
-            assert.equal(5, addfunc(2, 3))
+            const chatId = search_chatId(user_id, buddy_id)
+            const { userId } = fetch_msgList(user_id, chatId)
+
+            assert.equal(buddy_id, userId)
         })
     })
 })
-

@@ -15,7 +15,7 @@ export default function Chat() {
 	const { chatId } = useParams();
 
 	const userId = "1"; // todo: get userId from login info
-	const chatAPI = `/_chat/${chatId}`;
+	const chatAPI = `/_message/${chatId}`;
 
 	useEffect(() => {
 		// this function will be called just once.
@@ -34,7 +34,7 @@ export default function Chat() {
 	const sendMessageToBack = async (input) => {
 		const {
 			data: { success },
-		} = await axios.put(chatAPI, {
+		} = await axios.post(chatAPI, {
 			content: input,
 			timestamp: Date.now(),
 			senderId: userId,
@@ -103,6 +103,7 @@ export default function Chat() {
 				</div>
 				<div className="chat_input_container">
 					<Form.Control
+						className="chatting_input_window"
 						type="text"
 						value={input}
 						placeholder="Type message"

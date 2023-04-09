@@ -1,22 +1,27 @@
 [
     {
-        "id": "u001",
-        "name": "Yewon Song",
+        "id": "1",
+        "name": "Study buddy",
         "profile": "https://picsum.photos/50/50"
     },
     {
-        "id": "u002",
+        "id": "2",
         "name": "Bishnu Dev",
         "profile": "https://picsum.photos/50/50"
     },
     {
-        "id": "u003",
+        "id": "3",
         "name": "Lukelo Luoga",
         "profile": "https://picsum.photos/50/50"
     },
     {
-        "id": "u004",
+        "id": "4",
         "name": "Paula Seraphim",
+        "profile": "https://picsum.photos/50/50"
+    },
+    {
+        "id": "5",
+        "name": "Yewon Song",
         "profile": "https://picsum.photos/50/50"
     }
 ]

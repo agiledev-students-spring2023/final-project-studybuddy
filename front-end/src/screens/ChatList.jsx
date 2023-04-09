@@ -6,11 +6,10 @@ import "./ChatList.css";
 
 export default function ChatList() {
 	const [chatList, setChatList] = useState([]);
-	const userId = "sywu430"; // todo: modify to real ID
 
 	useEffect(() => {
 		async function fetchChatListData() {
-			const chatListAPI_url = `/_chatList/${userId}`;
+			const chatListAPI_url = `/_chat/chatList`;
 			const { data } = await axios.get(chatListAPI_url);
 			setChatList(data);
 		}
