@@ -4,7 +4,7 @@
   "description": "The back-end of your project will live in this directory.",
   "main": "server.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha.js",
+    "test": "nyc ./node_modules/mocha/bin/mocha.js",
     "start": "npx nodemon server",
     "format-back-end": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
     "format": "npm run format-back-end"
@@ -20,7 +20,8 @@
     "mocha": "^10.2.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.1"
+    "nodemailer": "^6.9.1",
+    "nyc": "^15.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"

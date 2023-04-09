@@ -38,12 +38,12 @@ const fetch_chatList = (user_id) => {
 
     }
     return chatList
-    // - [x] chat db에서 user_id로 chat list 찾기
-    // - [x] 각 chat list의 buddy_id찾기
-    // - [x] users db에서 buddy_id로 name, profile 찾기
-    // - [x] chat에 name, profile key-value 추가
-    // - [ ] last_read로 unread도 계산 (todo: sprint3)
-    // - [x] chat list 반환
+    // - [x] collect chats by user_id in chat db
+    // - [x] find buddy_id
+    // - [x] retrieve name, profile by buddy_id in users db
+    // - [x] add name, profile to 'chat'
+    // - [ ] calculate 'unread' by 'last_read' (todo: sprint3)
+    // - [x] return chat list
 }
 
 // 2. search chatID (when click dm button)
@@ -59,8 +59,7 @@ const search_chatId = (user_id, buddy_id) => {
         }
     }
     //(sprint3 todo) if none: chat create & return created chat_id
-    return "none"
-
+    return "c001"
 }
 
 

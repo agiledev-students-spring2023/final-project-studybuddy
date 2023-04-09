@@ -56,10 +56,10 @@ const fetch_msgList = (user_id, chatId) => {
 // input: message: {timestamp, content, sender_id}
 // output: sucess
 const create_message = (message) => {
-    // - (sprint3 todo) chatId, sender_id, content, timestamp를 가지는 object 생성
-    // - (sprint3 todo) message DB에 추가
+    // - (sprint3 todo) Message Object create (chatId, sender_id, content, timestamp)
+    // - (sprint3 todo) add to message DB
 
-    // - 성공 여부 반환
+    // -  return success
     return true
 }
 
