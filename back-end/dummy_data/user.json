@@ -1,0 +1,27 @@
+[
+    {
+        "id": "1",
+        "name": "Study buddy",
+        "profile": "https://picsum.photos/50/50"
+    },
+    {
+        "id": "2",
+        "name": "Bishnu Dev",
+        "profile": "https://picsum.photos/50/50"
+    },
+    {
+        "id": "3",
+        "name": "Lukelo Luoga",
+        "profile": "https://picsum.photos/50/50"
+    },
+    {
+        "id": "4",
+        "name": "Paula Seraphim",
+        "profile": "https://picsum.photos/50/50"
+    },
+    {
+        "id": "5",
+        "name": "Yewon Song",
+        "profile": "https://picsum.photos/50/50"
+    }
+]
