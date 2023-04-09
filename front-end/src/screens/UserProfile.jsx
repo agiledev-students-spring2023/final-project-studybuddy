@@ -29,7 +29,7 @@ const UserName = ({ name, major, picture }) => (
 const UserProfile = () => {
 	const { userId } = useParams();
 	const [account, setAccount] = useState([]);
-	const [chatId, setChatId] = useState('')
+	const [chatId, setChatId] = useState("");
 
 	useEffect(() => {
 		loadFilteredPosts(userId);
@@ -52,9 +52,11 @@ const UserProfile = () => {
 
 	const fetchChatId = async (userId) => {
 		const chatIdAPI = `/_chat`;
-		const { data: { chat_id } } = await axios.post(chatIdAPI, { buddy_id: userId });
-		setChatId(chat_id)
-	}
+		const {
+			data: { chat_id },
+		} = await axios.post(chatIdAPI, { buddy_id: userId });
+		setChatId(chat_id);
+	};
 
 	return (
 		<div>

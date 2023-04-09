@@ -6,7 +6,7 @@ const uploadPostController = async (req, res) => {
 		meetingDescription,
 	} = req.body;
 
-	// Save to the database
+	// TODO: Save to the database
 
 	return res.status(200).json({
 		id: 1,
@@ -18,5 +18,5 @@ const uploadPostController = async (req, res) => {
 };
 
 module.exports = {
-    uploadPostController,
+	uploadPostController,
 };
