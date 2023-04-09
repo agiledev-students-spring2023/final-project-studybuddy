@@ -1,35 +1,35 @@
 // import and instantiate express
-const express = require("express") // CommonJS import style!
-const app = express() // instantiate an Express object
+const express = require("express"); // CommonJS import style!
+const app = express(); // instantiate an Express object
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
 
 const cors = require("cors"); // package for 'cors' setting
 
-app.use(cors({
-    origin: "http://localhost:3000", // domain that approves to access / it will be our front-end domain
-    credentials: true, // add 'Access-Control-Allow-Credentials' to the responding header.   
-    optionsSuccessStatus: 200, // setting the responding status as 200. 
-}));
+app.use(
+	cors({
+		origin: "http://localhost:3000", // domain that approves to access / it will be our front-end domain
+		credentials: true, // add 'Access-Control-Allow-Credentials' to the responding header.
+		optionsSuccessStatus: 200, // setting the responding status as 200.
+	})
+);
 
 // import some useful middleware
-require("dotenv").config({ silent: true }) // load environmental variables from a hidden file named .env
+require("dotenv").config({ silent: true }); // load environmental variables from a hidden file named .env
 
-const morgan = require("morgan") // middleware for nice logging of incoming HTTP requests
+const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 
-app.use(morgan("dev")) // dev style gives a concise color-coded style of log output
+app.use(morgan("dev")); // dev style gives a concise color-coded style of log output
 
 // use express's builtin body-parser middleware to parse any data included in a request
-app.use(express.json()) // decode JSON-formatted incoming POST data
-app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming POST data
+app.use(express.json()); // decode JSON-formatted incoming POST data
+app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming POST data
 
 // make 'public' directory publicly readable with static content
-app.use("/static", express.static("public"))
+app.use("/static", express.static("public"));
 
+const routes = require("./routes");
 
-const routes = require('./routes');
+app.use("/", routes);
 
-app.use('/', routes);
-
-
-module.exports = app
+module.exports = app;
