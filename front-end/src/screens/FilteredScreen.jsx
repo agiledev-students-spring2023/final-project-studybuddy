@@ -39,6 +39,7 @@ export const FilteredItem = ({
 	subject,
 	topic,
 	title,
+	isTrue,
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${id}`;
@@ -116,6 +117,7 @@ export default function FilteredScreen() {
 							subject={post.subject}
 							topic={post.topic}
 							title={post.title}
+							isTrue={true}
 						/>
 					))}
 				</div>
