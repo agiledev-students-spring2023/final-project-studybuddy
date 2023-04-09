@@ -1,28 +1,33 @@
 import React from "react";
-import { HouseFill, ChatFill, PersonFill, CloudUploadFill } from "react-bootstrap-icons";
+import {
+	HouseFill,
+	ChatFill,
+	PersonFill,
+	CloudUploadFill,
+} from "react-bootstrap-icons";
 
 const authLinks = [
 	{
 		name: "Home",
 		path: "/",
-        icon: <HouseFill size={24} />,
+		icon: <HouseFill size={24} />,
 	},
-	
-    {
-        name: "Upload",
-        path: "/uploadpost",
-        icon: <CloudUploadFill size={24} />
-    },
+
+	{
+		name: "Upload",
+		path: "/uploadpost",
+		icon: <CloudUploadFill size={24} />,
+	},
 	{
 		name: "Chat",
 		path: "/chatList",
-        icon: <ChatFill size={24} />,
+		icon: <ChatFill size={24} />,
 	},
 	{
 		name: "Profile",
 		path: "/profile",
-        icon: <PersonFill size={24} />,
-	}
+		icon: <PersonFill size={24} />,
+	},
 ];
 
 const unAuthLinks = [
@@ -61,9 +66,9 @@ function Navbar(props) {
 											href={link.path}
 										>
 											<div className="d-flex flex-column align-items-center">
-                                                {link.icon}
-                                                <span>{link.name}</span>
-                                            </div>
+												{link.icon}
+												<span>{link.name}</span>
+											</div>
 										</a>
 									</li>
 								);

@@ -5,10 +5,10 @@ import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { MdArrowBack, MdSend } from "react-icons/md";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const PostPreview = ({ id, title, userid }) => (
-	<Link to={`/viewPost/${id}`} state={ {from: `/userprofile/${userid}`} }>
+	<Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
 		<div className="Post-preview">
 			<h5>{title}</h5>
 		</div>
@@ -48,7 +48,6 @@ const UserProfile = () => {
 			});
 	};
 
-	
 	return (
 		<div>
 			<div className="user_profile_header">
@@ -80,9 +79,16 @@ const UserProfile = () => {
 					<div className="Post">
 						<h2>Posts</h2>
 						<div className="Postgrid">
-						{account && account.post && account.post.map((post) => (
-								<PostPreview title={post.title} id={post.postId} userid={account.id} key={post.postId} />
-							))}
+							{account &&
+								account.post &&
+								account.post.map((post) => (
+									<PostPreview
+										title={post.title}
+										id={post.postId}
+										userid={account.id}
+										key={post.postId}
+									/>
+								))}
 						</div>
 					</div>
 				</div>

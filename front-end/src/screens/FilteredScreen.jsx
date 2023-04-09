@@ -32,19 +32,27 @@ const SearchBtnWithFilter = () => {
 	);
 };
 
-
-export const FilteredItem = ({ id, date_time, meeting_type, subject, topic, title }) => {
-
+export const FilteredItem = ({
+	id,
+	date_time,
+	meeting_type,
+	subject,
+	topic,
+	title,
+	isTrue,
+}) => {
 	const navigate = useNavigate();
-	const profile_url = `/userprofile/${id}`
-	const previous = isTrue ? '/filteredScreen' : '/';
+	const profile_url = `/userprofile/${id}`;
+	const previous = isTrue ? "/filteredScreen" : "/";
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{subject}</p>
 			<p className="mb-0">{topic}</p>
 			<h5
 				className="mb-1 cursor-pointer"
-				onClick={() => navigate(`/viewPost/${id}` ,{state: {from: previous }} )}
+				onClick={() =>
+					navigate(`/viewPost/${id}`, { state: { from: previous } })
+				}
 			>
 				{title}
 			</h5>
@@ -79,7 +87,6 @@ export default function FilteredScreen() {
 	}, []);
 
 	const loadFilteredPosts = () => {
-
 		const options = `filtered/${date}/${time}/${env}/${subject}/${subfield}`;
 
 		axios
@@ -110,6 +117,7 @@ export default function FilteredScreen() {
 							subject={post.subject}
 							topic={post.topic}
 							title={post.title}
+							isTrue={true}
 						/>
 					))}
 				</div>

@@ -5,8 +5,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
-import { useParams,useNavigate } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const UserComments = ({ username, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -27,7 +27,7 @@ const Item = ({ title, date_time }) => {
 	);
 };
 
-const TitleBar=(props) =>{
+const TitleBar = (props) => {
 	const title = props.title;
 	const back = props.backpage;
 	return (
@@ -40,7 +40,7 @@ const TitleBar=(props) =>{
 								<button
 									className="nav-link active"
 									onClick={back}
-									style={{ border:"none" }}
+									style={{ border: "none" }}
 								>
 									<h6 className="m-0">
 										<i className="fas fa-arrow-circle-left" />{" "}
@@ -63,8 +63,8 @@ const TitleBar=(props) =>{
 const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [comments, setComments] = useState([]);
-	const {postId}=useParams();
-	const message_url = `/chat/${postId}`
+	const { postId } = useParams();
+	const message_url = `/chat/${postId}`;
 	const [input, setInput] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -80,7 +80,7 @@ const ViewPost = () => {
 
 	const handleGoBack = () => {
 		navigate(previousPath);
-	  };
+	};
 
 	useEffect(() => {
 		loadFilteredPosts(postId);
@@ -88,7 +88,7 @@ const ViewPost = () => {
 
 	const loadFilteredPosts = (postId) => {
 		console.log(postId);
-		const options = `/viewpost/${postId}`;
+		const options = `/post/${postId}`;
 
 		axios
 			.get(options)
@@ -97,10 +97,10 @@ const ViewPost = () => {
 				// const object = response.data.find((obj) => obj.id == postId);
 				// setPosts(object);
 				// organize the two retrieved objects (post and comments)
-				
+
 				const post = response.data.post;
 				const comments = response.data.comments;
-				
+
 				setPost(post);
 				setComments(comments);
 			})
@@ -118,7 +118,7 @@ const ViewPost = () => {
 						<div className="profile">
 							<div className="mb-1">
 								<img
-									src= {'https://picsum.photos/id/64/300/300'}
+									src={"https://picsum.photos/id/64/300/300"}
 									className="Picture"
 									alt="ProfilePicture"
 								/>
@@ -160,10 +160,9 @@ const ViewPost = () => {
 							<UserComments
 								username={comment.author}
 								usercomment={comment.content}
-								comdate = {comment.date}
+								comdate={comment.date}
 							/>
 						))}
-
 					</div>
 
 					{/* Enter comment section */}

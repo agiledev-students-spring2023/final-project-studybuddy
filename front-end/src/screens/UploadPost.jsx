@@ -4,6 +4,9 @@ import TitleBar from "../components/TitleBar";
 import "./UploadPost.css";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import URL from "../api/endpoints";
+import axios from "axios";
+import { DEBUG } from "../configs";
 
 const UploadPost = () => {
 	const navigate = useNavigate();
@@ -15,7 +18,34 @@ const UploadPost = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
-	const onSubmit = (data) => navigate("/viewpost/1");
+
+	const onSubmit = (data) => {
+		const { date, time, mode, subject, desc } = data;
+		const dateTime = new Date(date + " " + time);
+
+		axios
+			.post(URL.UPLOAD_POST, {
+				meetingDateAndTime: dateTime,
+				meetingMode: mode === "1" ? "in-person" : "online",
+				meetingSubject: subject,
+				meetingDescription: desc,
+			})
+			.then((res) => {
+				DEBUG && console.log(res);
+				if (res.status === 200) {
+					alert("Post created successfully");
+					navigate(`/viewpost/${res.data.id}`);
+				} else {
+					alert("Something went wrong");
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				if (err.response) {
+					alert(err.response.data.message);
+				}
+			});
+	};
 
 	return (
 		<div>
@@ -47,17 +77,15 @@ const UploadPost = () => {
 										type="date"
 										className={
 											"form-control " +
-											(errors.user_id ? "is-invalid" : "")
+											(errors.date ? "is-invalid" : "")
 										}
 										id="date"
-										placeholder="User ID"
-										{...register("user_id", {
+										placeholder="Date"
+										{...register("date", {
 											required: true,
 										})}
 									/>
-									<label htmlFor="user_id">
-										Meeting Date
-									</label>
+									<label htmlFor="date">Meeting Date</label>
 								</div>
 								{/* Time */}
 								<div className="form-floating mb-3 custom-01">
@@ -65,29 +93,27 @@ const UploadPost = () => {
 										type="time"
 										className={
 											"form-control " +
-											(errors.user_id ? "is-invalid" : "")
+											(errors.time ? "is-invalid" : "")
 										}
 										id="date"
-										placeholder="User ID"
-										{...register("user_id", {
+										placeholder="time"
+										{...register("time", {
 											required: true,
 										})}
 									/>
-									<label htmlFor="user_id">
-										Meeting Date
-									</label>
+									<label htmlFor="time">Meeting Time</label>
 								</div>
 								{/* Mode of meeting */}
-								<div class="form-floating mb-3 custom-01">
+								<div className="form-floating mb-3 custom-01">
 									<select
 										type="text"
 										className={
 											"form-control " +
-											(errors.user_id ? "is-invalid" : "")
+											(errors.mode ? "is-invalid" : "")
 										}
-										id="user_id"
-										placeholder="User ID"
-										{...register("user_id", {
+										id="mode"
+										placeholder="mode"
+										{...register("mode", {
 											required: true,
 										})}
 									>
@@ -98,7 +124,7 @@ const UploadPost = () => {
 										<option value="2">Online</option>
 									</select>
 
-									<label for="floatingSelect">
+									<label htmlFor="floatingSelect">
 										In-person/Online meeting
 									</label>
 								</div>
@@ -109,17 +135,15 @@ const UploadPost = () => {
 										type="text"
 										className={
 											"form-control " +
-											(errors.password
-												? "is-invalid"
-												: "")
+											(errors.subject ? "is-invalid" : "")
 										}
-										id="password"
-										placeholder="Password"
-										{...register("password", {
+										id="subject"
+										placeholder="subject"
+										{...register("subject", {
 											required: true,
 										})}
 									/>
-									<label htmlFor="password">
+									<label htmlFor="subject">
 										Subject/Topic
 									</label>
 								</div>
@@ -129,12 +153,11 @@ const UploadPost = () => {
 									<input
 										type="text"
 										className="form-control "
-										id="floatingInputValue"
+										id="desc"
 										placeholder="Post Description i.e specific time"
+										{...register("desc")}
 									/>
-									<label htmlFor="password">
-										Description
-									</label>
+									<label htmlFor="desc">Description</label>
 								</div>
 
 								{/* Submit */}
