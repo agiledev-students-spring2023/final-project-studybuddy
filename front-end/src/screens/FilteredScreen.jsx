@@ -110,7 +110,7 @@ export default function FilteredScreen() {
 				<div className="container-fluid pageLayout">
 					<SearchBtnWithFilter />
 					{posts.map((post) => (
-						<FilteredItem
+						<FilteredItem className="post-result"
 							id={post.id}
 							date_time={post.date_time}
 							meeting_type={post.meeting_type}
