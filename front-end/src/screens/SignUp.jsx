@@ -19,19 +19,12 @@ export default function SignUp() {
 	}, []);
 
 	const getMajors = async () => {
-		const options = {
-			method: "GET",
-			url: "https://my.api.mockaroo.com/majors.json",
-			params: { key: "fb86de30" },
-			headers: {
-				cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
-			},
-		};
+		const options = `/register/majors`;
 
 		axios
-			.request(options)
+			.get(options)
 			.then(function (response) {
-				let majors = response.data.map((item) => item.name);
+				let majors = response.data.map((item) => item.field);
 				setMAJORS(majors);
 			})
 			.catch(function (error) {
@@ -39,7 +32,40 @@ export default function SignUp() {
 			});
 	};
 
-	const onSubmit = (data) => navigate("/Login");
+	const onSubmit = (data) => {
+
+		if (data.password !== data.confirm_password) {
+			alert("Passwords do not match");
+			return;
+		}
+
+		const options = {
+			url: "/register",
+			method: "POST",
+			data: {
+				user_id: data.user_id,
+				password: data.password,
+				name: data.name,
+				major: data.major,
+				email: data.email,
+			},
+		};
+
+		axios(options)
+			.then(function (response) {
+				console.log(response);
+				// Notify user that they have successfully signed up
+				alert("Successfully signed up!");
+				navigate("/Login");
+			})
+			.catch(function (error) {
+				console.error(error);
+				// Notify user that they have failed to sign up
+				alert("Failed to sign up");
+			});
+	}
+		
+	// navigate("/Login");
 
 	return (
 		<>
