@@ -79,7 +79,7 @@ const ViewPost = () => {
 	};
 
 	const handleGoBack = () => {
-		navigate(previousPath);
+		window.history.back();
 	};
 
 	useEffect(() => {
@@ -98,7 +98,7 @@ const ViewPost = () => {
 				// setPosts(object);
 				// organize the two retrieved objects (post and comments)
 
-				const post = response.data.post;
+				const post = response.data.question;
 				const comments = response.data.comments;
 
 				setPost(post);
