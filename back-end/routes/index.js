@@ -9,6 +9,7 @@ const message = require('./message.js')
 const auth = require('./auth.js')
 const filters = require('./filter.js')
 const post = require('./post.js')
+const register = require('./register.js')
 
 //ADD routes here:
 router.use("/", main);
@@ -19,5 +20,6 @@ router.use("/_message", message);
 router.use("/auth", auth);
 router.use("/filtered", filters);
 router.use("/post", post);
+router.use("/register", register);
 
 module.exports = router
