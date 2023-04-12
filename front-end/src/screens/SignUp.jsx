@@ -33,7 +33,6 @@ export default function SignUp() {
 	};
 
 	const onSubmit = (data) => {
-
 		if (data.password !== data.confirm_password) {
 			alert("Passwords do not match");
 			return;
@@ -63,8 +62,8 @@ export default function SignUp() {
 				// Notify user that they have failed to sign up
 				alert("Failed to sign up");
 			});
-	}
-		
+	};
+
 	// navigate("/Login");
 
 	return (

@@ -1,47 +1,47 @@
 [
-    {
-        "field": "Biology"
-    },
-    {
-        "field": "Chemistry"
-    },
-    {
-        "field": "Computer Science"
-    },
-    {
-        "field": "Economics"
-    },
-    {
-        "field": "Engineering"
-    },
-    {
-        "field": "English"
-    },
-    {
-        "field": "Environmental Science"
-    },
-    {
-        "field": "Geography"
-    },
-    {
-        "field": "History"
-    },
-    {
-        "field": "Mathematics"
-    },
-    {
-        "field": "Physics"
-    },
-    {
-        "field": "Political Science"
-    },
-    {
-        "field": "Psychology"
-    },
-    {
-        "field": "Sociology"
-    },
-    {
-        "field": "Statistics"
-    }
+	{
+		"field": "Biology"
+	},
+	{
+		"field": "Chemistry"
+	},
+	{
+		"field": "Computer Science"
+	},
+	{
+		"field": "Economics"
+	},
+	{
+		"field": "Engineering"
+	},
+	{
+		"field": "English"
+	},
+	{
+		"field": "Environmental Science"
+	},
+	{
+		"field": "Geography"
+	},
+	{
+		"field": "History"
+	},
+	{
+		"field": "Mathematics"
+	},
+	{
+		"field": "Physics"
+	},
+	{
+		"field": "Political Science"
+	},
+	{
+		"field": "Psychology"
+	},
+	{
+		"field": "Sociology"
+	},
+	{
+		"field": "Statistics"
+	}
 ]
