@@ -1,46 +1,42 @@
 [
-    {
-        "title": "Quantum Electrodynamics",
-        "content":
-            "Hey guys, can someone explain the renormalization procedure in quantum electrodynamics?",
-        "date": "04/04/23 12:05 PM",
-        "id": 1,
-        "author": "Jane Doe",
-        "author_major": "Physics",
-        "author_profile_pic": "Author Profile Pic",
-        "type": "question"
-    },
+	{
+		"title": "Quantum Electrodynamics",
+		"content": "Hey guys, can someone explain the renormalization procedure in quantum electrodynamics?",
+		"date": "04/04/23 12:05 PM",
+		"id": 1,
+		"author": "Jane Doe",
+		"author_major": "Physics",
+		"author_profile_pic": "Author Profile Pic",
+		"type": "question"
+	},
 	{
 		"id": 1,
 		"post_id": 1,
-		"content":
-			"Is this for class PHYS-405? I'm in the 2:00 lecture and our homework mentions this.",
+		"content": "Is this for class PHYS-405? I'm in the 2:00 lecture and our homework mentions this.",
 		"date": "04/04 3:16 PM",
 		"author": "Alice B.",
 		"author_major": "Physics",
 		"author_profile_pic": "Comment Author Profile Pic",
-        "type": "comment"
+		"type": "comment"
 	},
 	{
 		"id": 2,
 		"post_id": 1,
-		"content":
-			"It's a technique used in QED to deal with the problem of infinite self-energy of charged particles, such as electrons.",
+		"content": "It's a technique used in QED to deal with the problem of infinite self-energy of charged particles, such as electrons.",
 		"date": "04/05 1:30 AM",
 		"author": "Bob C.",
 		"author_major": "Mathematics",
 		"author_profile_pic": "Comment Author Profile Pic",
-        "type": "comment"
+		"type": "comment"
 	},
 	{
 		"id": 3,
 		"post_id": 1,
-		"content":
-			"The concept has also been applied to other areas, such as quantum chromodynamics and condensed matter physics",
+		"content": "The concept has also been applied to other areas, such as quantum chromodynamics and condensed matter physics",
 		"date": "04/05 5:30 PM",
 		"author": "Carol G.",
 		"author_major": "Physics",
 		"author_profile_pic": "Comment Author Profile Pic",
-        "type": "comment"
+		"type": "comment"
 	}
 ]

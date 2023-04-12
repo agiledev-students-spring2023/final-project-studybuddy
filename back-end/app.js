@@ -1,6 +1,8 @@
+require("dotenv").config({ silent: true }); // load environmental variables from a hidden file named .env
 // import and instantiate express
 const express = require("express"); // CommonJS import style!
 const app = express(); // instantiate an Express object
+require("./config/dbconnection");
 // we will put some server logic here later...
 // export the express app we created to make it available to other modules
 
@@ -15,7 +17,6 @@ app.use(
 );
 
 // import some useful middleware
-require("dotenv").config({ silent: true }); // load environmental variables from a hidden file named .env
 
 const morgan = require("morgan"); // middleware for nice logging of incoming HTTP requests
 
