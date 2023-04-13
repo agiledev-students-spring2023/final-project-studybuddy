@@ -39,8 +39,13 @@ const resetPasswordController = (req, res) => {
 	return res.status(200).json({ message: "Password reset successfully" });
 };
 
+const registerController = (req, res) => {
+	return res.status(200).json({ message: "Register successfully" });
+};
+
 module.exports = {
 	loginController,
 	forgotPasswordController,
 	resetPasswordController,
+	registerController,
 };
