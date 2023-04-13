@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import URL from "../api/endpoints";
 
 export default function SignUp() {
 	const navigate = useNavigate();
@@ -19,10 +20,10 @@ export default function SignUp() {
 	}, []);
 
 	const getMajors = async () => {
-		const options = `/register/majors`;
+		const url = URL.MAJORS;
 
 		axios
-			.get(options)
+			.get(url)
 			.then(function (response) {
 				let majors = response.data.map((item) => item.field);
 				setMAJORS(majors);
@@ -39,10 +40,10 @@ export default function SignUp() {
 		}
 
 		const options = {
-			url: "/register",
+			url: URL.REGISTER,
 			method: "POST",
 			data: {
-				user_id: data.user_id,
+				username: data.username,
 				password: data.password,
 				name: data.name,
 				major: data.major,
@@ -60,7 +61,9 @@ export default function SignUp() {
 			.catch(function (error) {
 				console.error(error);
 				// Notify user that they have failed to sign up
-				alert("Failed to sign up");
+				if (error.response) {
+					alert(error.response.data.message);
+				}
 			});
 	};
 
@@ -83,13 +86,15 @@ export default function SignUp() {
 									type="text"
 									className={
 										"form-control " +
-										(errors.user_id ? "is-invalid" : "")
+										(errors.username ? "is-invalid" : "")
 									}
-									id="user_id"
-									placeholder="User ID"
-									{...register("user_id", { required: true })}
+									id="username"
+									placeholder="Username"
+									{...register("username", {
+										required: true,
+									})}
 								/>
-								<label htmlFor="user_id">User ID</label>
+								<label htmlFor="username">Username</label>
 							</div>
 							{/* password */}
 							<div className="form-floating mb-3">
