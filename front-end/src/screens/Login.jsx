@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import URL from "../api/endpoints";
 import axios from "axios";
 import { saveToken } from "../auth/auth";
+import { toast } from "react-toastify";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -26,12 +27,12 @@ export default function Login() {
 					saveToken(token);
 					navigate("/");
 				} else {
-					alert(res.data.message);
+					toast.error(res.data.message);
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				alert(err.response.data.message);
+				toast.error(err.response.data.message);
 			});
 	};
 

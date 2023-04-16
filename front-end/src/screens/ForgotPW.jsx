@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import URL from "../api/endpoints";
 import "./ForgotPW.css";
+import { toast } from "react-toastify";
 
 export default function ForgotHW() {
 	const handleSubmit = (e) => {
@@ -13,10 +14,10 @@ export default function ForgotHW() {
 			})
 			.then((res) => {
 				console.log(res.data.message);
-				alert(res.data.message);
+				toast.success(res.data.message);
 			})
 			.catch((err) => {
-				alert(err.response.data.message);
+				toast.error(err.response.data.message);
 				console.log(err);
 			});
 	};
