@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const {
 	sendResetPasswordEmail,
 	generateResetToken,
@@ -8,9 +9,35 @@ const UserModel = require("../models/user.model");
 
 const SALT_ROUNDS = 10;
 
-const loginController = (req, res) => {
+const loginController = async (req, res) => {
 	const { username, password } = req.body;
-	return res.status(200).json({ token: "123" });
+	if (!(await UserModel.exists({ username })))
+		return res.status(400).json({ message: "Username does not exist" });
+
+	const user = await UserModel.findOne({ username });
+	const isPasswordCorrect = await bcrypt.compare(password, user.password);
+	if (!isPasswordCorrect)
+		return res.status(400).json({ message: "Invalid password" });
+
+	const token = jwt.sign(
+		{ username: user.username, email: user.email, id: user._id },
+		process.env.JWT_SECRET,
+		{
+			expiresIn: "24h",
+		}
+	);
+
+	return res.status(200).json({
+		message: "Login successful",
+		user: {
+			name: user.name,
+			major: user.major,
+			username: user.username,
+			email: user.email,
+			token: token,
+			id: user._id,
+		},
+	});
 };
 
 const forgotPasswordController = async (req, res) => {
