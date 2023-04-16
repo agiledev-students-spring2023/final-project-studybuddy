@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import URL from "../api/endpoints";
 import axios from "axios";
 import { DEBUG } from "../configs";
+import { toast } from "react-toastify";
 
 const UploadPost = () => {
 	const navigate = useNavigate();
@@ -31,18 +32,21 @@ const UploadPost = () => {
 				meetingDescription: desc,
 			})
 			.then((res) => {
-				DEBUG && console.log(res);
 				if (res.status === 200) {
-					alert("Post created successfully");
-					navigate(`/viewpost/${res.data.id}`);
+					DEBUG && console.log(res);
+					toast.success("Post created successfully, redirecting...");
+					setTimeout(() => {
+						navigate(`/viewpost/${res.data.id}`);
+					}, 2000);
 				} else {
-					alert("Something went wrong");
+					console.log(res);
+					toast.error("Something went wrong");
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 				if (err.response) {
-					alert(err.response.data.message);
+					toast.error(err.response.data.message);
 				}
 			});
 	};

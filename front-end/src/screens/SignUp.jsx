@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import URL from "../api/endpoints";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
 	const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function SignUp() {
 
 	const onSubmit = (data) => {
 		if (data.password !== data.confirm_password) {
-			alert("Passwords do not match");
+			toast.error("Passwords do not match");
 			return;
 		}
 
@@ -55,14 +56,18 @@ export default function SignUp() {
 			.then(function (response) {
 				console.log(response);
 				// Notify user that they have successfully signed up
-				alert("Successfully signed up!");
-				navigate("/Login");
+				toast.success(
+					"Successfully signed up, redirecting to login..."
+				);
+				setTimeout(() => {
+					navigate("/Login");
+				}, 2000);
 			})
 			.catch(function (error) {
 				console.error(error);
 				// Notify user that they have failed to sign up
 				if (error.response) {
-					alert(error.response.data.message);
+					toast.error(error.response.data.message);
 				}
 			});
 	};

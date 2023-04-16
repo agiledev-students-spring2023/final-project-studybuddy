@@ -7,6 +7,7 @@ import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PostPreview = ({ id, title }) => (
 	<Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
@@ -33,12 +34,12 @@ const ProfilePic = ({ profilepic }) => {
 					localStorage.setItem("token", res.data.token);
 					//navigate("/profile");
 				} else {
-					alert(res.data.message);
+					toast.error(res.data.message);
 				}
 			})
 			.catch((err) => {
 				console.log(err);
-				alert(err.response.data.message);
+				toast.error(err.response.data.message);
 			});
 	}
 

@@ -3,6 +3,7 @@ import axios from "axios";
 import URL from "../api/endpoints";
 import { useSearchParams } from "react-router-dom";
 import "./ResetPW.css";
+import { toast } from "react-toastify";
 
 export default function ResetPW() {
 	const [searchParams] = useSearchParams();
@@ -14,25 +15,25 @@ export default function ResetPW() {
 		const token = searchParams.get("token");
 		const username = searchParams.get("username");
 		if (!token || !username) {
-			alert("Invalid token or username!");
+			toast.error("Invalid token or username!");
 			return;
 		}
 		if (password !== confirmPassword) {
-			alert("Passwords do not match!");
+			toast.error("Passwords do not match!");
 			return;
 		} else {
 			axios
 				.post(URL.RESET_PASSWORD, { password, token, username })
 				.then((res) => {
 					if (res.status === 200) {
-						alert("Password reset successfully!");
+						toast.success("Password reset successfully!");
 					} else {
-						alert("Password reset failed!");
+						toast.error("Password reset failed!");
 					}
 				})
 				.catch((err) => {
 					err.response.data.message &&
-						alert(err.response.data.message);
+						toast.error(err.response.data.message);
 					console.error(err);
 				});
 		}
