@@ -25,9 +25,9 @@ const fetch_msgList = async (user_id, chatId) => {
     else
         buddy_id = chat.members[0]
 
-	console.log({message: newList, buddyName: '', buddyId: buddy_id})
+	console.log({messages: newList, buddyName: '', buddyId: buddy_id})
 
-	return {message: newList, buddyName: '', buddyId: buddy_id}
+	return {messages: newList, buddyName: '', buddyId: buddy_id}
 };
 
 /* 1. create message */
