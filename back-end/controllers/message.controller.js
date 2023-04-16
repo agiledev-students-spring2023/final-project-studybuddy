@@ -1,63 +1,44 @@
-const users = require("../dummy_data/user.json");
-const chats = require("../dummy_data/chat.json");
-const messages = require("../dummy_data/message.json");
+const { Message, Chat } = require("../models/chat.model");
 
-// 3. fetch message list in chat
-// method: GET
-// endpoint: /_message/:chatId
+/* 2. fetch message list in chat */
 // input: user_id, chatId
-// output: [ message ]
-const fetch_msgList = (user_id, chatId) => {
-	messageList = [];
-	for (var i = 0; i < messages.length; i++) {
-		// - search message list in message database by chatId
-		if (messages[i].chat_id == chatId) {
-			// - convert isMe to (message sender_id==user_id)
-			if (messages[i].sender_id == user_id) {
-				messages[i].isMe = true;
-			} else {
-				messages[i].isMe = false;
-			}
-			messageList.push(messages[i]);
-		}
-	}
-	// retrieve buddy name, id
-	let buddy_id;
-	for (var i = 0; i < chats.length; i++) {
-		const chat = chats[i];
-		if (chat.id == chatId) {
-			for (var j = 0; j < 2; j++) {
-				if (chat.members[j] != user_id) {
-					buddy_id = chat.members[j];
-					break;
-				}
-			}
-		}
-	}
-	let buddy_name;
-	for (var i = 0; i < users.length; i++) {
-		if (users[i].id == buddy_id) {
-			const buddy = users[i];
-			buddy_name = buddy.name;
-			break;
-		}
-	}
+// output: { messages, buddyName, buddyId }
+const fetch_msgList = async (user_id, chatId) => {
+	// - [o] chatId로 Message documents 찾기 - messages list
+	// - [o] Message's sender_id == user_id인지 확인해서 isMe로 변환
+	// - [ ] 상대방의 id 찾기
+	// - [ ] 상대방 id로 User document찾아서 name 알아내기 (TODO)
+    // - [ ] return { messages, buddyName, buddyId } 
+	user_id = 'u002' // todo: after implement User Model
+	const messageList = await Message.find({chat_id: chatId}).sort({timestamp: 1})
+	const newList = []
+	for(var i=0; i<messageList.length; i++ ) {
+        const { content, sender_id, timestamp } = messageList[i]
+		const message = {isMe: sender_id == user_id, content, timestamp }
 
-	// return message list
-	return { messages: messageList, name: buddy_name, userId: buddy_id };
+		newList.push(message)
+    }
+	
+	const chat = await Chat.findById(chatId)
+    if (chat.members[0] ==user_id)
+        buddy_id = chat.members[1]
+    else
+        buddy_id = chat.members[0]
+
+	console.log({message: newList, buddyName: '', buddyId: buddy_id})
+
+	return {message: newList, buddyName: '', buddyId: buddy_id}
 };
 
-// 4. create message
-// method: POST
-// endpoint: /_message/:chatId
-// input: message: {timestamp, content, sender_id}
-// output: sucess
-const create_message = (message) => {
-	// - (sprint3 todo) Message Object create (chatId, sender_id, content, timestamp)
-	// - (sprint3 todo) add to message DB
-
-	// -  return success
-	return true;
+/* 1. create message */
+// input: chat_id, message: {timestamp, content, sender_id}
+// output: success
+const create_message = async (chat_id, { content, timestamp, senderId }) => {
+	// - [ ] Message Document create (sender_id, content, timestamp, chat_id)
+	// - [ ] save to Message Model
+	// - [ ] return success
+    
+    
 };
 
 module.exports = {
