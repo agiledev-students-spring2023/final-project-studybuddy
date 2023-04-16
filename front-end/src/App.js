@@ -1,24 +1,27 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./screens/Home.jsx";
-import Login from "./screens/Login.jsx";
-import SignUp from "./screens/SignUp.jsx";
+import "./css/global.css";
+import Chat from "./screens/Chat.jsx";
+import ChatList from "./screens/ChatList.jsx";
+import FilteredScreen from "./screens/FilteredScreen.jsx";
 import Filters from "./screens/Filters.jsx";
 import ForgotPW from "./screens/ForgotPW.jsx";
-import ResetPW from "./screens/ResetPW.jsx";
-import UploadPost from "./screens/UploadPost.jsx";
-import ChatList from "./screens/ChatList.jsx";
-import Chat from "./screens/Chat.jsx";
-import UserProfile from "./screens/UserProfile.jsx";
-import FilteredScreen from "./screens/FilteredScreen.jsx";
-import ViewPost from "./screens/ViewPost.jsx";
+import Home from "./screens/Home.jsx";
+import Login from "./screens/Login.jsx";
 import Profile from "./screens/Profile.jsx";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./css/global.css";
+import ResetPW from "./screens/ResetPW.jsx";
+import SignUp from "./screens/SignUp.jsx";
+import UploadPost from "./screens/UploadPost.jsx";
+import UserProfile from "./screens/UserProfile.jsx";
+import ViewPost from "./screens/ViewPost.jsx";
 
 function App() {
 	return (
 		<div className="App container-fluid ps-0 pe-0">
+			<ToastContainer position="top-center" />
 			<Router>
 				<Routes>
 					<Route path="/" element={<Home />} />
