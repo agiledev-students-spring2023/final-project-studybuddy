@@ -11,6 +11,7 @@ const loginController = (req, res) => {
 const forgotPasswordController = async (req, res) => {
 	const { username, email } = req.body;
 
+
 	// TODO: Check if the email and username is in the database
 
 	// Generate a reset token
