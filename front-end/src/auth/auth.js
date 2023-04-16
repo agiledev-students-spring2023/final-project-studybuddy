@@ -1,17 +1,11 @@
 import jwt_decode from "jwt-decode";
 
-const saveToken = (token) => {
-	localStorage.setItem("token", token);
-};
+const saveToken = (token) => localStorage.setItem("token", token);
 
-const getToken = () => {
-	return localStorage.getItem("token");
-};
+const getToken = () => localStorage.getItem("token");
 
 // equivalent to logging out
-const removeToken = () => {
-	localStorage.removeItem("token");
-};
+const removeToken = () => localStorage.removeItem("token");
 
 // Returns true is user is logged in, false otherwise
 const isAuthenticated = () => {
