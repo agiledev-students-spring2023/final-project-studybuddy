@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import URL from "../api/endpoints";
 import axios from "axios";
+import { saveToken } from "../auth/auth";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -21,7 +22,8 @@ export default function Login() {
 			.post(url, { username: user_id, password })
 			.then((res) => {
 				if (res.status === 200) {
-					localStorage.setItem("token", res.data.token);
+					const token = res.data.user.token;
+					saveToken(token);
 					navigate("/");
 				} else {
 					alert(res.data.message);
