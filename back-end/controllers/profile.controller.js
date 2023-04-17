@@ -1,13 +1,15 @@
 const axios = require("axios");
 const multer = require("multer");
 const path = require("path");
-
+const User = require("../models/user.model");
+const mongoose = require('mongoose');
 
 const ProfileController=async(req, res) => {
     try{
 	const url = "https://my.api.mockaroo.com/study_buddy_data.json";
 	const key = "a015ead0";
-
+  
+    const user = await User.findById(req.user.id);
 	const response=await axios.get(url, {
 			params: { key },
 			headers: {
@@ -15,9 +17,9 @@ const ProfileController=async(req, res) => {
 			},
 		})
 	
-	const data = response.data;
-	return res.json(data);
-		}
+	const posts = response.data;
+	return res.json({posts, user});
+	}
 
 	catch(error)
     {
@@ -32,7 +34,7 @@ const storage = multer.diskStorage({
 		cb(null, "./uploads/");
 	},
 	filename: function (req, file, cb) {
-		// take apart the uploaded file's name so we ca create a new one based on it
+		// take apart the uploaded file's name so we can create a new one based on it
 		const extension = path.extname(file.originalname);
 		const basenameWithoutExtension = path.basename(
 			file.originalname,
@@ -46,32 +48,27 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// route for HTTP POST requests for /upload-example
-const ProfilePictureController=async(req, res, next) => {
-	// check whether anything was uploaded
-	if (!req.files || req.files.length == 0) {
-		// failure!
-		const error = new Error("Please upload a picture!");
-		error.httpStatusCode = 400;
-		res.json({
-			status: "you fail!!!",
-			message: "rejected your file... try harder",
-		});
-		// return next(error)
-	} else {
-		// success
-		// send a message back to the client, for example, a simple JSON object
-		const data = {
-			status: "all good",
-			message: "file was uploaded!!!",
-			files: req.files,
-		};
-		res.json(data);
-	}
-};
-
-
+const ProfilePictureController = async (req, res) => {
+    try {
+        const filePath =req.file.path;
+        console.log(filePath);
+        if (!req.file) {
+            return res.status(400).json({ msg: 'No file uploaded' });
+          }
+        const updatedUser = await User.findByIdAndUpdate(req.user.id, { Profile_pic: filePath }, { new: true });
+        if (!updatedUser) {
+          return res.status(404).json({ msg: 'User not found' });
+        }
+        res.json({ msg: 'Profile picture uploaded successfully' });
+      } catch (err) {	
+        console.error(err.message);
+        res.status(500).send('Could not upload the picture');
+      }
+      
+  };
+  
 module.exports = {
 	ProfilePictureController,
+    upload,
     ProfileController,
 };

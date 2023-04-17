@@ -7,7 +7,8 @@ import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
+import { getToken } from '../auth/auth';
 
 const PostPreview = ({ id, title }) => (
 	<Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
@@ -26,13 +27,17 @@ const ProfilePic = ({ profilepic }) => {
 
 	function handleSubmit() {
 		const formData = new FormData();
-		formData.append("profile_pic", image);
+		formData.append('Profile_pic', image);
 		axios
-			.post("profile", formData)
+			.post("/Profile", formData, {headers: {
+				'authorization':  getToken(),
+				'Content-Type': "multipart/form-data",
+			}})
 			.then((res) => {
 				if (res.status === 200) {
-					localStorage.setItem("token", res.data.token);
+					///localStorage.setItem("token", res.data.token);
 					//navigate("/profile");
+					toast.success('Profile picture uploaded successfully!');
 				} else {
 					toast.error(res.data.message);
 				}
@@ -118,19 +123,28 @@ const UserName = ({ name, major, picture }) => {
 
 const Profile = () => {
 	const [myaccount, setMyaccount] = useState([]);
-
+	const [profile, setMyprofile] =useState([]);
+	console.log(getToken());
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = "/profile";
-
+		const options = {
+			method: 'GET',
+			url: '/profile',
+			headers: {
+				'authorization':  getToken()
+			}
+		  };
 		axios
 			.request(options)
 			.then(function (response) {
+				const user = response.data.user;
+            	const posts = response.data.posts;
+				setMyprofile(user);
 				console.log(response.data);
-				const object = response.data.find((obj) => obj.id === 1);
+				const object = posts.find((obj) => obj.id === 1);
 				setMyaccount(object);
 			})
 			.catch(function (error) {
@@ -151,9 +165,9 @@ const Profile = () => {
 					</div>
 
 					<UserName
-						name={myaccount.name}
-						major={myaccount.major}
-						picture={myaccount.profile_pic}
+						name={profile.name}
+						major={profile.major}
+						picture={profile.profile_pic}
 					/>
 
 					<div className="Post">

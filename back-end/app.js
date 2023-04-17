@@ -27,8 +27,7 @@ app.use(express.json()); // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming POST data
 
 // make 'public' directory publicly readable with static content
-app.use("/static", express.static("public"));
-
+app.use('/uploads', express.static('uploads'));
 const routes = require("./routes");
 
 app.use("/", routes);
