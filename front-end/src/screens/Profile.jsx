@@ -44,9 +44,7 @@ const ProfilePic = ({ profilepic }) => {
 			.request(options)
 			.then((res) => {
 				if (res.status === 200) {
-					///localStorage.setItem("token", res.data.token);
-					//navigate("/profile");
-					toast.success("Profile picture uploaded successfully!");
+					toast.success('Profile picture uploaded successfully!');
 				} else {
 					toast.error(res.data.message);
 				}
@@ -56,10 +54,9 @@ const ProfilePic = ({ profilepic }) => {
 				toast.error(err.response.data.message);
 			});
 	}
-
 	return (
 		<div className="Pic">
-			<div className="Picture">
+			<div className="Picture01">
 				<img src={profilepic} alt="" />
 			</div>
 			<form onSubmit={handleSubmit}>
@@ -79,9 +76,9 @@ const ProfilePic = ({ profilepic }) => {
 
 const UserName = ({ name, major, picture }) => {
 	const [show, setShow] = useState(false);
-
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	//console.log(picture);
 	return (
 		<div className="UserInfo">
 			<div>
@@ -111,7 +108,7 @@ const UserName = ({ name, major, picture }) => {
 							<Modal.Title>Upload Profile Picture</Modal.Title>
 						</Modal.Header>
 						<Modal.Body>
-							<ProfilePic pic={picture} />
+							<ProfilePic profilepic={picture} />
 						</Modal.Body>
 						<Modal.Footer>
 							<Button variant="secondary" onClick={handleClose}>
@@ -132,8 +129,7 @@ const UserName = ({ name, major, picture }) => {
 
 const Profile = () => {
 	const [myaccount, setMyaccount] = useState([]);
-	const [profile, setMyprofile] = useState([]);
-	console.log(getToken());
+	const [profile, setMyprofile] =useState([]);
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
@@ -160,7 +156,6 @@ const Profile = () => {
 				console.error(error);
 			});
 	};
-
 	return (
 		<div>
 			<div className="title-bar">
@@ -176,7 +171,7 @@ const Profile = () => {
 					<UserName
 						name={profile.name}
 						major={profile.major}
-						picture={profile.profile_pic}
+						picture={profile.Profile_pic}
 					/>
 
 					<div className="Post">
