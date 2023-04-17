@@ -7,8 +7,8 @@ import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
-import { toast,ToastContainer } from "react-toastify";
-import { getToken } from '../auth/auth';
+import { toast, ToastContainer } from "react-toastify";
+import { getToken } from "../auth/auth";
 
 const PostPreview = ({ id, title }) => (
 	<Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
@@ -31,28 +31,30 @@ const ProfilePic = ({ profilepic }) => {
 		form.append("Profile_pic", image);
 
 		const options = {
-			method: 'POST',
-			url: '/Profile',
+			method: "POST",
+			url: "/Profile",
 			headers: {
 				authorization: getToken(),
-				'Content-Type': 'multipart/form-data'
+				"Content-Type": "multipart/form-data",
 			},
-			data: form
+			data: form,
 		};
 
-		axios.request(options).then((res) => {
-			if (res.status === 200) {
-				///localStorage.setItem("token", res.data.token);
-				//navigate("/profile");
-				toast.success('Profile picture uploaded successfully!');
-			} else {
-				toast.error(res.data.message);
-			}
-		})
-		.catch((err) => {
-			console.log(err);
-			toast.error(err.response.data.message);
-		});
+		axios
+			.request(options)
+			.then((res) => {
+				if (res.status === 200) {
+					///localStorage.setItem("token", res.data.token);
+					//navigate("/profile");
+					toast.success("Profile picture uploaded successfully!");
+				} else {
+					toast.error(res.data.message);
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				toast.error(err.response.data.message);
+			});
 	}
 
 	return (
@@ -130,7 +132,7 @@ const UserName = ({ name, major, picture }) => {
 
 const Profile = () => {
 	const [myaccount, setMyaccount] = useState([]);
-	const [profile, setMyprofile] =useState([]);
+	const [profile, setMyprofile] = useState([]);
 	console.log(getToken());
 	useEffect(() => {
 		loadFilteredPosts();
@@ -138,17 +140,17 @@ const Profile = () => {
 
 	const loadFilteredPosts = () => {
 		const options = {
-			method: 'GET',
-			url: '/profile',
+			method: "GET",
+			url: "/profile",
 			headers: {
-				'authorization':  getToken()
-			}
-		  };
+				authorization: getToken(),
+			},
+		};
 		axios
 			.request(options)
 			.then(function (response) {
 				const user = response.data.user;
-            	const posts = response.data.posts;
+				const posts = response.data.posts;
 				setMyprofile(user);
 				console.log(response.data);
 				const object = posts.find((obj) => obj.id === 1);
