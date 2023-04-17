@@ -2,6 +2,8 @@ const users = require("../dummy_data/user.json");
 const chats = require("../dummy_data/chat.json");
 const messages = require("../dummy_data/message.json");
 
+const { Message, Chat } = require("../models/chat.model");
+
 // 1. fetch chat list
 // method: GET
 // endpoint: /_chat/chatList
@@ -50,18 +52,26 @@ const fetch_chatList = (user_id) => {
 // endpoint: /_chat
 // input: user_id, buddy_id
 // output: chat_id
-const search_chatId = (user_id, buddy_id) => {
-	// check there is chat with buddy
-	for (var i = 0; i < chats.length; i++) {
-		if (
-			chats[i].members.includes(user_id) &&
-			chats[i].members.includes(buddy_id)
-		) {
-			return chats[i].id;
-		}
-	}
-	//(sprint3 todo) if none: chat create & return created chat_id
-	return "c001";
+const search_chatId = async (user_id, buddy_id) => {
+	// - [o] search Chat with buddy
+	// - [o] if there is chat, return chat_id
+	// - [o] else: create chat & return created chat_id
+	// - [o] return chat_id
+	user_id = "u001"
+	buddy_id = "u003"
+	
+	const members = [user_id, buddy_id].sort()
+	const chat = await Chat.findOne({members: members})
+	
+	if (chat == null) {
+		// create
+		chat = await Chat.create({
+			members: members, 
+			last_read: [Date.now(), Date.now()],
+		})
+	} 
+	
+	return chat._id
 };
 
 module.exports = {
