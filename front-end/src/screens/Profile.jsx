@@ -25,27 +25,34 @@ const ProfilePic = ({ profilepic }) => {
 		setImage(e.target.files[0]);
 	}
 
-	function handleSubmit() {
-		const formData = new FormData();
-		formData.append('Profile_pic', image);
-		axios
-			.post("/Profile", formData, {headers: {
-				'authorization':  getToken(),
-				'Content-Type': "multipart/form-data",
-			}})
-			.then((res) => {
-				if (res.status === 200) {
-					///localStorage.setItem("token", res.data.token);
-					//navigate("/profile");
-					toast.success('Profile picture uploaded successfully!');
-				} else {
-					toast.error(res.data.message);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				toast.error(err.response.data.message);
-			});
+	function handleSubmit(e) {
+		e.preventDefault();
+		const form = new FormData();
+		form.append("Profile_pic", image);
+
+		const options = {
+			method: 'POST',
+			url: '/Profile',
+			headers: {
+				authorization: getToken(),
+				'Content-Type': 'multipart/form-data'
+			},
+			data: form
+		};
+
+		axios.request(options).then((res) => {
+			if (res.status === 200) {
+				///localStorage.setItem("token", res.data.token);
+				//navigate("/profile");
+				toast.success('Profile picture uploaded successfully!');
+			} else {
+				toast.error(res.data.message);
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			toast.error(err.response.data.message);
+		});
 	}
 
 	return (

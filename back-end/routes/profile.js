@@ -8,8 +8,13 @@ const {
 
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 
-router.get("/", isAuthenticated,ProfileController);
+router.get("/", isAuthenticated, ProfileController);
 
-router.post("/", isAuthenticated,upload.single('Profile_pic'),ProfilePictureController);
+router.post(
+	"/",
+	isAuthenticated,
+	upload.single("Profile_pic"),
+	ProfilePictureController
+);
 
 module.exports = router;
