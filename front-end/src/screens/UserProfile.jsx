@@ -8,11 +8,11 @@ import { MdArrowBack, MdSend } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const PostPreview = ({ id, title, userid }) => (
-	<Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
-		<div className="Post-preview">
-			<h5>{title}</h5>
-		</div>
-	</Link>
+    <Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
+        <div className="Post-preview">
+            <h5>{title}</h5>
+        </div>
+    </Link>
 );
 
 const UserName = ({ name, major, picture }) => (

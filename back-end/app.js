@@ -26,9 +26,9 @@ app.use(morgan("dev")); // dev style gives a concise color-coded style of log ou
 app.use(express.json()); // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming POST data
 
-// make 'public' directory publicly readable with static content
 app.use("/uploads", express.static("uploads"));
 app.use("/userprofile/uploads", express.static("uploads"));
+
 const routes = require("./routes");
 
 app.use("/", routes);
