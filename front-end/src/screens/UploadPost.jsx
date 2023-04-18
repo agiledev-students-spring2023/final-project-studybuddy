@@ -45,10 +45,10 @@ const UploadPost = () => {
 			.then((res) => {
 				if (res.status === 200) {
 					DEBUG && console.log(res);
-					toast.success("Post created successfully, redirecting...");
+					toast.success("Post created successfully");
 					setTimeout(() => {
 						navigate(`/viewpost/${res.data.post._id}`);
-					}, 2000);
+					}, 1500);
 				} else {
 					console.log(res);
 					toast.error("Something went wrong");
