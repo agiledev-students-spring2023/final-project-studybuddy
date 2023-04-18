@@ -48,7 +48,7 @@ const upload = multer({ storage: storage });
 const ProfilePictureController = async (req, res) => {
 	try {
 		const filePath = req.file.path;
-		console.log(filePath);
+
 		if (!req.file) {
 			return res.status(400).json({ msg: "No file uploaded" });
 		}

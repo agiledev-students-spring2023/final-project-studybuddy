@@ -29,6 +29,7 @@ const UserName = ({ name, major, picture }) => (
 const UserProfile = () => {
 	const { userId } = useParams();
 	const [account, setAccount] = useState([]);
+	const [profile, setMyprofile] =useState([]);
 	const [chatId, setChatId] = useState("");
 
 	useEffect(() => {
@@ -37,13 +38,18 @@ const UserProfile = () => {
 	}, [userId]);
 
 	const loadFilteredPosts = (userId) => {
-		const options = `/userprofile/${userId}`;
-
+		const options = {
+			method: "GET",
+			url: `/userprofile/${userId}`,
+		};
 		axios
 			.request(options)
 			.then(function (response) {
 				console.log(response.data);
-				setAccount(response.data);
+				const user = response.data.user;
+				const posts = response.data.filteredData;
+				setAccount(posts);
+				setMyprofile(user);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -57,7 +63,6 @@ const UserProfile = () => {
 		} = await axios.post(chatIdAPI, { buddy_id: userId });
 		setChatId(chat_id);
 	};
-
 	return (
 		<div>
 			<div className="user_profile_header">
@@ -70,9 +75,9 @@ const UserProfile = () => {
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<UserName
-						name={account.name}
-						major={account.major}
-						picture={account.profile_pic}
+						name={profile.name}
+						major={profile.major}
+						picture={profile.Profile_pic}
 					/>
 
 					<div className="Message">

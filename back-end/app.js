@@ -28,6 +28,7 @@ app.use(express.urlencoded({ extended: true })); // decode url-encoded incoming 
 
 // make 'public' directory publicly readable with static content
 app.use("/uploads", express.static("uploads"));
+app.use("/userprofile/uploads", express.static("uploads"));
 const routes = require("./routes");
 
 app.use("/", routes);

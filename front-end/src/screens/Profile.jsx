@@ -78,7 +78,6 @@ const UserName = ({ name, major, picture }) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	//console.log(picture);
 	return (
 		<div className="UserInfo">
 			<div>
@@ -132,6 +131,10 @@ const Profile = () => {
 	const [profile, setMyprofile] =useState([]);
 	useEffect(() => {
 		loadFilteredPosts();
+		const intervalId = setInterval(() => {
+			loadFilteredPosts();
+		  }, 5000);
+		  return () => clearInterval(intervalId);
 	}, []);
 
 	const loadFilteredPosts = () => {

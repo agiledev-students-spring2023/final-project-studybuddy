@@ -128,3 +128,7 @@ typings/
 **/.jekyll-cache
 **/_site/
 memo
+
+# upload folder contain profile pictures of users
+back-end/uploads/
+**/back-end/uploads/
