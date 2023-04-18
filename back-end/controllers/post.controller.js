@@ -14,7 +14,6 @@ const uploadPostController = async (req, res) => {
 	const userid = req.user.id;
 	const user = await UserModel.findById(userid);
 
-	// TODO: Save to the database
 	try {
 		const post = new PostModel({
 			_id: new mongoose.Types.ObjectId(),
