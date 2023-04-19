@@ -57,21 +57,21 @@ const search_chatId = async (user_id, buddy_id) => {
 	// - [o] if there is chat, return chat_id
 	// - [o] else: create chat & return created chat_id
 	// - [o] return chat_id
-	user_id = "u001"
-	buddy_id = "u003"
-	
-	const members = [user_id, buddy_id].sort()
-	const chat = await Chat.findOne({members: members})
-	
+	user_id = "u001";
+	buddy_id = "u003";
+
+	const members = [user_id, buddy_id].sort();
+	const chat = await Chat.findOne({ members: members });
+
 	if (chat == null) {
 		// create
 		chat = await Chat.create({
-			members: members, 
+			members: members,
 			last_read: [Date.now(), Date.now()],
-		})
-	} 
-	
-	return chat._id
+		});
+	}
+
+	return chat._id;
 };
 
 module.exports = {

@@ -1,4 +1,7 @@
 const fakePost = require("../dummy_data/viewpost.json");
+const { PostModel } = require("../models/post.model");
+const mongoose = require("mongoose");
+const UserModel = require("../models/user.model");
 
 const uploadPostController = async (req, res) => {
 	const {
@@ -8,15 +11,29 @@ const uploadPostController = async (req, res) => {
 		meetingDescription,
 	} = req.body;
 
-	// TODO: Save to the database
+	const userid = req.user.id;
+	const user = await UserModel.findById(userid);
 
-	return res.status(200).json({
-		id: 1,
-		meetingDateAndTime,
-		meetingMode,
-		meetingSubject,
-		meetingDescription,
-	});
+	try {
+		const post = new PostModel({
+			_id: new mongoose.Types.ObjectId(),
+			dateAndTime: meetingDateAndTime,
+			mode: meetingMode,
+			subject: meetingSubject,
+			description: meetingDescription,
+		});
+		await post.save();
+
+		user.posts.push(post);
+		await user.save();
+
+		return res
+			.status(200)
+			.json({ message: "Post uploaded successfully", post });
+	} catch (err) {
+		console.error(err);
+		return res.status(500).json({ message: err.message });
+	}
 };
 
 const viewPostController = async (req, res) => {

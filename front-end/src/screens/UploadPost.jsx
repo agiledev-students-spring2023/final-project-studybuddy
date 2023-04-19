@@ -8,6 +8,7 @@ import URL from "../api/endpoints";
 import axios from "axios";
 import { DEBUG } from "../configs";
 import { toast } from "react-toastify";
+import { getToken } from "../auth/auth";
 
 const UploadPost = () => {
 	const navigate = useNavigate();
@@ -24,20 +25,30 @@ const UploadPost = () => {
 		const { date, time, mode, subject, desc } = data;
 		const dateTime = new Date(date + " " + time);
 
-		axios
-			.post(URL.UPLOAD_POST, {
+		var options = {
+			method: "POST",
+			url: URL.UPLOAD_POST,
+			headers: {
+				"Content-Type": "application/json",
+				authorization: getToken(),
+			},
+			data: {
 				meetingDateAndTime: dateTime,
 				meetingMode: mode === "1" ? "in-person" : "online",
 				meetingSubject: subject,
 				meetingDescription: desc,
-			})
+			},
+		};
+
+		axios
+			.request(options)
 			.then((res) => {
 				if (res.status === 200) {
 					DEBUG && console.log(res);
-					toast.success("Post created successfully, redirecting...");
+					toast.success("Post created successfully");
 					setTimeout(() => {
-						navigate(`/viewpost/${res.data.id}`);
-					}, 2000);
+						navigate(`/viewpost/${res.data.post._id}`);
+					}, 1500);
 				} else {
 					console.log(res);
 					toast.error("Something went wrong");

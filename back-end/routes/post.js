@@ -6,6 +6,7 @@ const {
 	uploadPostController,
 	viewPostController,
 } = require("../controllers/post.controller");
+const { isAuthenticated } = require("../middlewares/auth.middleware");
 
 // This is the route that will be called when the user clicks on a specific post to view it
 // Feteches the following data: post title, post content, post author (with their major and profile pic), post date, post id, post comments and comment authors (with their major and profile pic), comment dates, and comment ids
@@ -18,6 +19,11 @@ router.get("/:postId", async (req, res) => {
 	res.send({ question, comments });
 });
 
-router.post("/", validate(uploadPostSchema), uploadPostController);
+router.post(
+	"/",
+	validate(uploadPostSchema),
+	isAuthenticated,
+	uploadPostController
+);
 
 module.exports = router;

@@ -10,6 +10,7 @@ const UserSchema = new Schema({
 	email: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
 	Profile_pic: { type: String, default: "/uploads/avatar.png" },
+	posts: [{ type: ObjectId, ref: "Post" }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

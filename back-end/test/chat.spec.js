@@ -19,11 +19,15 @@ describe("chat & message controller test", () => {
 		// assert.equal(buddy_id, userId);
 	});
 	it("create message", async () => {
-		const chat_id = "6436c2ec9a15051ed60287ed"
-		const content = "npm test message"
-		const timestamp = Date.now()
-		const senderId = "u001"
-		const success = await create_message(chat_id, { content, timestamp, senderId });
+		const chat_id = "6436c2ec9a15051ed60287ed";
+		const content = "npm test message";
+		const timestamp = Date.now();
+		const senderId = "u001";
+		const success = await create_message(chat_id, {
+			content,
+			timestamp,
+			senderId,
+		});
 		assert.equal(true, success);
 	});
 
