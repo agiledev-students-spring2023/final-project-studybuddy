@@ -86,6 +86,9 @@ jspm_packages/
 build/
 **/build/
 
+uploads/
+**/uploads/
+
 # React dependencies
 .pnp
 .pnp.js
