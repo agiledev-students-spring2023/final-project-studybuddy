@@ -127,7 +127,7 @@ const UserName = ({ name, major, picture }) => {
 };
 
 const Profile = () => {
-    const [myaccount, setMyaccount] = useState([]);
+    const [myposts, setMyposts] = useState([]);
     const [profile, setMyprofile] =useState([]);
     useEffect(() => {
         loadFilteredPosts();
@@ -151,14 +151,14 @@ const Profile = () => {
                 const user = response.data.user;
                 const posts = response.data.posts;
                 setMyprofile(user);
-                console.log(response.data);
-                const object = posts.find((obj) => obj.id === 1);
-                setMyaccount(object);
+                setMyposts(posts);
+                
             })
             .catch(function (error) {
                 console.error(error);
             });
     };
+    console.log(myposts);
     return (
         <div>
             <div className="title-bar">
@@ -180,13 +180,11 @@ const Profile = () => {
                     <div className="Post">
                         <h2>Posts</h2>
                         <div className="Postgrid">
-                            {myaccount &&
-                                myaccount.post &&
-                                myaccount.post.map((post) => (
+                            {myposts.map((post) => (
                                     <PostPreview
-                                        key={post.postId}
-                                        title={post.title}
-                                        id={post.postId}
+                                        key={post._id}
+                                        title={post.subject}
+                                        id={post._id}
                                     />
                                 ))}
                         </div>

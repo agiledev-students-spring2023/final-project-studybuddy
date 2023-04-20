@@ -3,6 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const User = require("../models/user.model");
 const mongoose = require("mongoose");
+const {PostModel } =require("../models/post.model")
 
 const ProfileController = async (req, res) => {
     try {
@@ -10,15 +11,12 @@ const ProfileController = async (req, res) => {
         const key = "a015ead0";
 
         const user = await User.findById(req.user.id);
-        const response = await axios.get(url, {
-            params: { key },
-            headers: {
-                cookie: "layer0_bucket=90; layer0_destination=default; layer0_environment_id_info=1680b086-a116-4dc7-a17d-9e6fdbb9f6d9",
-            },
-        });
+        const postID=user.posts;
+    
+        const posts = await PostModel.find({ _id: { $in: postID } });
 
-        const posts = response.data;
-        return res.json({ posts, user });
+        //console.log(posts);
+        return res.json( {user, posts} );
     } catch (error) {
         console.log(error);
         return res.status(500).send("Error retrieving data from mockAPI");

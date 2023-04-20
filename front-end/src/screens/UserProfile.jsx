@@ -28,7 +28,7 @@ const UserName = ({ name, major, picture }) => (
 );
 const UserProfile = () => {
     const { userId } = useParams();
-    const [account, setAccount] = useState([]);
+    const [myposts, setMyposts] = useState([]);
     const [profile, setMyprofile] =useState([]);
     const [chatId, setChatId] = useState("");
 
@@ -45,10 +45,9 @@ const UserProfile = () => {
         axios
             .request(options)
             .then(function (response) {
-                console.log(response.data);
                 const user = response.data.user;
-                const posts = response.data.filteredData;
-                setAccount(posts);
+                const posts = response.data.posts;
+                setMyposts(posts);
                 setMyprofile(user);
             })
             .catch(function (error) {
@@ -94,16 +93,17 @@ const UserProfile = () => {
                     <div className="Post">
                         <h2>Posts</h2>
                         <div className="Postgrid">
-                            {account &&
-                                account.post &&
-                                account.post.map((post) => (
-                                    <PostPreview
-                                        title={post.title}
-                                        id={post.postId}
-                                        userid={account.id}
-                                        key={post.postId}
-                                    />
-                                ))}
+                        {myposts && myposts.length > 0 ? (
+                            myposts.map((post) => (
+                                <PostPreview
+                                    title={post.subject}
+                                    id={post._id}
+                                    userid={profile.id}
+                                    key={post._id}
+                                />
+                            ))) : (
+                             <p>No posts</p>
+                                )}
                         </div>
                     </div>
                 </div>

@@ -71,18 +71,6 @@ const UploadPost = () => {
 			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
-					<div className="row text-center">
-						<div className="mb-1">
-							<img
-								src={img}
-								className="Picture"
-								alt="ProfilePicture"
-							/>
-						</div>
-						<p className="mb-1">User Name</p>
-						<p className="mb-1">User Major</p>
-					</div>
-
 					<div className="row">
 						<div className="col-md-12">
 							<form onSubmit={handleSubmit(onSubmit)}>
