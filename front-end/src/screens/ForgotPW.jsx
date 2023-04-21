@@ -3,6 +3,8 @@ import axios from "axios";
 import URL from "../api/endpoints";
 import "./ForgotPW.css";
 import { toast } from "react-toastify";
+import Navbar from "../components/Navbar";
+
 
 export default function ForgotHW() {
 	const handleSubmit = (e) => {
@@ -41,6 +43,8 @@ export default function ForgotHW() {
 					<input className="FP-submit-form" type="submit" />
 				</div>
 			</form>
+
+			<Navbar />
 		</div>
 	);
 }
