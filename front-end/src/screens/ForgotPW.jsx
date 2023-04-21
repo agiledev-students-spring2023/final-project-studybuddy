@@ -5,7 +5,6 @@ import "./ForgotPW.css";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 
-
 export default function ForgotHW() {
 	const handleSubmit = (e) => {
 		e.preventDefault();

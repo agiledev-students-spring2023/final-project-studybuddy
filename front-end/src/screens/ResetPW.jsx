@@ -7,7 +7,6 @@ import "./ResetPW.css";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
 
-
 export default function ResetPW() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
@@ -30,7 +29,9 @@ export default function ResetPW() {
 				.post(URL.RESET_PASSWORD, { password, token, username })
 				.then((res) => {
 					if (res.status === 200) {
-						toast.success("Password reset successfully, redirecting to login page...");
+						toast.success(
+							"Password reset successfully, redirecting to login page..."
+						);
 						setTimeout(() => {
 							navigate("/Login");
 						}, 2000);

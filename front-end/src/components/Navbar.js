@@ -4,7 +4,7 @@ import {
 	ChatFill,
 	PersonFill,
 	CloudUploadFill,
-	PersonFillAdd
+	PersonFillAdd,
 } from "react-bootstrap-icons";
 
 const authLinks = [
