@@ -9,8 +9,8 @@ const fetch_msgList = async (user_id, chatId) => {
 	// - [o] 상대방의 id 찾기
 	// - [ ] 상대방 id로 User document찾아서 name 알아내기 (TODO)
 	// - [ ] return { messages, buddyName, buddyId }
-	user_id = "u002"; // todo: after implement User Model
-	chatId = "6436c2ec9a15051ed60287ed"
+	user_id = "643b1b8926271cb644835017"; // todo: after implement User Model
+	chatId = "64412ca9c4c16504021edaad"
 	const messageList = await Message.find({ chat_id: chatId }).sort({
 		timestamp: 1,
 	});
@@ -36,8 +36,8 @@ const create_message = async (chat_id, { content, timestamp, senderId }) => {
 	// - [o] Message Document create (sender_id, content, timestamp, chat_id)
 	// - [o] save to Message Model
 	// - [o] return success
-	senderId = "u002";
-	chat_id = "6436c2ec9a15051ed60287ed"
+	senderId = "643b1b8926271cb644835017";
+	chat_id = "64412ca9c4c16504021edaad"
 	try {
 		const msg = await Message.create({
 			sender_id: senderId, // ObjectId, #todo: after implemented User model

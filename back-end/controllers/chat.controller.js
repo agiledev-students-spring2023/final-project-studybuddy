@@ -3,48 +3,54 @@ const chats = require("../dummy_data/chat.json");
 const messages = require("../dummy_data/message.json");
 
 const { Message, Chat } = require("../models/chat.model");
+const User = require("../models/user.model");
+
 
 // 1. fetch chat list
 // method: GET
 // endpoint: /_chat/chatList
 // input: user_id
 // output: [chat]
-const fetch_chatList = (user_id) => {
-	const chatList = [];
-	for (var i = 0; i < chats.length; i++) {
-		const chat = chats[i];
-		if (chat.members.includes(user_id)) {
-			let buddy_id;
-			for (var j = 0; j < 2; j++) {
-				if (chat.members[j] != user_id) {
-					buddy_id = chat.members[j];
-				}
-			}
-			for (var j = 0; j < users.length; j++) {
-				if (users[j].id === buddy_id) {
-					chat.name = users[j].name;
-					chat.img_url = users[j].profile;
-				}
-			}
-			const msg_list = [];
-			for (var j = 0; j < messages.length; j++) {
-				// - search message list in message database by chatId
-				if (messages[j].chat_id == chat.id) {
-					msg_list.push(messages[j]);
-				}
-			}
-			chat.preview = msg_list[msg_list.length - 1].content;
-			chat.unread = 10;
-			chatList.push(chat);
-		}
-	}
-	return chatList;
-	// - [x] collect chats by user_id in chat db
-	// - [x] find buddy_id
-	// - [x] retrieve name, profile by buddy_id in users db
-	// - [x] add name, profile to 'chat'
+const fetch_chatList = async (user_id) => {
+	// - [o] collect chats by user_id in chat db
+	// - [o] find buddy_id
+	// - [o] retrieve name, profile by buddy_id in users db
+	// - [o] find message by chat_id and assign last message to preview
 	// - [ ] calculate 'unread' by 'last_read' (todo: sprint3)
-	// - [x] return chat list
+	// - [o] add name, profile, unread, preview to 'chat'
+	// - [ ] return chat list
+	user_id = "643b1b8926271cb644835017"
+	
+	const chat = await Chat.find({ members: user_id });
+	const chatlist = []
+	for (var i = 0 ; i < chat.length; i++ ) {
+		// chat[i].members = [1, 2]
+		if (chat[i].members[0] == user_id ) {
+			buddy_id = chat[i].members[1]
+		}
+		else {
+			buddy_id = chat[i].members[0]
+		}
+		const user = await User.findById( buddy_id );
+		
+		// find message chat_id
+		const messageList = await Message.find({ chat_id: chat[i]._id }).sort({
+			timestamp: 1,
+		});
+
+		console.log('msg list', messageList)
+
+		const chat_info = { 
+			name: user.name, 
+			img_url: user.Profile_pic , 
+			unread: 1 , 
+			id: chat[i]._id, 
+			preview: messageList[messageList.length-1].content
+		}
+		chatlist.push(chat_info)
+	}
+	console.log(chatlist)
+	return chatlist
 };
 
 // 2. search chatID (when click dm button)
@@ -57,8 +63,8 @@ const search_chatId = async (user_id, buddy_id) => {
 	// - [o] if there is chat, return chat_id
 	// - [o] else: create chat & return created chat_id
 	// - [o] return chat_id
-	user_id = "u001";
-	buddy_id = "u003";
+	user_id = "643f1c65c0f302b408a31ba0";
+	buddy_id = "643b1b8926271cb644835017";
 
 	const members = [user_id, buddy_id].sort();
 	const chat = await Chat.findOne({ members: members });
@@ -67,7 +73,7 @@ const search_chatId = async (user_id, buddy_id) => {
 		// create
 		chat = await Chat.create({
 			members: members,
-			last_read: [Date.now(), Date.now()],
+			last_read: [0, 0],
 		});
 	}
 
