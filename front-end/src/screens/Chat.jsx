@@ -7,6 +7,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import ChatError from "../components/ChatError";
+import { getToken } from "../auth/auth"
 
 export default function Chat() {
 	const [buddyName, setBuddyName] = useState("");
@@ -16,21 +17,68 @@ export default function Chat() {
 	const [success, setSuccess] = useState(true)
 	const { chatId } = useParams();
 
-	const userId = "1"; // todo: get userId from login info
+	const [sending, setSending] = useState(false)
+	const [lastMsg, setLastMsg] = useState('')
+
 	const chatAPI = `/_message/${chatId}`;
+
+
+	async function fetchChatData() {
+		if (sending) {
+			console.log('not fetch')
+			return
+		}
+
+		try {
+			const options = {
+				method: "GET",
+				url: chatAPI,
+				headers: {
+					authorization: getToken(),
+				},
+			};
+			const { data } = await axios.request(options)
+
+			const { success, messages, buddyName, buddyId } = data;
+
+			setSuccess(success)
+			setMessages(messages);
+			if (messages.length) {
+				setLastMsg(messages[messages.length - 1]._id)
+			}
+			setBuddyName(buddyName);
+			setBuddyId(buddyId);
+		} catch (err) {
+			setSuccess(false)
+		}
+	}
+
+	async function updateLastRead() {
+		const updateAPI = '/_chat'
+		const { data } = await axios.put(updateAPI, { chatId }, {
+			headers: {
+				authorization: getToken(),
+			}
+		});
+	}
+	useEffect(() => {
+		scrollToBottom()
+	}, [lastMsg])
+
 
 	useEffect(() => {
 		// this function will be called just once.
-		async function fetchChatData() {
-			const { data } = await axios.get(chatAPI);
-			const { success, messages, name, userId } = data;
-			setSuccess(success)
-			console.log('chat message ', success)
-			setMessages(messages);
-			setBuddyName(name);
-			setBuddyId(userId);
-		}
-		fetchChatData();
+		updateLastRead()
+
+		let interval = setInterval(() => {
+			fetchChatData()
+		}, 1000);
+
+		return () => {
+			// updateLastRead()
+
+			clearInterval(interval);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -39,34 +87,28 @@ export default function Chat() {
 			data: { success },
 		} = await axios.post(chatAPI, {
 			content: input,
-			timestamp: Date.now(),
-			senderId: userId,
+			timestamp: Date.now()
+		}, {
+			headers: {
+				authorization: getToken(),
+			}
 		});
-		console.log(success);
+
+		fetchChatData()
 	};
 
-	const sendMessage = () => {
+	const sendMessage = async () => {
 		if (input.length === 0) return; // empty input
 
-		/* Message (isMe, content, timestamp) */
-		const msg = {
-			isMe: true,
-			content: input,
-			timestamp: Date.now(),
-		};
-		window.scrollTo(0, document.body.scrollHeight);
-		/* push new message */
-		const newMessages = messages.concat(msg);
-		setMessages(newMessages);
+		setSending(true)
 
-		// TODO: send message to back-end
-		console.log(input);
-		sendMessageToBack(input);
+		await sendMessageToBack(input);
 
 		/* reset input */
 		setInput("");
 
-		scrollToBottom();
+
+		setSending(false)
 	};
 
 	const scrollToBottom = () => {
@@ -98,7 +140,7 @@ export default function Chat() {
 					{buddyName}
 				</p>{" "}
 			</div>
-				<div className="chat_screen">
+				<div className="chat_screen" >
 					<div className="chat_screen_body" id="chat_body">
 						{messages.map((e, i) => (
 							<ChatBubble key={i} chat={e} />

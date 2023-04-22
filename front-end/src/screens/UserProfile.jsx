@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { getUser } from "../auth/auth"
+import { getToken } from "../auth/auth"
 
 const PostPreview = ({ id, title, userid }) => (
     <Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
@@ -29,8 +29,8 @@ const UserName = ({ name, major, picture }) => (
 );
 const UserProfile = () => {
     const { userId } = useParams();
-    const [myposts, setMyposts] = useState([]);
-    const [profile, setMyprofile] =useState([]);
+    const [account, setAccount] = useState([]);
+    const [profile, setMyprofile] = useState([]);
     const [chatId, setChatId] = useState("");
 
     useEffect(() => {
@@ -46,9 +46,10 @@ const UserProfile = () => {
         axios
             .request(options)
             .then(function (response) {
+                console.log(response.data);
                 const user = response.data.user;
-                const posts = response.data.posts;
-                setMyposts(posts);
+                const posts = response.data.filteredData;
+                setAccount(posts);
                 setMyprofile(user);
             })
             .catch(function (error) {
@@ -58,10 +59,10 @@ const UserProfile = () => {
 
     const fetchChatId = async (userId) => {
         const chatIdAPI = `/_chat`;
-        const { id } = await getUser()
+
         const {
             data: { chat_id },
-        } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: {userId: id }});
+        } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: { authorization: getToken() } });
         setChatId(chat_id);
     };
     return (
@@ -95,17 +96,16 @@ const UserProfile = () => {
                     <div className="Post">
                         <h2>Posts</h2>
                         <div className="Postgrid">
-                        {myposts && myposts.length > 0 ? (
-                            myposts.map((post) => (
-                                <PostPreview
-                                    title={post.subject}
-                                    id={post._id}
-                                    userid={profile.id}
-                                    key={post._id}
-                                />
-                            ))) : (
-                             <p>No posts</p>
-                                )}
+                            {account &&
+                                account.post &&
+                                account.post.map((post) => (
+                                    <PostPreview
+                                        title={post.title}
+                                        id={post.postId}
+                                        userid={account.id}
+                                        key={post.postId}
+                                    />
+                                ))}
                         </div>
                     </div>
                 </div>

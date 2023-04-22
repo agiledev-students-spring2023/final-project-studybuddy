@@ -1,27 +1,23 @@
 const express = require("express");
-const {
-	fetch_msgList,
-	create_message,
-} = require("../controllers/message.controller");
 const router = express.Router();
+const {
+	MsgListController,
+	createMsgController
+} = require("../controllers/message.controller");
 
-const user_id = "1"; // (sprint3 todo)
+const { isAuthenticated } = require("../middlewares/auth.middleware");
 
-router.get("/:chatId", async (req, res) => {
-	const user_id = req.headers.userid
-	console.log("(get) fetch_msgList", user_id)
-	const { messages, buddyName, buddyId } = await fetch_msgList(
-		user_id,
-		req.params.chatId
-	);
 
-	res.send({ messages, name: buddyName, userId: buddyId });
-});
+router.get(
+	"/:chatId",
+	isAuthenticated,
+	MsgListController
+);
 
-router.post("/:chatId", async (req, res) => {
-	console.log("(post) create_message", req.body.senderId)
-	const success = await create_message(req.params.chatId, req.body);
-	res.send({ success });
-});
+router.post(
+	"/:chatId",
+	isAuthenticated,
+	createMsgController
+);
 
 module.exports = router;
