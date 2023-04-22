@@ -2,10 +2,13 @@ import React from "react";
 import axios from "axios";
 import URL from "../api/endpoints";
 import { useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./ResetPW.css";
 import { toast } from "react-toastify";
+import Navbar from "../components/Navbar";
 
 export default function ResetPW() {
+	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 
 	const handleSubmit = (e) => {
@@ -26,7 +29,12 @@ export default function ResetPW() {
 				.post(URL.RESET_PASSWORD, { password, token, username })
 				.then((res) => {
 					if (res.status === 200) {
-						toast.success("Password reset successfully!");
+						toast.success(
+							"Password reset successfully, redirecting to login page..."
+						);
+						setTimeout(() => {
+							navigate("/Login");
+						}, 2000);
 					} else {
 						toast.error("Password reset failed!");
 					}
@@ -58,6 +66,8 @@ export default function ResetPW() {
 					<input type="submit" className="RP-submit-form" />
 				</div>
 			</form>
+
+			<Navbar />
 		</div>
 	);
 }

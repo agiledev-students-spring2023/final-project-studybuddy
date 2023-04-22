@@ -6,6 +6,7 @@ const {
 	generateResetToken,
 } = require("../utilities/auth.utils");
 const UserModel = require("../models/user.model");
+const { ResetPassword } = require("../models/auth.model");
 
 const SALT_ROUNDS = 10;
 
@@ -43,12 +44,26 @@ const loginController = async (req, res) => {
 const forgotPasswordController = async (req, res) => {
 	const { username, email } = req.body;
 
-	// TODO: Check if the email and username is in the database
+	// prettier-ignore
+	if (!(await UserModel.exists({ username })) || !(await UserModel.exists({ email })))
+		return res.status(400).json({ message: "Provided user doesn't exist" });
 
 	// Generate a reset token
 	const resetToken = generateResetToken(email, username);
 
-	// TODO: Save reset token to the database
+	const newResetPassword = new ResetPassword({
+		_id: new mongoose.Types.ObjectId(),
+		username,
+		reset_token: resetToken,
+		reset_token_expiration: Date.now() + 3600000, // 1 hour
+	});
+
+	try {
+		await newResetPassword.save();
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Something went wrong." });
+	}
 
 	// Send email to the user
 	let success = await sendResetPasswordEmail(email, resetToken, username);
@@ -61,12 +76,33 @@ const forgotPasswordController = async (req, res) => {
 	}
 };
 
-const resetPasswordController = (req, res) => {
+const resetPasswordController = async (req, res) => {
 	const { password, token, username } = req.body;
 
 	// TODO: Check if the token is valid
+	const resetPassword = await ResetPassword.findOne({
+		username,
+		reset_token: token,
+	});
+	if (!resetPassword)
+		return res.status(400).json({ message: "Invalid reset token" });
+	if (resetPassword.reset_token_expiration < Date.now())
+		return res.status(400).json({ message: "Reset token has expired" });
 
 	// TODO: Update the password in the database
+	try {
+		const salt = await bcrypt.genSalt(SALT_ROUNDS);
+		const hashedPassword = await bcrypt.hash(password, salt);
+		const user = await UserModel.findOne({ username });
+		user.password = hashedPassword;
+		await user.save();
+
+		// Delete the reset token from the database
+		await ResetPassword.findByIdAndDelete(resetPassword._id);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "Something went wrong" });
+	}
 
 	return res.status(200).json({ message: "Password reset successfully" });
 };

@@ -36,8 +36,10 @@ const create_message = async (chat_id, { content, timestamp, senderId }) => {
 	// - [o] Message Document create (sender_id, content, timestamp, chat_id)
 	// - [o] save to Message Model
 	// - [o] return success
+
 	senderId = "643b1b8926271cb644835017";
 	chat_id = "64412ca9c4c16504021edaad"
+
 	try {
 		const msg = await Message.create({
 			sender_id: senderId, // ObjectId, #todo: after implemented User model

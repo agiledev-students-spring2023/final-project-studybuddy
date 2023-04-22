@@ -4,6 +4,7 @@ import {
 	ChatFill,
 	PersonFill,
 	CloudUploadFill,
+	PersonFillAdd,
 } from "react-bootstrap-icons";
 
 const authLinks = [
@@ -34,10 +35,12 @@ const unAuthLinks = [
 	{
 		name: "Login",
 		path: "/login",
+		icon: <PersonFill size={24} />,
 	},
 	{
 		name: "Sign Up",
 		path: "/signup",
+		icon: <PersonFillAdd size={24} />,
 	},
 ];
 
