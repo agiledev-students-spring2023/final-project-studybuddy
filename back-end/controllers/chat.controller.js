@@ -1,16 +1,50 @@
-const users = require("../dummy_data/user.json");
-const chats = require("../dummy_data/chat.json");
-const messages = require("../dummy_data/message.json");
-
 const { Message, Chat } = require("../models/chat.model");
 const User = require("../models/user.model");
+const mongoose = require("mongoose");
 
+const { ObjectId } = mongoose.Types;
+
+
+// GET: /chatList/:user_id (receive: chat_ids)
+// Success: Status_code: 200
+// Failure: Status_code: (404 if not found, otherwise 400)
+// GET: /chat/:chat_id (receive: user_id, messages)
+// Success: Status_code: 200
+// Failure: Status_code: (404 if not found, otherwise 400)
+// PUT: /chat/:chat_id (send: sender_id, receiver_id, content, time / receive: success)
+// Success: Status_code: 200
+// Failure: 401 if unauthorized, otherwise 400
+
+
+
+const chatListController = async (req, res) => {
+	const user_id = req.user.id
+
+	const { status, chatlist } = await fetch_chatList(user_id);
+
+	res.status(status).send({ chatlist });
+}
+
+const chatidSearchController = async (req, res) => {
+	const user_id = req.user.id
+
+	console.log("(search_chatId) buddyId", req.body.buddy_id)
+	const { status, chat_id } = await search_chatId(user_id, req.body.buddy_id);
+	res.status(status).send({ chat_id });
+}
+
+const lastReadUpdateController = async (req, res) => {
+	const userId = req.user.id
+	const { chatId } = req.body
+	const status = await update_last_read(userId, chatId)
+	res.status(status).send({ success: status == 200 })
+}
 
 // 1. fetch chat list
 // method: GET
 // endpoint: /_chat/chatList
 // input: user_id
-// output: [chat]
+// output:  { success, chatlist }
 const fetch_chatList = async (user_id) => {
 	// - [o] collect chats by user_id in chat db
 	// - [o] find buddy_id
@@ -19,46 +53,55 @@ const fetch_chatList = async (user_id) => {
 	// - [o] calculate 'unread' by 'Chat:last_read' (todo: sprint3)
 	// - [o] add name, profile, unread, preview to 'chat'
 	// - [o] return chat list
-	
-	const chat = await Chat.find({ members: user_id });
+
+	let status = 404
 	const chatlist = []
-	for (var i = 0 ; i < chat.length; i++ ) {
-		// chat[i].members = [1, 2]
-		if (chat[i].members[0] == user_id ) {
-			buddy_id = chat[i].members[1]
-			last_read = chat[i].last_read[0]
-		}
-		else {
-			buddy_id = chat[i].members[0]
-			last_read = chat[i].last_read[1]
-		}
-		const user = await User.findById( buddy_id );
-		
-		// find message chat_id
-		const messageList = await Message.find({ chat_id: chat[i]._id }).sort({
-			timestamp: 1,
-		});
 
-		/// last_read, messageList
-		/// messageList에 있는 Message들 중에서 timestamp가 last_read보다 큰 Message 갯수를 세서 unread에 assign
-		count = 0
-		for (var j = 0; j<messageList.length; j++ ) {
-			if (messageList[j].timestamp > last_read && messageList[j].sender_id != user_id ) {
-				count = count+1
+	try {
+		const chat = await Chat.find({ members: user_id });
+		for (var i = 0; i < chat.length; i++) {
+
+			if (chat[i].members[0] == user_id) {
+				buddy_id = chat[i].members[1]
+				last_read = chat[i].last_read[0]
 			}
-		}
+			else {
+				buddy_id = chat[i].members[0]
+				last_read = chat[i].last_read[1]
+			}
+			const user = await User.findById(buddy_id);
 
-		const chat_info = { 
-			name: user.name, 
-			img_url: user.Profile_pic , 
-			unread: count , 
-			id: chat[i]._id, 
-			preview: messageList[messageList.length-1].content
+			// find message chat_id
+			const messageList = await Message.find({ chat_id: chat[i]._id }).sort({
+				timestamp: 1,
+			});
+
+			/// last_read, messageList
+			/// messageList에 있는 Message들 중에서 timestamp가 last_read보다 큰 Message 갯수를 세서 unread에 assign
+			count = 0
+			for (var j = 0; j < messageList.length; j++) {
+				if (messageList[j].timestamp > last_read && messageList[j].sender_id != user_id) {
+					count = count + 1
+				}
+			}
+			const preview = messageList.length ? messageList[messageList.length - 1].content : ''
+			const chat_info = {
+				name: user.name,
+				img_url: user.Profile_pic,
+				unread: count,
+				id: chat[i]._id,
+				preview
+			}
+
+			chatlist.push(chat_info)
 		}
-		chatlist.push(chat_info)
+		status = 200
+	} catch (err) {
+		console.log(err)
+		status = 400
 	}
 
-	return chatlist
+	return { status, chatlist }
 };
 
 // 2. search chatID (when click dm button)
@@ -71,24 +114,61 @@ const search_chatId = async (user_id, buddy_id) => {
 	// - [o] if there is chat, return chat_id
 	// - [o] else: create chat & return created chat_id
 	// - [o] return chat_id
-	user_id = "643f1c65c0f302b408a31ba0";
-	buddy_id = "643b1b8926271cb644835017";
 
-	const members = [user_id, buddy_id].sort();
-	const chat = await Chat.findOne({ members: members });
+	try {
+		const buddy = await User.findById(buddy_id)
+		const me = await User.findById(user_id)
 
-	if (chat == null) {
-		// create
-		chat = await Chat.create({
-			members: members,
-			last_read: [0, 0],
-		});
+		if (buddy && me) {
+			const members = [user_id, buddy_id].sort();
+			let chat = await Chat.findOne({ members: members });
+
+			if (chat == null) {
+				// create
+				chat = await Chat.create({
+					members: members,
+					last_read: [0, 0],
+				});
+			}
+			return { status: 200, chat_id: chat._id }
+		}
+		if (!me) console.error(`User (id: ${user_id}) not exist`)
+		if (!buddy) console.error(`Buddy (id: ${buddy_id}) not exist`)
+
+		return { status: 404, chat_id: undefined }
+	} catch (err) {
+		// console.log(err)
+		return { status: 400, chat_id: undefined }
+	}
+};
+
+const update_last_read = async (user_id, chat_id) => {
+	const validId = ObjectId.isValid(chat_id)
+	if (!validId) return 400;
+
+	const chat = await Chat.findById(chat_id);
+	if (!chat) return 404
+
+	let last_read
+	if (chat.members[0] == user_id) {
+		last_read = chat.last_read
+		last_read[0] = Date.now()
+	}
+	else {
+		last_read = chat.last_read
+		last_read[1] = Date.now()
 	}
 
-	return chat._id;
-};
+	const _ = await Chat.updateOne({ _id: chat_id }, { last_read: last_read })
+
+	return 200
+}
 
 module.exports = {
 	fetch_chatList,
 	search_chatId,
+	update_last_read,
+	chatListController,
+	chatidSearchController,
+	lastReadUpdateController
 };
