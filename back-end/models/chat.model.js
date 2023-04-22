@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
 const ChatSchema = new Schema({
-	members: [String], // TODO: String to ObjectId
+	members: [String], // TODO: String to ObjectId 
 	last_read: [Number],
 });
+
 
 const MessageSchema = new Schema({
 	sender_id: String, // ObjectId, #todo: after implemented User model
