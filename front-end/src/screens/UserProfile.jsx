@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { getUser } from "../auth/auth"
 
 const PostPreview = ({ id, title, userid }) => (
     <Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
@@ -57,9 +58,10 @@ const UserProfile = () => {
 
     const fetchChatId = async (userId) => {
         const chatIdAPI = `/_chat`;
+        const { id } = await getUser()
         const {
             data: { chat_id },
-        } = await axios.post(chatIdAPI, { buddy_id: userId });
+        } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: {userId: id }});
         setChatId(chat_id);
     };
     return (

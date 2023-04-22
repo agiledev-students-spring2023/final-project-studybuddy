@@ -3,17 +3,24 @@ import React, { useEffect, useState } from "react";
 import MessagePreview from "../components/MessagePreview";
 import Navbar from "../components/Navbar";
 import "./ChatList.css";
+import { getUser } from "../auth/auth"
+
 
 export default function ChatList() {
 	const [chatList, setChatList] = useState([]);
 
+
 	useEffect(() => {
 		async function fetchChatListData() {
+			const { id } = await getUser()
 			const chatListAPI_url = `/_chat/chatList`;
-			const { data } = await axios.get(chatListAPI_url);
+			const { data } = await axios.get(chatListAPI_url, {
+				headers: {userId: id}
+			});
 			setChatList(data);
 		}
-		fetchChatListData();
+
+		fetchChatListData();	
 	}, []);
 
 	return (

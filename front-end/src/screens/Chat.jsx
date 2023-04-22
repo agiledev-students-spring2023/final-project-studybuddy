@@ -6,12 +6,14 @@ import "./Chat.css";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
+import ChatError from "../components/ChatError";
 
 export default function Chat() {
 	const [buddyName, setBuddyName] = useState("");
 	const [buddyId, setBuddyId] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
+	const [success, setSuccess] = useState(true)
 	const { chatId } = useParams();
 
 	const userId = "1"; // todo: get userId from login info
@@ -21,8 +23,9 @@ export default function Chat() {
 		// this function will be called just once.
 		async function fetchChatData() {
 			const { data } = await axios.get(chatAPI);
-			const { messages, name, userId } = data;
-
+			const { success, messages, name, userId } = data;
+			setSuccess(success)
+			console.log('chat message ', success)
 			setMessages(messages);
 			setBuddyName(name);
 			setBuddyId(userId);
@@ -81,7 +84,7 @@ export default function Chat() {
 
 	return (
 		<div className="screen">
-			<div className="chat_screen_header">
+			{success ? <><div className="chat_screen_header">
 				<MdArrowBack
 					className="cursor_pointer back_icon_"
 					onClick={() => window.history.back()}
@@ -95,29 +98,30 @@ export default function Chat() {
 					{buddyName}
 				</p>{" "}
 			</div>
-			<div className="chat_screen">
-				<div className="chat_screen_body" id="chat_body">
-					{messages.map((e, i) => (
-						<ChatBubble key={i} chat={e} />
-					))}
-				</div>
-				<div className="chat_input_container">
-					<Form.Control
-						className="chatting_input_window"
-						type="text"
-						value={input}
-						placeholder="Type message"
-						onChange={(e) => setInput(e.target.value)}
-						onKeyDown={handleKeyDown}
-					/>
-					<button
-						className="btn_chatsend"
-						onClick={handleButtonClick}
-					>
-						<MdSend />
-					</button>
-				</div>
-			</div>
+				<div className="chat_screen">
+					<div className="chat_screen_body" id="chat_body">
+						{messages.map((e, i) => (
+							<ChatBubble key={i} chat={e} />
+						))}
+					</div>
+					<div className="chat_input_container">
+						<Form.Control
+							className="chatting_input_window"
+							type="text"
+							value={input}
+							placeholder="Type message"
+							onChange={(e) => setInput(e.target.value)}
+							onKeyDown={handleKeyDown}
+						/>
+						<button
+							className="btn_chatsend"
+							onClick={handleButtonClick}
+						>
+							<MdSend />
+						</button>
+					</div>
+				</div></> : <ChatError />}
+
 			<Navbar user="Others" />
 		</div>
 	);

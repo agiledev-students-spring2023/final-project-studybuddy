@@ -16,10 +16,9 @@ const fetch_chatList = async (user_id) => {
 	// - [o] find buddy_id
 	// - [o] retrieve name, profile by buddy_id in users db
 	// - [o] find message by chat_id and assign last message to preview
-	// - [ ] calculate 'unread' by 'last_read' (todo: sprint3)
+	// - [o] calculate 'unread' by 'Chat:last_read' (todo: sprint3)
 	// - [o] add name, profile, unread, preview to 'chat'
-	// - [ ] return chat list
-	user_id = "643b1b8926271cb644835017"
+	// - [o] return chat list
 	
 	const chat = await Chat.find({ members: user_id });
 	const chatlist = []
@@ -27,9 +26,11 @@ const fetch_chatList = async (user_id) => {
 		// chat[i].members = [1, 2]
 		if (chat[i].members[0] == user_id ) {
 			buddy_id = chat[i].members[1]
+			last_read = chat[i].last_read[0]
 		}
 		else {
 			buddy_id = chat[i].members[0]
+			last_read = chat[i].last_read[1]
 		}
 		const user = await User.findById( buddy_id );
 		
@@ -38,18 +39,25 @@ const fetch_chatList = async (user_id) => {
 			timestamp: 1,
 		});
 
-		console.log('msg list', messageList)
+		/// last_read, messageList
+		/// messageList에 있는 Message들 중에서 timestamp가 last_read보다 큰 Message 갯수를 세서 unread에 assign
+		count = 0
+		for (var j = 0; j<messageList.length; j++ ) {
+			if (messageList[j].timestamp > last_read && messageList[j].sender_id != user_id ) {
+				count = count+1
+			}
+		}
 
 		const chat_info = { 
 			name: user.name, 
 			img_url: user.Profile_pic , 
-			unread: 1 , 
+			unread: count , 
 			id: chat[i]._id, 
 			preview: messageList[messageList.length-1].content
 		}
 		chatlist.push(chat_info)
 	}
-	console.log(chatlist)
+
 	return chatlist
 };
 
