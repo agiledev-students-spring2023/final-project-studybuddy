@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import ChatError from "../components/ChatError";
 import { getToken } from "../auth/auth"
+import Loader from "../components/Loader";
 
 export default function Chat() {
 	const [buddyName, setBuddyName] = useState("");
@@ -19,6 +20,7 @@ export default function Chat() {
 
 	const [sending, setSending] = useState(false)
 	const [lastMsg, setLastMsg] = useState('')
+	const [loading, setLoading] = useState(true)
 
 	const chatAPI = `/_message/${chatId}`;
 
@@ -43,13 +45,15 @@ export default function Chat() {
 
 			setSuccess(success)
 			setMessages(messages);
+			setBuddyName(buddyName);
+			setBuddyId(buddyId);
+			setLoading(false)
 			if (messages.length) {
 				setLastMsg(messages[messages.length - 1]._id)
 			}
-			setBuddyName(buddyName);
-			setBuddyId(buddyId);
 		} catch (err) {
 			setSuccess(false)
+			setLoading(false)
 		}
 	}
 
@@ -68,6 +72,7 @@ export default function Chat() {
 
 	useEffect(() => {
 		// this function will be called just once.
+		setLoading(true)
 		updateLastRead()
 
 		let interval = setInterval(() => {
@@ -113,6 +118,7 @@ export default function Chat() {
 
 	const scrollToBottom = () => {
 		const element = document.getElementById("chat_body");
+		if (!element) return
 		element.scrollTop = element.scrollHeight;
 	};
 
@@ -126,13 +132,13 @@ export default function Chat() {
 
 	return (
 		<div className="screen">
-			{success ? <><div className="chat_screen_header">
+			{loading ? <Loader /> : success ? <><div className="chat_screen_header">
 				<MdArrowBack
 					className="cursor_pointer back_icon_"
 					onClick={() => window.history.back()}
 				/>
 				<p
-					class="cursor_pointer"
+					className="cursor_pointer"
 					onClick={() =>
 						(window.location.href = `/userprofile/${buddyId}`)
 					}
@@ -162,8 +168,7 @@ export default function Chat() {
 							<MdSend />
 						</button>
 					</div>
-				</div></> : <ChatError />}
-
+				</div></> : <ChatError idx={2} />}
 			<Navbar user="Others" />
 		</div>
 	);

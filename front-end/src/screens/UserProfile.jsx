@@ -58,12 +58,16 @@ const UserProfile = () => {
     };
 
     const fetchChatId = async (userId) => {
-        const chatIdAPI = `/_chat`;
+        try {
+            const chatIdAPI = `/_chat`;
 
-        const {
-            data: { chat_id },
-        } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: { authorization: getToken() } });
-        setChatId(chat_id);
+            const {
+                data: { chat_id },
+            } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: { authorization: getToken() } });
+            setChatId(chat_id);
+        } catch {
+            setChatId('undefined');
+        }
     };
     return (
         <div>
