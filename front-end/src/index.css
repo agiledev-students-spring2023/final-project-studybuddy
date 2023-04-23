@@ -33,3 +33,11 @@ code {
 	line-height: 1.2;
 	border-bottom: 1px solid #ced4da;
 }
+
+.loader_screen {
+	display: flex;
+	text-align: center;
+	height: calc(100vh - 150px);
+	justify-content: center;
+	align-items: center;
+}
