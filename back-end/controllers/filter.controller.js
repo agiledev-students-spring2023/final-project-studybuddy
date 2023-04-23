@@ -1,13 +1,28 @@
 const posts = require("../dummy_data/filtered.json");
+const mongoose = require("mongoose");
+const { PostModel } = require("../models/post.model");
+const UserModel = require("../models/user.model");
 
-const fetch_Results = (date, time, env, subject, subfield) => {
-	// filter the posts array based on them
-	// const filteredPosts = posts.filter(post => {
-	//     return post.date == date && post.time == time && post.env == env && post.subject == subject && post.subfield == subfield
-	// })
+const fetch_Results = async (req, res) => {
+	// return posts relevant to the filter by date, time, environment, subject, and subfield
+	const filteredPosts = [];
+	const { date, time, environment, subject, subfield } = req.body;
 
-	// send dummy data for now
-	return posts;
+	// get all posts
+	const allPosts = await PostModel.find({});
+	const allUsers = await UserModel.find({});
+	const allUsersAndPosts = await UserModel.find({}).populate("posts");
+
+	// filter by mode (environment)
+	if (environment !== "All") {
+		allPosts.forEach((post) => {
+			if (post.mode === environment) {
+				filteredPosts.push(post);
+			}
+		});
+	}
+
+	res.send(filteredPosts);
 };
 
 module.exports = { fetch_Results };

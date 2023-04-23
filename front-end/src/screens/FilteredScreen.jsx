@@ -35,19 +35,21 @@ const SearchBtnWithFilter = () => {
 export const FilteredItem = ({
 	id,
 	date_time,
-	meeting_type,
+	mode,
+	major,
 	subject,
-	topic,
+	descrip,
 	title,
 	isTrue,
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
+	const shortDescrip = `${descrip}`
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-1">{subject}</p>
-			<p className="mb-0">{topic}</p>
+			<p className="mb-1">{major}</p>
+			<p className="mb-2">{subject}</p>
 			<h5
 				className="mb-1 cursor-pointer"
 				onClick={() =>
@@ -57,10 +59,16 @@ export const FilteredItem = ({
 				{title}
 			</h5>
 			<p className="m-0">
-				{/* {format("MMM dd, yyyy hh:mm a", new Date(date_time))} */}
-				{date_time}
+				{/* format date as MM/DD/YYYY */}
+				{format("MM/dd/yyyy", new Date(date_time))}
 			</p>
-			<p className="m-0">{meeting_type}</p>
+			<p className="m-0">{mode}</p>
+			<p className="m-0">
+				{/* format description to only include first 50 characters then "..." */}
+
+
+				{shortDescrip.length > 50 ? shortDescrip.slice(0, 50) + "..." : shortDescrip}
+			</p>
 			<div className="row pt-2 pb-2">
 				<div className="col-6 text-center">
 					<a href={profile_url} className="btn btm-md btn-primary">
@@ -80,14 +88,14 @@ export const FilteredItem = ({
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
-	const { date, time, env, subject, subfield } = state;
+	const { date, time, env, major, subject } = state;
 
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = `filtered/${date}/${time}/${env}/${subject}/${subfield}`;
+		const options = `filtered/${date}/${time}/${env}/${major}/${subject}`;
 
 		axios
 			.get(options)
@@ -115,8 +123,8 @@ export default function FilteredScreen() {
 							id={post.id}
 							date_time={post.date_time}
 							meeting_type={post.meeting_type}
+							major={post.major}
 							subject={post.subject}
-							topic={post.topic}
 							title={post.title}
 							isTrue={true}
 						/>

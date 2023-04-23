@@ -15,8 +15,9 @@ export default function Home() {
 	const loadFilteredPosts = () => {
 		const options = {
 			method: "GET",
-			url: "https://my.api.mockaroo.com/posts.json",
-			params: { key: "fb86de30" },
+			// url: "https://my.api.mockaroo.com/posts.json",
+			// params: { key: "fb86de30" },
+			url: `/allposts`,
 		};
 
 		axios
@@ -44,7 +45,9 @@ export default function Home() {
 					<FilteredItem
 						id={post.id}
 						major={post.major}
-						title={post.title}
+						subject={post.subject}
+						descrip = {post.descrip}
+						mode={post.mode}
 						date_time={post.date_time}
 						istrue={false}
 						key={post.id}
