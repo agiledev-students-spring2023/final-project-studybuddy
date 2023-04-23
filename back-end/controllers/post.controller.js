@@ -2,6 +2,8 @@ const fakePost = require("../dummy_data/viewpost.json");
 const { PostModel } = require("../models/post.model");
 const mongoose = require("mongoose");
 const UserModel = require("../models/user.model");
+const CommentModel = require("../models/comments.model");
+
 
 const uploadPostController = async (req, res) => {
 	const {
@@ -37,11 +39,11 @@ const uploadPostController = async (req, res) => {
 };
 
 const viewPostController = async (req, res) => {
-	// Fetch post based on postId and separate into question and comments
-	// Question is the first element in the array and comments are the rest
-	const post = fakePost;
-	const question = post[0];
-	const comments = post.slice(1);
+	const { postId } = req.params;
+
+	// const post = fakePost;
+	// const question = post[0];
+	// const comments = post.slice(1);
 
 	return { question, comments };
 };

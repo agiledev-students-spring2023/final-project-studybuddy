@@ -1,3 +1,13 @@
 .mb-0 {
 	font-size: small;
 }
+
+.mb-1 {
+	font-size: large;
+	background-color: #c8b6ff;
+	color: white;
+}
+
+.mb-2 {
+	font-size: x-large;
+}
