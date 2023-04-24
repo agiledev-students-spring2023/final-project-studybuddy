@@ -37,6 +37,7 @@ router.get("/:date/:env/:subject/:subfield", async (req, res) => {
 						date_time: post.dateAndTime,
 						istrue: false,
 						mode: post.mode,
+						userid: user._id,
 						key: post._id,
 					});
 				}

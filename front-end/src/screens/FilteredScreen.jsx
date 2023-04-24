@@ -7,6 +7,7 @@ import TitleBar from "../components/TitleBar";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "./FilteredScreen.css";
+import { getToken } from "../auth/auth";
 
 // test to see if config is working
 const SearchBtnWithFilter = () => {
@@ -51,6 +52,28 @@ export const FilteredItem = ({
 	const previous = isTrue ? "/filteredScreen" : "/";
 	const post_url = `/viewPost/${id}`;
 	const shortDescrip = `${descrip}`;
+
+	const [chatId, setChatId] = useState("");
+	useEffect(() => {
+		fetchChatId(user_id);
+	}, [user_id]);
+
+	const fetchChatId = async (user_id) => {
+		try {
+			const chatIdAPI = `/_chat`;
+
+			const {
+				data: { chat_id },
+			} = await axios.post(
+				chatIdAPI,
+				{ buddy_id: user_id },
+				{ headers: { authorization: getToken() } }
+			);
+			setChatId(chat_id);
+		} catch {
+			setChatId("undefined");
+		}
+	};
 
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
@@ -142,6 +165,7 @@ export default function FilteredScreen() {
 							mode={post.mode}
 							date_time={post.date_time}
 							istrue={false}
+							user_id={post.userid}
 							key={post.id}
 							chatId={"todo"}
 						/>
