@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { getToken } from "../auth/auth";
 
-const PostPreview = ({ id, title }) => (
+const PostPreview = ({ id, subject }) => (
     <Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
         <div className="Post-preview">
-            <h5>{title}</h5>
+            <h5>{subject}</h5>
         </div>
     </Link>
 );
@@ -158,7 +158,6 @@ const Profile = () => {
                 console.error(error);
             });
     };
-    console.log(myposts);
     return (
         <div>
             <div className="title-bar">
@@ -180,13 +179,17 @@ const Profile = () => {
                     <div className="Post">
                         <h2>Posts</h2>
                         <div className="Postgrid">
-                            {myposts.map((post) => (
+                            {myposts && myposts.length > 0 ? (
+                                myposts.map((post) => (
                                     <PostPreview
-                                        key={post._id}
-                                        title={post.subject}
-                                        id={post._id}
+                                        subject={post.subject}
+                                        id={post.postId}
+                                        key={post.postId}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <p> No posts</p>
+                            )}
                         </div>
                     </div>
                 </div>

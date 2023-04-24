@@ -8,16 +8,14 @@ const mongoose = require("mongoose");
 router.get("/:userId", async (req, res) => {
     try {
         const userId = req.params.userId;
-        const tempUserId = "643b1b8926271cb644835017";
-        const url = "https://my.api.mockaroo.com/study_buddy_data.json";
-        const key = "a015ead0";
-
-        const user = await User.findById(tempUserId);
-        const postID = user.posts;
-
-        const posts = await PostModel.find({ _id: { $in: postID } });
-
+        const user = await User.findById(userId);
+        if (!user) {
+        return res.status(404).send("User not found");
+        }
+        const postIDs = user.posts;
+        const posts  = await PostModel.find({ _id: { $in: postIDs } });
         return res.json({ posts, user });
+
     } catch (error) {
         console.log(error);
         return res.status(500).send("Error retrieving data from mockAPI");

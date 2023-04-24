@@ -23,7 +23,7 @@ export default function Home() {
 		axios
 			.request(options)
 			.then(function (response) {
-				setPosts(response.data);
+				setPosts(response.data);				
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -50,6 +50,7 @@ export default function Home() {
 						mode={post.mode}
 						date_time={post.date_time}
 						istrue={false}
+						user_id={post.userid}
 						key={post.id}
 					/>
 				))}

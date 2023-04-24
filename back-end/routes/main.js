@@ -12,7 +12,7 @@ router.get("/allposts", async (req, res) => {
     const allUsersAndPosts = await UserModel.find({}).populate("posts");
     const postsWithUser = allUsersAndPosts.reduce((acc, user) => {
         user.posts.forEach((post) => {
-			acc.push({ id: post._id, major: user.major, subject: post.subject, descrip: post.description, date_time: post.dateAndTime, istrue: false, mode: post.mode, key: post._id });
+			acc.push({ id: post._id, major: user.major, subject: post.subject, descrip: post.description, date_time: post.dateAndTime, istrue: false, mode: post.mode,userid: user._id, key: post._id });
         });
         return acc;
     }, []);
