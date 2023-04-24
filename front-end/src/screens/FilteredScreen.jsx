@@ -43,6 +43,7 @@ export const FilteredItem = ({
 	title,
 	user_id,
 	isTrue,
+	old
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
@@ -52,7 +53,7 @@ export const FilteredItem = ({
 
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-1">
+			<p className={'mb-1 ' + ((old)? 'bg-light text-secondary':'')}>
 				{author} studies {major}
 			</p>
 			<p className="mb-2">{subject}</p>

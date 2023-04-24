@@ -10,8 +10,11 @@ router.get("/", (req, res) => {
 });
 
 router.get("/allposts", async (req, res) => {
+	const soryBy = req.query.sort_by || "date";
+	const sort_order = req.query.order === "asc" ? -1 : 1;
+
 	const allUsersAndPosts = await UserModel.find({}).populate("posts");
-	const postsWithUser = allUsersAndPosts.reduce((acc, user) => {
+	let postsWithUser = allUsersAndPosts.reduce((acc, user) => {
 		user.posts.forEach((post) => {
 			// acc.push({ id: post._id, author: user.name, major: user.major, subject: post.subject, descrip: post.description, date_time: post.dateAndTime, istrue: false, mode: post.mode, key: post._id });
 			acc.push({
@@ -29,7 +32,32 @@ router.get("/allposts", async (req, res) => {
 		});
 		return acc;
 	}, []);
-	res.send(postsWithUser);
+
+	let thirtyDaysAgo = new Date();
+	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+	postsWithUser = postsWithUser.filter((post) => {
+		return post.date_time > thirtyDaysAgo;
+	});
+
+	let olderPosts = postsWithUser.filter((post) => {
+		return post.date_time < Date.now();
+	});
+
+	let newerPosts = postsWithUser.filter((post) => {
+		return post.date_time >= Date.now();
+	});
+
+	if (soryBy === "date") {
+		olderPosts.sort((a, b) => {
+			return -1 * sort_order * (a.date_time - b.date_time);
+		});
+
+		newerPosts.sort((a, b) => {
+			return sort_order * (a.date_time - b.date_time);
+		});
+	}
+
+	return res.send([...newerPosts, ...olderPosts]);
 });
 
 router.get("/allmajors", async (req, res) => {

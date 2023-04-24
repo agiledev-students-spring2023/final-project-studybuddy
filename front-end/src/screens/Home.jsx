@@ -17,7 +17,7 @@ export default function Home() {
 			method: "GET",
 			// url: "https://my.api.mockaroo.com/posts.json",
 			// params: { key: "fb86de30" },
-			url: `/allposts`,
+			url: `/allposts?sort_by=date&order=desc`,
 		};
 
 		axios
@@ -53,6 +53,7 @@ export default function Home() {
 						istrue={false}
 						user_id={post.userid}
 						key={post.id}
+						old={new Date(post.date_time) < new Date()}
 					/>
 				))}
 				<Navbar user="Others" />
