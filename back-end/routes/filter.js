@@ -8,13 +8,8 @@ const UserModel = require("../models/user.model");
 // This route will return an array of posts that match the filters
 // FilteredScreen.jsx sends a GET request to this route to get the filtered posts
 
-router.get("/:date/:env/:subject/:subfield", async (req, res) => {
-	const filters = [
-		req.params.date,
-		req.params.env,
-		req.params.subject,
-		req.params.subfield,
-	];
+router.get("/:date/:flex/:env/:subject/:subfield", async (req, res) => {
+	const filters = [req.params.date, req.params.flex, req.params.env, req.params.subject, req.params.subfield]
 	const myPosts = await fetch_Results(filters);
 	console.log(req.params.date);
 	console.log(req.params.env);

@@ -106,8 +106,8 @@ const UserProfile = () => {
 								posts.map((post) => (
 									<PostPreview
 										subject={post.subject}
-										id={post.postId}
-										key={post.postId}
+										id={post._id}
+										key={post._id}
 									/>
 								))
 							) : (

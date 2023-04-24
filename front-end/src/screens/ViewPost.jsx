@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import { MdSend } from "react-icons/md";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { format } from "date-fns/fp";
 
 const UserComments = ({ username, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -21,8 +22,10 @@ const UserComments = ({ username, usercomment, comdate }) => (
 const Item = ({ title, date_time }) => {
 	return (
 		<div className="Post-info">
-			<p> {title} </p>
-			<p>{date_time} </p>
+			<h1> {title} </h1>
+			{/* format date time as "MM/DD/YYYY" and "HH:MM" */}
+			{/* <p> {format("MM/dd/yyyy")(new Date(date_time))} </p> */}
+			<p> {date_time} </p>
 		</div>
 	);
 };
@@ -62,6 +65,7 @@ const TitleBar = (props) => {
 };
 const ViewPost = () => {
 	const [post, setPost] = useState([]);
+	const [author, setAuthor] = useState([]);
 	const [comments, setComments] = useState([]);
 	const { postId } = useParams();
 	const message_url = `/chat/${postId}`;
@@ -98,11 +102,11 @@ const ViewPost = () => {
 				// setPosts(object);
 				// organize the two retrieved objects (post and comments)
 
-				const post = response.data.question;
-				const comments = response.data.comments;
+				const post = response.data.postInfo;
+				const author = response.data.authorInfo;
 
 				setPost(post);
-				setComments(comments);
+				setAuthor(author);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -116,16 +120,16 @@ const ViewPost = () => {
 				<div className="container-fluid pageLayout">
 					<div className="Buddy">
 						<div className="profile">
-							<div className="mb-1">
+							<div>
 								<img
-									src={"https://picsum.photos/id/64/300/300"}
+									src={author.userpic}
 									className="Picture"
 									alt="ProfilePicture"
 								/>
 							</div>
 							<div className="mydetails">
-								<h3 className="mb-1">{post.author}</h3>
-								<h3 className="mb-1">{post.author_major}</h3>
+								<h3 className="mb-3">{author.username}</h3>
+								<h3 className="mb-0"> Student of {author.usermajor}</h3>
 							</div>
 						</div>
 						<div className="MessageBuddy">
@@ -140,10 +144,10 @@ const ViewPost = () => {
 						</div>
 					</div>
 
-					<Item title={post.title} date_time={post.date} />
+					<Item title={post.subject} date_time={post.dateAndTime} />
 
 					<div className="Description">
-						<p>{post.content}</p>
+						<p>{post.description}</p>
 					</div>
 					<div className="Comments">
 						{/* {posts &&
@@ -156,13 +160,13 @@ const ViewPost = () => {
 							))} */}
 
 						{/* Unpack list of comments with their own information */}
-						{comments.map((comment) => (
+						{/* {comments.map((comment) => (
 							<UserComments
 								username={comment.author}
 								usercomment={comment.content}
 								comdate={comment.date}
 							/>
-						))}
+						))} */}
 					</div>
 
 					{/* Enter comment section */}
