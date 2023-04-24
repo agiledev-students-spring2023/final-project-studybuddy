@@ -9,6 +9,7 @@ import React, { useEffect, useState } from "react";
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
 	const [date, setDate] = useState("");
+	const [flex, setFlex] = useState("");
 	const [env, setEnv] = useState("");
 	const [subject, setSubject] = useState("");
 	const [subfield, setSubfield] = useState("");
@@ -36,6 +37,7 @@ export default function Filters() {
 			.querySelector(".react-calendar__tile--active")
 			.getElementsByTagName("abbr")[0]
 			.getAttribute("aria-label");
+		const flex = document.querySelector("#flexibility").value;
 		const online = document
 			.querySelector(".env-container")
 			.getElementsByTagName("input")[0].checked;
@@ -57,9 +59,10 @@ export default function Filters() {
 		setEnv(env);
 		setSubject(subject);
 		setSubfield(subfield);
+		setFlex(flex);
 
 		navigate("/filteredScreen", {
-			state: { date, env, subject, subfield },
+			state: { date, flex, env, subject, subfield },
 		});
 	};
 
@@ -76,6 +79,12 @@ export default function Filters() {
 					<Calendar id="myCal" onChange={onChange} value={value} />
 				</div>
 				<br />
+				<h4> Flexibility </h4>
+				<select id="flexibility"> 
+					<option value="1"> This Day Only </option>
+					<option value="2"> Around This Day </option>
+					<option value="3"> Any Day </option>
+				</select>
 			</div>
 
 			<div className="env-container">

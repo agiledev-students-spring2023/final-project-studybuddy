@@ -97,14 +97,14 @@ export const FilteredItem = ({
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
-	const { date, env, subject, subfield } = state;
+	const { date, flex, env, subject, subfield } = state;
 
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = `filtered/${date}/${env}/${subject}/${subfield}`;
+		const options = `filtered/${date}/${flex}/${env}/${subject}/${subfield}`;
 
 		axios
 			.get(options)
