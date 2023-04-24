@@ -115,3 +115,14 @@
 .Postgrid a:hover {
 	background-color: #c1c8ff;
 }
+
+.Postgrid p{
+	
+	margin-top: 20px;
+	margin-left: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	color: rgb(180, 179, 187);
+	text-transform: uppercase;
+	
+  }
