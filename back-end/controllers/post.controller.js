@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const UserModel = require("../models/user.model");
 const CommentModel = require("../models/comments.model");
 
-
 const uploadPostController = async (req, res) => {
 	const {
 		meetingDateAndTime,
@@ -61,7 +60,7 @@ const viewPostController = async (req, res) => {
 	return { postInfo, authorInfo}
 
 
-
+	// retrieve post info from database: author, date, subject, description, comments, etc
 };
 
 module.exports = {

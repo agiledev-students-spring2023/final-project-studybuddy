@@ -10,6 +10,10 @@ const fetch_Results = async (req, res) => {
 		if (req[2] !== "no preference") {
 			if (req[4] === "none") { 	
 				const allPosts = await PostModel.find({ mode: req[2] });
+	if (req[2] === "All") {
+		if (req[1] !== "no preference") {
+			if (req[3] === "none") {
+				const allPosts = await PostModel.find({ mode: req[1] });
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description

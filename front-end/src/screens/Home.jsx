@@ -17,13 +17,13 @@ export default function Home() {
 			method: "GET",
 			// url: "https://my.api.mockaroo.com/posts.json",
 			// params: { key: "fb86de30" },
-			url: `/allposts`,
+			url: `/allposts?sort_by=date&order=desc`,
 		};
 
 		axios
 			.request(options)
 			.then(function (response) {
-				setPosts(response.data);				
+				setPosts(response.data);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -47,12 +47,13 @@ export default function Home() {
 						major={post.major}
 						author={post.author}
 						subject={post.subject}
-						descrip = {post.descrip}
+						descrip={post.descrip}
 						mode={post.mode}
 						date_time={post.date_time}
 						istrue={false}
 						user_id={post.userid}
 						key={post.id}
+						old={new Date(post.date_time) < new Date()}
 					/>
 				))}
 				<Navbar user="Others" />
