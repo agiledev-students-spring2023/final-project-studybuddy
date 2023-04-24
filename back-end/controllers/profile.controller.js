@@ -7,9 +7,6 @@ const { PostModel } = require("../models/post.model");
 
 const ProfileController = async (req, res) => {
 	try {
-		const url = "https://my.api.mockaroo.com/study_buddy_data.json";
-		const key = "a015ead0";
-
 		const user = await User.findById(req.user.id);
 		const postID = user.posts;
 		const posts = await PostModel.find({ _id: { $in: postID } });
