@@ -1,18 +1,33 @@
-import React, { useState } from "react";
 import Calendar from "react-calendar";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import "./Filters.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
 	const [date, setDate] = useState("");
-	const [time, setTime] = useState("");
 	const [env, setEnv] = useState("");
 	const [subject, setSubject] = useState("");
 	const [subfield, setSubfield] = useState("");
 	const navigate = useNavigate();
+	const [MAJORS, setMAJORS] = useState([]);
+
+	useEffect(() => {
+		getMajors();
+	}, []);
+
+	const getMajors = async () => {
+		const url = `/allmajors`;
+
+		axios
+			.get(url)
+			.then(function (response) {
+				setMAJORS(response.data);
+			})
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -21,7 +36,6 @@ export default function Filters() {
 			.querySelector(".react-calendar__tile--active")
 			.getElementsByTagName("abbr")[0]
 			.getAttribute("aria-label");
-		const time = document.querySelector(".time-pref").value;
 		const online = document
 			.querySelector(".env-container")
 			.getElementsByTagName("input")[0].checked;
@@ -30,21 +44,22 @@ export default function Filters() {
 			.getElementsByTagName("input")[1].checked;
 		const env =
 			online && !inPerson
-				? "Online"
+				? "online"
 				: !online && inPerson
-				? "In Person"
-				: "No Preference";
-		const subject = document.querySelector(".general-subject").value;
-		const subfield = document.querySelector(".specific-subject").value;
+				? "in-person"
+				: "no preference";
+		const subject = document.querySelector("#this_major").value;
+		const input_subfield = document.querySelector(".specific-subject").value;
+		const subfield = 
+			input_subfield === "" ? "none" : input_subfield;
 
 		setDate(date);
-		setTime(time);
 		setEnv(env);
 		setSubject(subject);
 		setSubfield(subfield);
 
 		navigate("/filteredScreen", {
-			state: { date, time, env, subject, subfield },
+			state: { date, env, subject, subfield },
 		});
 	};
 
@@ -52,32 +67,19 @@ export default function Filters() {
 		<div className="filters-container">
 			<div className="title-bar">
 				{" "}
-				<TitleBar title="Filters" backpage="/" />{" "}
-			</div>
-			<div>
-				{" "}
-				<strong>
-					{" "}
-					find the perfect study buddy according to your availability{" "}
-				</strong>{" "}
+				<TitleBar title="Find a Study Buddy" backpage="/" />{" "}
 			</div>
 
 			<div className="calendar-container">
-				<h2> Meeting Date & Time </h2>
+				<h2> <strong> Meeting Date </strong></h2>
 				<div className="calendar">
 					<Calendar id="myCal" onChange={onChange} value={value} />
 				</div>
 				<br />
-				<input
-					className="time-pref"
-					type="time"
-					name="time-pref"
-					defaultValue={"00:00"}
-				/>
 			</div>
 
 			<div className="env-container">
-				<h2> Meeting Preference</h2>
+				<h2> <strong>Meeting Preference</strong></h2>
 				<input className="env-pref" type="checkbox" name="env-pref" />
 				<label className="env-pref-label"> Online </label>
 				<br />
@@ -86,21 +88,26 @@ export default function Filters() {
 			</div>
 
 			<div className="subject-container">
-				<h2> Subject </h2>
-				<input
-					className="general-subject"
-					type="text"
-					name="general-subject"
-					defaultValue="User Major (Default)"
-				/>
-				<br />
+				<h2> <strong> Subject </strong> </h2>
 				<select
+					id="this_major"
+					aria-label="Floating label select example"
+				>
+					<option value="All"> All </option>
+					{MAJORS.map((major) => (
+						<option key={major} value={major}>
+							{major}
+						</option>
+					))}
+				</select>
+				<br />
+				<h2> <strong> Optional Subfield </strong> </h2>
+				<input
 					className="specific-subject"
 					name="specific-subject"
-					defaultValue="subfield (optional)"
+					defaultValue=""
 				>
-					<option value="default">Optional Subfield</option>
-				</select>
+				</input>
 			</div>
 			<br />
 			<a
