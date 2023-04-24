@@ -1,13 +1,10 @@
 const majors = require("../dummy_data/majors.json");
 const mongoose = require("mongoose");
-const { MajorsModel } = require("../models/majors.model");
+const MajorsModel = require("../models/majors.model");
 
-const fetch_Majors = () => {
-	// Get all majors from the database
-	// const allMajors = MajorsModel.find({});
-
-	// return allMajors;
-	return majors;
+const fetch_Majors = async () => {
+	const allMajors = await MajorsModel.find({});
+	return allMajors;
 };
 
 module.exports = { fetch_Majors };

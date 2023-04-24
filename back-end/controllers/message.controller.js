@@ -4,23 +4,23 @@ const mongoose = require("mongoose");
 
 const { ObjectId } = mongoose.Types;
 
-
-
 const MsgListController = async (req, res) => {
-	const user_id = req.user.id
+	const user_id = req.user.id;
 
-	const { status, success, messages, buddyName, buddyId } = await fetch_msgList(
-		user_id,
-		req.params.chatId
-	);
+	const { status, success, messages, buddyName, buddyId } =
+		await fetch_msgList(user_id, req.params.chatId);
 
 	res.status(status).send({ success, messages, buddyName, buddyId });
-}
+};
 
 const createMsgController = async (req, res) => {
-	const status = await create_message(req.params.chatId, req.user.id, req.body);
+	const status = await create_message(
+		req.params.chatId,
+		req.user.id,
+		req.body
+	);
 	res.status(status).send({ success: status == 200 });
-}
+};
 
 /* 2. fetch message list in chat */
 // input: user_id, chatId
@@ -32,11 +32,18 @@ const fetch_msgList = async (user_id, chatId) => {
 	// - [o] find User document by buddy id and retrieve buddy name
 	// - [o] return { messages, buddyName, buddyId }
 
-	let buddy_id = null
+	let buddy_id = null;
 
 	try {
-		const validId = ObjectId.isValid(chatId)
-		if (!validId) return { status: 400, success: false, messages: [], buddyName: "", buddyId: "" };
+		const validId = ObjectId.isValid(chatId);
+		if (!validId)
+			return {
+				status: 400,
+				success: false,
+				messages: [],
+				buddyName: "",
+				buddyId: "",
+			};
 		const chat = await Chat.findById(chatId);
 
 		const messageList = await Message.find({ chat_id: chatId }).sort({
@@ -44,35 +51,49 @@ const fetch_msgList = async (user_id, chatId) => {
 		});
 		const newList = [];
 		for (var i = 0; i < messageList.length; i++) {
-
 			const { content, sender_id, timestamp, _id } = messageList[i];
-			const message = { isMe: sender_id == user_id, content, timestamp, _id };
+			const message = {
+				isMe: sender_id == user_id,
+				content,
+				timestamp,
+				_id,
+			};
 
 			newList.push(message);
 		}
 
-
-		let last_read
+		let last_read;
 		if (chat.members[0] == user_id) {
 			buddy_id = chat.members[1];
-			last_read = chat.last_read
-			last_read[0] = Date.now()
-		}
-		else {
+			last_read = chat.last_read;
+			last_read[0] = Date.now();
+		} else {
 			buddy_id = chat.members[0];
-			last_read = chat.last_read
-			last_read[1] = Date.now()
+			last_read = chat.last_read;
+			last_read[1] = Date.now();
 		}
-		const user = await User.findById(buddy_id)
+		const user = await User.findById(buddy_id);
 
-		await Chat.updateOne({ _id: chatId }, { last_read: last_read })
+		await Chat.updateOne({ _id: chatId }, { last_read: last_read });
 
-		return { status: 200, success: true, messages: newList, buddyName: user.name, buddyId: buddy_id };
+		return {
+			status: 200,
+			success: true,
+			messages: newList,
+			buddyName: user.name,
+			buddyId: buddy_id,
+		};
 	} catch (err) {
-		console.log(err)
-		return { status: 400, success: false, messages: [], buddyName: "", buddyId: "" };
+		console.log(err);
+		return {
+			status: 400,
+			success: false,
+			messages: [],
+			buddyName: "",
+			buddyId: "",
+		};
 	}
-}
+};
 
 /* 1. create message */
 // input: chat_id, message: {timestamp, content, sender_id}
@@ -83,8 +104,8 @@ const create_message = async (chat_id, senderId, { content, timestamp }) => {
 	// - [o] return success
 
 	try {
-		const validId = ObjectId.isValid(chat_id)
-		if (!validId) return 400
+		const validId = ObjectId.isValid(chat_id);
+		if (!validId) return 400;
 
 		const msg = await Message.create({
 			sender_id: senderId,
@@ -103,5 +124,5 @@ module.exports = {
 	fetch_msgList,
 	create_message,
 	MsgListController,
-	createMsgController
+	createMsgController,
 };

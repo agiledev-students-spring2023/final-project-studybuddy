@@ -22,11 +22,9 @@ export default function Filters() {
 	const getMajors = async () => {
 		const url = `/allmajors`;
 
-		axios
-			.get(url)
-			.then(function (response) {
-				setMAJORS(response.data);
-			})
+		axios.get(url).then(function (response) {
+			setMAJORS(response.data);
+		});
 	};
 
 	const handleSubmit = (e) => {
@@ -49,9 +47,9 @@ export default function Filters() {
 				? "in-person"
 				: "no preference";
 		const subject = document.querySelector("#this_major").value;
-		const input_subfield = document.querySelector(".specific-subject").value;
-		const subfield = 
-			input_subfield === "" ? "none" : input_subfield;
+		const input_subfield =
+			document.querySelector(".specific-subject").value;
+		const subfield = input_subfield === "" ? "none" : input_subfield;
 
 		setDate(date);
 		setEnv(env);
@@ -71,7 +69,10 @@ export default function Filters() {
 			</div>
 
 			<div className="calendar-container">
-				<h2> <strong> Meeting Date </strong></h2>
+				<h2>
+					{" "}
+					<strong> Meeting Date </strong>
+				</h2>
 				<div className="calendar">
 					<Calendar id="myCal" onChange={onChange} value={value} />
 				</div>
@@ -79,7 +80,10 @@ export default function Filters() {
 			</div>
 
 			<div className="env-container">
-				<h2> <strong>Meeting Preference</strong></h2>
+				<h2>
+					{" "}
+					<strong>Meeting Preference</strong>
+				</h2>
 				<input className="env-pref" type="checkbox" name="env-pref" />
 				<label className="env-pref-label"> Online </label>
 				<br />
@@ -88,7 +92,10 @@ export default function Filters() {
 			</div>
 
 			<div className="subject-container">
-				<h2> <strong> Subject </strong> </h2>
+				<h2>
+					{" "}
+					<strong> Subject </strong>{" "}
+				</h2>
 				<select
 					id="this_major"
 					aria-label="Floating label select example"
@@ -101,13 +108,15 @@ export default function Filters() {
 					))}
 				</select>
 				<br />
-				<h2> <strong> Optional Subfield </strong> </h2>
+				<h2>
+					{" "}
+					<strong> Optional Subfield </strong>{" "}
+				</h2>
 				<input
 					className="specific-subject"
 					name="specific-subject"
 					defaultValue=""
-				>
-				</input>
+				></input>
 			</div>
 			<br />
 			<a

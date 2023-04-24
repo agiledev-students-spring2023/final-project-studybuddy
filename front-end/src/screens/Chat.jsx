@@ -7,7 +7,7 @@ import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import ChatError from "../components/ChatError";
-import { getToken } from "../auth/auth"
+import { getToken } from "../auth/auth";
 import Loader from "../components/Loader";
 
 export default function Chat() {
@@ -15,20 +15,19 @@ export default function Chat() {
 	const [buddyId, setBuddyId] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [input, setInput] = useState("");
-	const [success, setSuccess] = useState(true)
+	const [success, setSuccess] = useState(true);
 	const { chatId } = useParams();
 
-	const [sending, setSending] = useState(false)
-	const [lastMsg, setLastMsg] = useState('')
-	const [loading, setLoading] = useState(true)
+	const [sending, setSending] = useState(false);
+	const [lastMsg, setLastMsg] = useState("");
+	const [loading, setLoading] = useState(true);
 
 	const chatAPI = `/_message/${chatId}`;
 
-
 	async function fetchChatData() {
 		if (sending) {
-			console.log('not fetch')
-			return
+			console.log("not fetch");
+			return;
 		}
 
 		try {
@@ -39,44 +38,47 @@ export default function Chat() {
 					authorization: getToken(),
 				},
 			};
-			const { data } = await axios.request(options)
+			const { data } = await axios.request(options);
 
 			const { success, messages, buddyName, buddyId } = data;
 
-			setSuccess(success)
+			setSuccess(success);
 			setMessages(messages);
 			setBuddyName(buddyName);
 			setBuddyId(buddyId);
-			setLoading(false)
+			setLoading(false);
 			if (messages.length) {
-				setLastMsg(messages[messages.length - 1]._id)
+				setLastMsg(messages[messages.length - 1]._id);
 			}
 		} catch (err) {
-			setSuccess(false)
-			setLoading(false)
+			setSuccess(false);
+			setLoading(false);
 		}
 	}
 
 	async function updateLastRead() {
-		const updateAPI = '/_chat'
-		const { data } = await axios.put(updateAPI, { chatId }, {
-			headers: {
-				authorization: getToken(),
+		const updateAPI = "/_chat";
+		const { data } = await axios.put(
+			updateAPI,
+			{ chatId },
+			{
+				headers: {
+					authorization: getToken(),
+				},
 			}
-		});
+		);
 	}
 	useEffect(() => {
-		scrollToBottom()
-	}, [lastMsg])
-
+		scrollToBottom();
+	}, [lastMsg]);
 
 	useEffect(() => {
 		// this function will be called just once.
-		setLoading(true)
-		updateLastRead()
+		setLoading(true);
+		updateLastRead();
 
 		let interval = setInterval(() => {
-			fetchChatData()
+			fetchChatData();
 		}, 1000);
 
 		return () => {
@@ -90,35 +92,38 @@ export default function Chat() {
 	const sendMessageToBack = async (input) => {
 		const {
 			data: { success },
-		} = await axios.post(chatAPI, {
-			content: input,
-			timestamp: Date.now()
-		}, {
-			headers: {
-				authorization: getToken(),
+		} = await axios.post(
+			chatAPI,
+			{
+				content: input,
+				timestamp: Date.now(),
+			},
+			{
+				headers: {
+					authorization: getToken(),
+				},
 			}
-		});
+		);
 
-		fetchChatData()
+		fetchChatData();
 	};
 
 	const sendMessage = async () => {
 		if (input.length === 0) return; // empty input
 
-		setSending(true)
+		setSending(true);
 
 		await sendMessageToBack(input);
 
 		/* reset input */
 		setInput("");
 
-
-		setSending(false)
+		setSending(false);
 	};
 
 	const scrollToBottom = () => {
 		const element = document.getElementById("chat_body");
-		if (!element) return
+		if (!element) return;
 		element.scrollTop = element.scrollHeight;
 	};
 
@@ -132,43 +137,51 @@ export default function Chat() {
 
 	return (
 		<div className="screen">
-			{loading ? <Loader /> : success ? <><div className="chat_screen_header">
-				<MdArrowBack
-					className="cursor_pointer back_icon_"
-					onClick={() => window.history.back()}
-				/>
-				<p
-					className="cursor_pointer"
-					onClick={() =>
-						(window.location.href = `/userprofile/${buddyId}`)
-					}
-				>
-					{buddyName}
-				</p>{" "}
-			</div>
-				<div className="chat_screen" >
-					<div className="chat_screen_body" id="chat_body">
-						{messages.map((e, i) => (
-							<ChatBubble key={i} chat={e} />
-						))}
-					</div>
-					<div className="chat_input_container">
-						<Form.Control
-							className="chatting_input_window"
-							type="text"
-							value={input}
-							placeholder="Type message"
-							onChange={(e) => setInput(e.target.value)}
-							onKeyDown={handleKeyDown}
+			{loading ? (
+				<Loader />
+			) : success ? (
+				<>
+					<div className="chat_screen_header">
+						<MdArrowBack
+							className="cursor_pointer back_icon_"
+							onClick={() => window.history.back()}
 						/>
-						<button
-							className="btn_chatsend"
-							onClick={handleButtonClick}
+						<p
+							className="cursor_pointer"
+							onClick={() =>
+								(window.location.href = `/userprofile/${buddyId}`)
+							}
 						>
-							<MdSend />
-						</button>
+							{buddyName}
+						</p>{" "}
 					</div>
-				</div></> : <ChatError idx={2} />}
+					<div className="chat_screen">
+						<div className="chat_screen_body" id="chat_body">
+							{messages.map((e, i) => (
+								<ChatBubble key={i} chat={e} />
+							))}
+						</div>
+						<div className="chat_input_container">
+							<Form.Control
+								className="chatting_input_window"
+								type="text"
+								value={input}
+								placeholder="Type message"
+								onChange={(e) => setInput(e.target.value)}
+								onKeyDown={handleKeyDown}
+							/>
+							<button
+								className="btn_chatsend"
+								onClick={handleButtonClick}
+							>
+								<MdSend />
+							</button>
+						</div>
+					</div>
+				</>
+			) : (
+				<ChatError idx={2} />
+			)}
 			<Navbar user="Others" />
 		</div>
 	);

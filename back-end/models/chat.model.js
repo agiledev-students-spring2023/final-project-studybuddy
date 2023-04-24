@@ -8,7 +8,6 @@ const ChatSchema = new Schema({
 	last_read: [Number],
 });
 
-
 const MessageSchema = new Schema({
 	sender_id: String,
 	content: String,

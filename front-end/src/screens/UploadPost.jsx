@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import "./UploadPost.css";
@@ -12,14 +12,31 @@ import { getToken } from "../auth/auth";
 
 const UploadPost = () => {
 	const navigate = useNavigate();
-	const img =
-		"https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png";
+	const [MAJORS, setMAJORS] = useState([]);
 
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+
+	useEffect(() => {
+		getMajors();
+	}, []);
+
+	const getMajors = async () => {
+		const url = URL.MAJORS;
+
+		axios
+			.get(url)
+			.then(function (response) {
+				let majors = response.data.map((item) => item.field);
+				setMAJORS(majors);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
 
 	const onSubmit = (data) => {
 		const { date, time, mode, subject, desc } = data;
@@ -71,7 +88,6 @@ const UploadPost = () => {
 			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
-
 					<div className="row">
 						<div className="col-md-12">
 							<form onSubmit={handleSubmit(onSubmit)}>
@@ -133,7 +149,31 @@ const UploadPost = () => {
 									</label>
 								</div>
 
-								{/* Subject */}
+								<div className="form-floating mb-3">
+									<select
+										className={
+											"form-select " +
+											(errors.major ? "is-invalid" : "")
+										}
+										id="subject"
+										placeholder="subject"
+										{...register("subject", {
+											required: true,
+										})}
+									>
+										<option value="">Select a major</option>
+										{MAJORS.map((major) => (
+											<option key={major} value={major}>
+												{major}
+											</option>
+										))}
+									</select>
+									<label htmlFor="subject">
+										Subject/Topic
+									</label>
+								</div>
+
+								{/* Subject
 								<div className="form-floating mb-3 custom-01">
 									<input
 										type="text"
@@ -150,7 +190,7 @@ const UploadPost = () => {
 									<label htmlFor="subject">
 										Subject/Topic
 									</label>
-								</div>
+								</div> */}
 
 								{/* Description */}
 								<div className="form-floating mb-3 custom02">
