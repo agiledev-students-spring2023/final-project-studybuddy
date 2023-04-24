@@ -163,7 +163,6 @@ const Profile = () => {
 		removeToken();
 		window.location.href = "/Login";
 	};
-	console.log(myposts);
 	return (
 		<div>
 			<div className="title-bar">
