@@ -1,9 +1,12 @@
 const majors = require("../dummy_data/majors.json");
+const mongoose = require("mongoose");
+const { MajorsModel } = require("../models/majors.model");
 
 const fetch_Majors = () => {
-	// Get all majors listed in database
+	// Get all majors from the database
+	// const allMajors = MajorsModel.find({});
 
-	// Send dummy data for now
+	// return allMajors;
 	return majors;
 };
 

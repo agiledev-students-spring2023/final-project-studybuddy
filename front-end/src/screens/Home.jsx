@@ -45,6 +45,7 @@ export default function Home() {
 					<FilteredItem
 						id={post.id}
 						major={post.major}
+						author={post.author}
 						subject={post.subject}
 						descrip = {post.descrip}
 						mode={post.mode}

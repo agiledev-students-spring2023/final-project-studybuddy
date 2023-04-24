@@ -36,6 +36,7 @@ export const FilteredItem = ({
 	id,
 	date_time,
 	mode,
+	author,
 	major,
 	subject,
 	descrip,
@@ -48,7 +49,7 @@ export const FilteredItem = ({
 	const shortDescrip = `${descrip}`
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-1">{major}</p>
+			<p className="mb-1">{author} studies {major}</p>
 			<p className="mb-2">{subject}</p>
 			<h5
 				className="mb-1 cursor-pointer"
@@ -88,14 +89,14 @@ export const FilteredItem = ({
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
-	const { date, time, env, major, subject } = state;
+	const { date, env, subject, subfield } = state;
 
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = `filtered/${date}/${time}/${env}/${major}/${subject}`;
+		const options = `filtered/${date}/${env}/${subject}/${subfield}`;
 
 		axios
 			.get(options)
@@ -121,12 +122,14 @@ export default function FilteredScreen() {
 						<FilteredItem
 							className="post-result"
 							id={post.id}
-							date_time={post.date_time}
-							meeting_type={post.meeting_type}
+							author={post.author}
 							major={post.major}
 							subject={post.subject}
-							title={post.title}
-							isTrue={true}
+							descrip = {post.descrip}
+							mode={post.mode}
+							date_time={post.date_time}
+							istrue={false}
+							key={post.id}
 						/>
 					))}
 				</div>

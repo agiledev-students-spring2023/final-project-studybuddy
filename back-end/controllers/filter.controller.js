@@ -4,25 +4,80 @@ const { PostModel } = require("../models/post.model");
 const UserModel = require("../models/user.model");
 
 const fetch_Results = async (req, res) => {
-	// return posts relevant to the filter by date, time, environment, subject, and subfield
 	const filteredPosts = [];
-	const { date, time, environment, subject, subfield } = req.body;
-
-	// get all posts
-	const allPosts = await PostModel.find({});
-	const allUsers = await UserModel.find({});
-	const allUsersAndPosts = await UserModel.find({}).populate("posts");
-
-	// filter by mode (environment)
-	if (environment !== "All") {
-		allPosts.forEach((post) => {
-			if (post.mode === environment) {
-				filteredPosts.push(post);
+	if (req[2] === "All") {
+		if (req[1] !== "no preference") {
+			if (req[3] === "none") { 	
+				const allPosts = await PostModel.find({ mode: req[1] });
+				filteredPosts.push(...allPosts);
+			} else {
+				// check if value is included in post description
+				const allPosts = await PostModel.find({ mode: req[1]});
+				allPosts.forEach((post) => {
+					// if there is a description, check if it includes the value
+					if (post.description !== undefined) {
+						if (post.description.includes(req[3])) {
+							filteredPosts.push(post);
+						}
+					}
+				});
 			}
-		});
+		} else {
+			const allPosts = await PostModel.find({});
+			if (req[3] === "none") { 	
+				const allPosts = await PostModel.find({});
+				filteredPosts.push(...allPosts);
+			} else {
+				// check if value is included in post description
+				const allPosts = await PostModel.find({});
+				allPosts.forEach((post) => {
+					// if there is a description, check if it includes the value
+					if (post.description !== undefined) {
+						if (post.description.includes(req[3])) {
+							filteredPosts.push(post);
+						}
+					}
+				});
+			}
+		}
+	} else {
+		if (req[1] !== "no preference") {
+			if (req[3] === "none") { 	
+				const allPosts = await PostModel.find({ mode: req[1], subject: req[2]});
+				filteredPosts.push(...allPosts);
+			} else {
+				// check if value is included in post description
+				const allPosts = await PostModel.find({ mode: req[1], subject: req[2]});
+				allPosts.forEach((post) => {
+					// if there is a description, check if it includes the value
+					if (post.description !== undefined) {
+						if (post.description.includes(req[3])) {
+							filteredPosts.push(post);
+						}
+					}
+				});
+			}
+		} else {
+			if (req[3] === "none") { 	
+				const allPosts = await PostModel.find({subject: req[2]});
+				filteredPosts.push(...allPosts);
+			} else {
+				// check if value is included in post description
+				const allPosts = await PostModel.find({subject: req[2]});
+				allPosts.forEach((post) => {
+					// if there is a description, check if it includes the value
+					if (post.description !== undefined) {
+						if (post.description.includes(req[3])) {
+							filteredPosts.push(post);
+						}
+					}
+				});
+			}
+		}
 	}
 
-	res.send(filteredPosts);
+	// return posts;
+	return filteredPosts;
 };
 
 module.exports = { fetch_Results };
