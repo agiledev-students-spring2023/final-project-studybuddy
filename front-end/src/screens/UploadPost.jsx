@@ -13,7 +13,7 @@ import { getToken } from "../auth/auth";
 const UploadPost = () => {
 	const navigate = useNavigate();
 	const [MAJORS, setMAJORS] = useState([]);
-	
+
 	const {
 		register,
 		handleSubmit,

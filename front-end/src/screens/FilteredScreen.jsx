@@ -48,11 +48,13 @@ export const FilteredItem = ({
 	const profile_url = `/userprofile/${user_id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
 	const post_url = `/viewPost/${id}`;
-	const shortDescrip = `${descrip}`
-	
+	const shortDescrip = `${descrip}`;
+
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-1">{author} studies {major}</p>
+			<p className="mb-1">
+				{author} studies {major}
+			</p>
 			<p className="mb-2">{subject}</p>
 			<h5
 				className="mb-1 cursor-pointer"
@@ -70,8 +72,9 @@ export const FilteredItem = ({
 			<p className="m-0">
 				{/* format description to only include first 50 characters then "..." */}
 
-
-				{shortDescrip.length > 50 ? shortDescrip.slice(0, 50) + "..." : shortDescrip}
+				{shortDescrip.length > 50
+					? shortDescrip.slice(0, 50) + "..."
+					: shortDescrip}
 			</p>
 			<div className="row pt-2 pb-2">
 				<div className="col-4 text-center">
@@ -115,7 +118,7 @@ export default function FilteredScreen() {
 				console.error(error);
 			});
 	};
-	
+
 	return (
 		<>
 			<div className="title-bar">
@@ -133,7 +136,7 @@ export default function FilteredScreen() {
 							author={post.author}
 							major={post.major}
 							subject={post.subject}
-							descrip = {post.descrip}
+							descrip={post.descrip}
 							mode={post.mode}
 							date_time={post.date_time}
 							istrue={false}

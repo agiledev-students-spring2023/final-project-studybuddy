@@ -23,7 +23,7 @@ export default function Home() {
 		axios
 			.request(options)
 			.then(function (response) {
-				setPosts(response.data);				
+				setPosts(response.data);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -47,7 +47,7 @@ export default function Home() {
 						major={post.major}
 						author={post.author}
 						subject={post.subject}
-						descrip = {post.descrip}
+						descrip={post.descrip}
 						mode={post.mode}
 						date_time={post.date_time}
 						istrue={false}
