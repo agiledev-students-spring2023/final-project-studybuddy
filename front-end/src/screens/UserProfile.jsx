@@ -68,7 +68,6 @@ const UserProfile = () => {
             setChatId('undefined');
         }
     };
-    console.log(posts);
     return (
         <div>
             <div className="user_profile_header">
