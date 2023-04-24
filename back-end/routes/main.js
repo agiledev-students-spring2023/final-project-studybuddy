@@ -3,17 +3,32 @@ const router = express.Router();
 const UserModel = require("../models/user.model");
 const { PostModel } = require("../models/post.model");
 const MajorsModel = require("../models/majors.model");
+const { isAuthenticated } = require("../middlewares/auth.middleware");
+const { search_chatId } = require("../utilities/chat.utils");
 
 // route for HTTP GET requests to the root document
 router.get("/", (req, res) => {
 	res.send("home!");
 });
 
-router.get("/allposts", async (req, res) => {
+router.get("/allposts", isAuthenticated, async (req, res) => {
 	const soryBy = req.query.sort_by || "date";
 	const sort_order = req.query.order === "asc" ? -1 : 1;
 
-	const allUsersAndPosts = await UserModel.find({}).populate("posts");
+	let allUsersAndPosts = await UserModel.find({}).populate("posts");
+
+	let temp = []
+	const loginuserid = req.user.id;
+	for (var i = 0; i < allUsersAndPosts.length; i++) {
+		const cur_user = allUsersAndPosts[i]
+		const { chat_id } = await search_chatId(loginuserid, cur_user._id)
+		const obj = { chatId: chat_id };
+		const copiedObj = Object.assign(cur_user, obj);
+		temp.push(copiedObj)
+
+	}
+	allUsersAndPosts = temp
+
 	let postsWithUser = allUsersAndPosts.reduce((acc, user) => {
 		user.posts.forEach((post) => {
 			// acc.push({ id: post._id, author: user.name, major: user.major, subject: post.subject, descrip: post.description, date_time: post.dateAndTime, istrue: false, mode: post.mode, key: post._id });
@@ -28,7 +43,7 @@ router.get("/allposts", async (req, res) => {
 				mode: post.mode,
 				userid: user._id,
 				key: post._id,
-				chatId: "hello"
+				chatId: user.chatId
 			});
 		});
 		return acc;
