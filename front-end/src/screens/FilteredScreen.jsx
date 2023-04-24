@@ -125,7 +125,7 @@ export const FilteredItem = ({
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
-	const { date, env, subject, subfield } = state;
+	const { date, flex, env, subject, subfield } = state;
 
 	useEffect(() => {
 		loadFilteredPosts();
@@ -133,7 +133,6 @@ export default function FilteredScreen() {
 
 	const loadFilteredPosts = () => {
 
-		console.log("filter screen")
 		const options = {
 			method: "GET",
 			url: `filtered/${date}/${env}/${subject}/${subfield}`,
@@ -141,6 +140,7 @@ export default function FilteredScreen() {
 				authorization: getToken(),
 			},
 		}
+
 
 		axios
 			.request(options)

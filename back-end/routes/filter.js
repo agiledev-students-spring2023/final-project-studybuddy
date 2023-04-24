@@ -17,6 +17,7 @@ router.get("/:date/:env/:subject/:subfield", isAuthenticated, async (req, res) =
 		req.params.subject,
 		req.params.subfield,
 	];
+
 	const myPosts = await fetch_Results(filters);
 	console.log(req.params.date);
 	console.log(req.params.env);

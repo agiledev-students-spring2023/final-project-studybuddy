@@ -38,13 +38,27 @@ const uploadPostController = async (req, res) => {
 };
 
 const viewPostController = async (req, res) => {
-	const { postId } = req.params;
+	const { postId } = req[0];
+	console.log("POST ID: ", postId);
+	const thisPost = await PostModel.findById(postId);
+	const postInfo = {
+		_id: thisPost._id,
+		dateAndTime: thisPost.dateAndTime,
+		mode: thisPost.mode,
+		subject: thisPost.subject,
+		description: thisPost.description,
+	};
 
-	const post = fakePost;
-	const question = post[0];
-	const comments = post.slice(1);
+	// find author and comments
+	const thisAuthor = await UserModel.findOne({ posts: postId });
+	const authorInfo = {
+		_id: thisAuthor._id,
+		username: thisAuthor.name,
+		usermajor: thisAuthor.major,
+	};
 
-	return { question, comments };
+	return { postInfo, authorInfo}
+
 
 	// retrieve post info from database: author, date, subject, description, comments, etc
 };
