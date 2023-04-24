@@ -45,6 +45,7 @@ export const FilteredItem = ({
 	user_id,
 	isTrue,
 	old,
+	chatId
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
@@ -52,27 +53,27 @@ export const FilteredItem = ({
 	const post_url = `/viewPost/${id}`;
 	const shortDescrip = `${descrip}`;
 
-	const [chatId, setChatId] = useState("");
-	useEffect(() => {
-		fetchChatId(user_id);
-	}, [user_id]);
+	// const [chatId, setChatId] = useState("");
+	// useEffect(() => {
+	// 	fetchChatId(user_id);
+	// }, [user_id]);
 
-	const fetchChatId = async (user_id) => {
-		try {
-			const chatIdAPI = `/_chat`;
+	// const fetchChatId = async (user_id) => {
+	// 	try {
+	// 		const chatIdAPI = `/_chat`;
 
-			const {
-				data: { chat_id },
-			} = await axios.post(
-				chatIdAPI,
-				{ buddy_id: user_id },
-				{ headers: { authorization: getToken() } }
-			);
-			setChatId(chat_id);
-		} catch {
-			setChatId("undefined");
-		}
-	};
+	// 		const {
+	// 			data: { chat_id },
+	// 		} = await axios.post(
+	// 			chatIdAPI,
+	// 			{ buddy_id: user_id },
+	// 			{ headers: { authorization: getToken() } }
+	// 		);
+	// 		setChatId(chat_id);
+	// 	} catch {
+	// 		setChatId("undefined");
+	// 	}
+	// };
 
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
@@ -131,10 +132,18 @@ export default function FilteredScreen() {
 	}, []);
 
 	const loadFilteredPosts = () => {
-		const options = `filtered/${date}/${flex}/${env}/${subject}/${subfield}`;
+
+		const options = {
+			method: "GET",
+			url: `filtered/${date}/${env}/${subject}/${subfield}`,
+			headers: {
+				authorization: getToken(),
+			},
+		}
+
 
 		axios
-			.get(options)
+			.request(options)
 			.then(function (response) {
 				setPosts(response.data);
 			})
@@ -166,6 +175,7 @@ export default function FilteredScreen() {
 							istrue={false}
 							user_id={post.userid}
 							key={post.id}
+							chatId={post.chatId}
 						/>
 					))}
 				</div>

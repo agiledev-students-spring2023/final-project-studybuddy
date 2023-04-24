@@ -4,6 +4,7 @@ import { MdSearch } from "react-icons/md";
 import Navbar from "../components/Navbar";
 import { FilteredItem } from "./FilteredScreen";
 import "./Home.css";
+import { getToken } from "../auth/auth";
 
 export default function Home() {
 	const [posts, setPosts] = useState([]);
@@ -18,6 +19,9 @@ export default function Home() {
 			// url: "https://my.api.mockaroo.com/posts.json",
 			// params: { key: "fb86de30" },
 			url: `/allposts?sort_by=date&order=desc`,
+			headers: {
+				authorization: getToken(),
+			},
 		};
 
 		axios
@@ -54,6 +58,7 @@ export default function Home() {
 						user_id={post.userid}
 						key={post.id}
 						old={new Date(post.date_time) < new Date()}
+						chatId={post.chatId}
 					/>
 				))}
 				<Navbar user="Others" />
