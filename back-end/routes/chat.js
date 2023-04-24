@@ -3,8 +3,7 @@ const router = express.Router();
 const {
 	chatListController,
 	chatidSearchController,
-	lastReadUpdateController,
-	update_last_read
+	lastReadUpdateController
 } = require("../controllers/chat.controller");
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 

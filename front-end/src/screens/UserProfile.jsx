@@ -4,14 +4,14 @@ import { useParams } from "react-router-dom";
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { MdArrowBack, MdSend } from "react-icons/md";
+import { MdArrowBack } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { getToken } from "../auth/auth"
 
-const PostPreview = ({ id, title, userid }) => (
+const PostPreview = ({ id, subject, userid }) => (
     <Link to={`/viewPost/${id}`} state={{ from: `/userprofile/${userid}` }}>
         <div className="Post-preview">
-            <h5>{title}</h5>
+            <h5>{subject}</h5>
         </div>
     </Link>
 );
@@ -29,10 +29,9 @@ const UserName = ({ name, major, picture }) => (
 );
 const UserProfile = () => {
     const { userId } = useParams();
-    const [account, setAccount] = useState([]);
+    const [posts, setMyposts] = useState([]);
     const [profile, setMyprofile] = useState([]);
     const [chatId, setChatId] = useState("");
-
     useEffect(() => {
         loadFilteredPosts(userId);
         fetchChatId(userId);
@@ -46,11 +45,11 @@ const UserProfile = () => {
         axios
             .request(options)
             .then(function (response) {
-                console.log(response.data);
                 const user = response.data.user;
-                const posts = response.data.filteredData;
-                setAccount(posts);
+                const allposts = response.data.posts;
                 setMyprofile(user);
+                setMyposts(allposts);
+                
             })
             .catch(function (error) {
                 console.error(error);
@@ -58,12 +57,16 @@ const UserProfile = () => {
     };
 
     const fetchChatId = async (userId) => {
-        const chatIdAPI = `/_chat`;
+        try {
+            const chatIdAPI = `/_chat`;
 
-        const {
-            data: { chat_id },
-        } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: { authorization: getToken() } });
-        setChatId(chat_id);
+            const {
+                data: { chat_id },
+            } = await axios.post(chatIdAPI, { buddy_id: userId }, { headers: { authorization: getToken() } });
+            setChatId(chat_id);
+        } catch {
+            setChatId('undefined');
+        }
     };
     return (
         <div>
@@ -96,16 +99,17 @@ const UserProfile = () => {
                     <div className="Post">
                         <h2>Posts</h2>
                         <div className="Postgrid">
-                            {account &&
-                                account.post &&
-                                account.post.map((post) => (
+                            {posts && posts.length > 0 ? (
+                                posts.map((post) => (
                                     <PostPreview
-                                        title={post.title}
+                                        subject={post.subject}
                                         id={post.postId}
-                                        userid={account.id}
                                         key={post.postId}
                                     />
-                                ))}
+                                ))
+                            ) : (
+                                <p> No posts</p>
+                            )}
                         </div>
                     </div>
                 </div>

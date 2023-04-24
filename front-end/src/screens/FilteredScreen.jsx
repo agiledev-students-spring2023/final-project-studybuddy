@@ -41,12 +41,14 @@ export const FilteredItem = ({
 	subject,
 	descrip,
 	title,
+	user_id,
 	isTrue,
 }) => {
 	const navigate = useNavigate();
-	const profile_url = `/userprofile/${id}`;
+	const profile_url = `/userprofile/${user_id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
 	const shortDescrip = `${descrip}`
+	
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className="mb-1">{author} studies {major}</p>
@@ -107,7 +109,7 @@ export default function FilteredScreen() {
 				console.error(error);
 			});
 	};
-
+	
 	return (
 		<>
 			<div className="title-bar">
