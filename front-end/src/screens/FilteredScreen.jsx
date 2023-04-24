@@ -47,6 +47,7 @@ export const FilteredItem = ({
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
+	const post_url = `/viewPost/${id}`;
 	const shortDescrip = `${descrip}`
 	
 	return (
@@ -73,12 +74,17 @@ export const FilteredItem = ({
 				{shortDescrip.length > 50 ? shortDescrip.slice(0, 50) + "..." : shortDescrip}
 			</p>
 			<div className="row pt-2 pb-2">
-				<div className="col-6 text-center">
-					<a href={profile_url} className="btn btm-md btn-primary">
+				<div className="col-4 text-center">
+					<a href={post_url} className="btn btn-md btn-primary">
+						View Post
+					</a>
+				</div>
+				<div className="col-4 text-center">
+					<a href={profile_url} className="btn btm-md btn-secondary">
 						View Profile
 					</a>
 				</div>
-				<div className="col-6 text-center">
+				<div className="col-4 text-center">
 					<a href="/chat/1" className="btn btn-md btn-secondary">
 						Message
 					</a>

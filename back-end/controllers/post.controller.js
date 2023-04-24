@@ -41,11 +41,14 @@ const uploadPostController = async (req, res) => {
 const viewPostController = async (req, res) => {
 	const { postId } = req.params;
 
-	// const post = fakePost;
-	// const question = post[0];
-	// const comments = post.slice(1);
+	const post = fakePost;
+	const question = post[0];
+	const comments = post.slice(1);
 
 	return { question, comments };
+
+	// retrieve post info from database: author, date, subject, description, comments, etc
+
 };
 
 module.exports = {
