@@ -28,6 +28,7 @@ router.get("/allposts", async (req, res) => {
 				mode: post.mode,
 				userid: user._id,
 				key: post._id,
+				chatId: "hello"
 			});
 		});
 		return acc;
