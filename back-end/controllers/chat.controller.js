@@ -1,10 +1,13 @@
 const { Message, Chat } = require("../models/chat.model");
 const User = require("../models/user.model");
 const mongoose = require("mongoose");
-const { fetch_chatList, search_chatId, update_last_read } = require("../utilities/chat.utils");
+const {
+	fetch_chatList,
+	search_chatId,
+	update_last_read,
+} = require("../utilities/chat.utils");
 
 const { ObjectId } = mongoose.Types;
-
 
 // GET: /chatList/:user_id (receive: chat_ids)
 // Success: Status_code: 200
@@ -16,34 +19,31 @@ const { ObjectId } = mongoose.Types;
 // Success: Status_code: 200
 // Failure: 401 if unauthorized, otherwise 400
 
-
 const chatListController = async (req, res) => {
-	const user_id = req.user.id
+	const user_id = req.user.id;
 
 	const { status, chatlist } = await fetch_chatList(user_id);
 
 	res.status(status).send({ chatlist });
-}
+};
 
 const chatidSearchController = async (req, res) => {
-	const user_id = req.user.id
+	const user_id = req.user.id;
 
-	console.log("(search_chatId) buddyId", req.body.buddy_id)
+	console.log("(search_chatId) buddyId", req.body.buddy_id);
 	const { status, chat_id } = await search_chatId(user_id, req.body.buddy_id);
 	res.status(status).send({ chat_id });
-}
+};
 
 const lastReadUpdateController = async (req, res) => {
-	const userId = req.user.id
-	const { chatId } = req.body
-	const status = await update_last_read(userId, chatId)
-	res.status(status).send({ success: status == 200 })
-}
-
+	const userId = req.user.id;
+	const { chatId } = req.body;
+	const status = await update_last_read(userId, chatId);
+	res.status(status).send({ success: status == 200 });
+};
 
 module.exports = {
-
 	chatListController,
 	chatidSearchController,
-	lastReadUpdateController
+	lastReadUpdateController,
 };

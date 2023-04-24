@@ -3,7 +3,7 @@ const router = express.Router();
 const { fetch_Majors } = require("../controllers/general.controller");
 
 router.get("/majors", async (req, res) => {
-	const majors = fetch_Majors();
+	const majors = await fetch_Majors();
 	res.send(majors);
 });
 

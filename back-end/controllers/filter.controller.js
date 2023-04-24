@@ -7,12 +7,12 @@ const fetch_Results = async (req, res) => {
 	const filteredPosts = [];
 	if (req[2] === "All") {
 		if (req[1] !== "no preference") {
-			if (req[3] === "none") { 	
+			if (req[3] === "none") {
 				const allPosts = await PostModel.find({ mode: req[1] });
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({ mode: req[1]});
+				const allPosts = await PostModel.find({ mode: req[1] });
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {
@@ -24,7 +24,7 @@ const fetch_Results = async (req, res) => {
 			}
 		} else {
 			const allPosts = await PostModel.find({});
-			if (req[3] === "none") { 	
+			if (req[3] === "none") {
 				const allPosts = await PostModel.find({});
 				filteredPosts.push(...allPosts);
 			} else {
@@ -42,12 +42,18 @@ const fetch_Results = async (req, res) => {
 		}
 	} else {
 		if (req[1] !== "no preference") {
-			if (req[3] === "none") { 	
-				const allPosts = await PostModel.find({ mode: req[1], subject: req[2]});
+			if (req[3] === "none") {
+				const allPosts = await PostModel.find({
+					mode: req[1],
+					subject: req[2],
+				});
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({ mode: req[1], subject: req[2]});
+				const allPosts = await PostModel.find({
+					mode: req[1],
+					subject: req[2],
+				});
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {
@@ -58,12 +64,12 @@ const fetch_Results = async (req, res) => {
 				});
 			}
 		} else {
-			if (req[3] === "none") { 	
-				const allPosts = await PostModel.find({subject: req[2]});
+			if (req[3] === "none") {
+				const allPosts = await PostModel.find({ subject: req[2] });
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({subject: req[2]});
+				const allPosts = await PostModel.find({ subject: req[2] });
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {

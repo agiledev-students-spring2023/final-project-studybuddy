@@ -8,7 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { getToken } from "../auth/auth";
+import { getToken, removeToken } from "../auth/auth";
 
 const PostPreview = ({ id, subject }) => (
     <Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
@@ -18,7 +18,7 @@ const PostPreview = ({ id, subject }) => (
     </Link>
 );
 
-const ProfilePic = ({ profilepic }) => {
+const ProfilePic = ({ profilepic, onSuccess }) => {
     const [image, setImage] = useState();
 
     function handleImage(e) {
@@ -45,6 +45,7 @@ const ProfilePic = ({ profilepic }) => {
             .then((res) => {
                 if (res.status === 200) {
                     toast.success("Profile picture uploaded successfully!");
+                    onSuccess();
                 } else {
                     toast.error(res.data.message);
                 }
@@ -74,7 +75,7 @@ const ProfilePic = ({ profilepic }) => {
     );
 };
 
-const UserName = ({ name, major, picture }) => {
+const UserName = ({ name, major, picture, onUploadSuccess }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -107,7 +108,7 @@ const UserName = ({ name, major, picture }) => {
                             <Modal.Title>Upload Profile Picture</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <ProfilePic profilepic={picture} />
+                            <ProfilePic profilepic={picture} onSuccess={onUploadSuccess}/>
                         </Modal.Body>
                         <Modal.Footer>
                             <Button variant="secondary" onClick={handleClose}>
@@ -129,12 +130,9 @@ const UserName = ({ name, major, picture }) => {
 const Profile = () => {
     const [myposts, setMyposts] = useState([]);
     const [profile, setMyprofile] =useState([]);
+
     useEffect(() => {
         loadFilteredPosts();
-        const intervalId = setInterval(() => {
-            loadFilteredPosts();
-          }, 5000);
-          return () => clearInterval(intervalId);
     }, []);
 
     const loadFilteredPosts = () => {
@@ -158,6 +156,12 @@ const Profile = () => {
                 console.error(error);
             });
     };
+
+    const onLogout = () => {
+        removeToken();
+        window.location.href = "/Login";
+    }
+
     return (
         <div>
             <div className="title-bar">
@@ -167,13 +171,14 @@ const Profile = () => {
             <div className="content-body">
                 <div className="container-fluid pageLayout">
                     <div className="Logout">
-                        <a href="/Login">Log out</a>
+                        <a href="#" onClick={onLogout}>Log out</a>
                     </div>
 
                     <UserName
                         name={profile.name}
                         major={profile.major}
                         picture={profile.Profile_pic}
+                        onUploadSuccess={loadFilteredPosts}
                     />
 
                     <div className="Post">
