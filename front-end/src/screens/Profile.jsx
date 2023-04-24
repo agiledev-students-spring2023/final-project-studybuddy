@@ -163,7 +163,7 @@ const Profile = () => {
 		removeToken();
 		window.location.href = "/Login";
 	};
-
+	console.log(myposts);
 	return (
 		<div>
 			<div className="title-bar">
@@ -192,8 +192,8 @@ const Profile = () => {
 								myposts.map((post) => (
 									<PostPreview
 										subject={post.subject}
-										id={post.postId}
-										key={post.postId}
+										id={post._id}
+										key={post._id}
 									/>
 								))
 							) : (
