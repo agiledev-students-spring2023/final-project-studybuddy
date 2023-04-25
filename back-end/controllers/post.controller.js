@@ -2,7 +2,6 @@ const fakePost = require("../dummy_data/viewpost.json");
 const { PostModel } = require("../models/post.model");
 const mongoose = require("mongoose");
 const UserModel = require("../models/user.model");
-const CommentModel = require("../models/comments.model");
 
 const uploadPostController = async (req, res) => {
 	const {
@@ -62,6 +61,7 @@ const viewPostController = async (req, res) => {
 
 	// retrieve post info from database: author, date, subject, description, comments, etc
 };
+
 
 module.exports = {
 	uploadPostController,

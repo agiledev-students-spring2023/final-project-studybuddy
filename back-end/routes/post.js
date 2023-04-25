@@ -9,6 +9,8 @@ const {
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { PostModel } = require("../models/post.model");
 const UserModel = require("../models/user.model");
+const { CommentModel } = require("../models/comments.model");
+const mongoose = require("mongoose");
 
 // This is the route that will be called when the user clicks on a specific post to view it
 // Feteches the following data: post title, post content, post author (with their major and profile pic), post date, post id, post comments and comment authors (with their major and profile pic), comment dates, and comment ids
@@ -39,7 +41,22 @@ router.get("/:postId", async (req, res) => {
 	};
 	console.log(authorInfo);
 
-	res.send({ postInfo, authorInfo });
+	// Fetch comments data from database by finding the comments with post id equal to the post id of the post
+	const comments = await CommentModel.find({ post_id: postid });
+	console.log(comments);
+	const allComments = [];
+	for (let i = 0; i < comments.length; i++) {
+		const commentInfo = {
+			_id: comments[i]._id,
+			dateAndTime: comments[i].dateAndTime,
+			content: comments[i].content,
+			author_name: comments[i].author_name,
+			author_major: comments[i].author_major,
+		};
+		allComments.push(commentInfo);
+	}
+
+	res.send({ postInfo, authorInfo, allComments });
 });
 
 router.post(
