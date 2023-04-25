@@ -9,12 +9,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
 
-const UserComments = ({ username, usercomment, comdate }) => (
+const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	<div className="usercomment">
 		<div className="row p-1 pt-2 pb-2 m-1 ">
-			<h5 className="mb-1 text-left">{username}</h5>
-			<p className="mb-1 text-left">{comdate}</p>
-			<p className="mb-1 text-left">{usercomment}</p>
+			<h5 className="mb-0 text-left">{username}</h5>
+			<h6 className="mb-0 text-left">{usermajor}</h6>
+			<p className="mb-0 text-left">{format("MM/dd/yyyy HH:MM")(new Date(comdate))}</p>
+			<br />
+			<p className="mb-3 text-left">{usercomment}</p>
 		</div>
 	</div>
 );
@@ -24,8 +26,8 @@ const Item = ({ title, date_time }) => {
 		<div className="Post-info">
 			<h1> {title} </h1>
 			{/* format date time as "MM/DD/YYYY" and "HH:MM" */}
-			{/* <p> {format("MM/dd/yyyy")(new Date(date_time))} </p> */}
 			<p> {date_time} </p>
+			{/* <p> {format("MM/dd/yyyy HH:MM")(new Date(date_time))}</p> */}
 		</div>
 	);
 };
@@ -79,7 +81,27 @@ const ViewPost = () => {
 	};
 
 	const handleButtonClick = () => {
-		setInput("");
+		setInput("")
+		// handle submit comment 
+		const options = `/comment/${postId}`;
+		const data = {
+			content: input,
+			dateAndTime: new Date(),
+			author: "user",
+			author_major: "Computer Science",
+		};
+
+		axios
+			.post(options, data)
+			.then(function (response) {
+				console.log(response);
+				loadFilteredPosts(postId);
+			}
+			)
+			.catch(function (error) {
+				console.log(error);
+			}
+			);
 	};
 
 	const handleGoBack = () => {
@@ -104,9 +126,11 @@ const ViewPost = () => {
 
 				const post = response.data.postInfo;
 				const author = response.data.authorInfo;
+				const comments = response.data.allComments;
 
 				setPost(post);
 				setAuthor(author);
+				setComments(comments);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -149,24 +173,16 @@ const ViewPost = () => {
 					<div className="Description">
 						<p>{post.description}</p>
 					</div>
-					<div className="Comments">
-						{/* {posts &&
-							posts.comments &&
-							posts.comments.map((data) => (
-								<UserComments
-									username={data.name}
-									usercomment={data.comment}
-								/>
-							))} */}
-
-						{/* Unpack list of comments with their own information */}
-						{/* {comments.map((comment) => (
+					<div className="Comments"> 
+						<h4> Comments </h4>
+						{ comments.map((comment) => (
 							<UserComments
-								username={comment.author}
+								username={comment.author_name}
+								usermajor={comment.author_major}
 								usercomment={comment.content}
-								comdate={comment.date}
+								comdate={comment.dateAndTime}
 							/>
-						))} */}
+						))}
 					</div>
 
 					{/* Enter comment section */}
