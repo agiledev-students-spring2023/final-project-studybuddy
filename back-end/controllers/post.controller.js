@@ -56,12 +56,10 @@ const viewPostController = async (req, res) => {
 		usermajor: thisAuthor.major,
 	};
 
-	return { postInfo, authorInfo}
-
+	return { postInfo, authorInfo };
 
 	// retrieve post info from database: author, date, subject, description, comments, etc
 };
-
 
 module.exports = {
 	uploadPostController,

@@ -45,7 +45,7 @@ export const FilteredItem = ({
 	user_id,
 	isTrue,
 	old,
-	chatId
+	chatId,
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
@@ -113,7 +113,10 @@ export const FilteredItem = ({
 					</a>
 				</div>
 				<div className="col-4 text-center">
-					<a href={`/chat/${chatId}`} className="btn btn-md btn-secondary">
+					<a
+						href={`/chat/${chatId}`}
+						className="btn btn-md btn-secondary"
+					>
 						Message
 					</a>
 				</div>
@@ -132,15 +135,13 @@ export default function FilteredScreen() {
 	}, []);
 
 	const loadFilteredPosts = () => {
-
 		const options = {
 			method: "GET",
 			url: `filtered/${date}/${env}/${subject}/${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},
-		}
-
+		};
 
 		axios
 			.request(options)
