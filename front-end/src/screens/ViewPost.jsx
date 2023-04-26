@@ -8,13 +8,16 @@ import { MdSend } from "react-icons/md";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
+import { getToken } from "../auth/auth";
 
 const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	<div className="usercomment">
 		<div className="row p-1 pt-2 pb-2 m-1 ">
 			<h5 className="mb-0 text-left">{username}</h5>
 			<h6 className="mb-0 text-left">{usermajor}</h6>
-			<p className="mb-0 text-left">{format("MM/dd/yyyy HH:MM")(new Date(comdate))}</p>
+			<p className="mb-0 text-left">
+				{format("MM/dd/yyyy HH:MM")(new Date(comdate))}
+			</p>
 			<br />
 			<p className="mb-3 text-left">{usercomment}</p>
 		</div>
@@ -65,6 +68,7 @@ const TitleBar = (props) => {
 		</>
 	);
 };
+
 const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [author, setAuthor] = useState([]);
@@ -81,9 +85,8 @@ const ViewPost = () => {
 	};
 
 	const handleButtonClick = () => {
-		setInput("")
-		// handle submit comment 
-		const options = `/comment/${postId}`;
+		setInput("");
+		// handle submit comment
 		const data = {
 			content: input,
 			dateAndTime: new Date(),
@@ -91,17 +94,25 @@ const ViewPost = () => {
 			author_major: "Computer Science",
 		};
 
+		const options = {
+			method: "post",
+			url: `/comment/${postId}`,
+			headers: {
+				"Content-Type": "application/json",
+				authorization: getToken(),
+			},
+			data: data,
+		};
+
 		axios
-			.post(options, data)
+			.request(options)
 			.then(function (response) {
 				console.log(response);
 				loadFilteredPosts(postId);
-			}
-			)
+			})
 			.catch(function (error) {
 				console.log(error);
-			}
-			);
+			});
 	};
 
 	const handleGoBack = () => {
@@ -153,7 +164,10 @@ const ViewPost = () => {
 							</div>
 							<div className="mydetails">
 								<h3 className="mb-3">{author.username}</h3>
-								<h3 className="mb-0"> Student of {author.usermajor}</h3>
+								<h3 className="mb-0">
+									{" "}
+									Student of {author.usermajor}
+								</h3>
 							</div>
 						</div>
 						<div className="MessageBuddy">
@@ -173,9 +187,9 @@ const ViewPost = () => {
 					<div className="Description">
 						<p>{post.description}</p>
 					</div>
-					<div className="Comments"> 
+					<div className="Comments">
 						<h4> Comments </h4>
-						{ comments.map((comment) => (
+						{comments.map((comment) => (
 							<UserComments
 								username={comment.author_name}
 								usermajor={comment.author_major}

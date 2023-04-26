@@ -17,17 +17,16 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 
 	let allUsersAndPosts = await UserModel.find({}).populate("posts");
 
-	let temp = []
+	let temp = [];
 	const loginuserid = req.user.id;
 	for (var i = 0; i < allUsersAndPosts.length; i++) {
-		const cur_user = allUsersAndPosts[i]
-		const { chat_id } = await search_chatId(loginuserid, cur_user._id)
+		const cur_user = allUsersAndPosts[i];
+		const { chat_id } = await search_chatId(loginuserid, cur_user._id);
 		const obj = { chatId: chat_id };
 		const copiedObj = Object.assign(cur_user, obj);
-		temp.push(copiedObj)
-
+		temp.push(copiedObj);
 	}
-	allUsersAndPosts = temp
+	allUsersAndPosts = temp;
 
 	let postsWithUser = allUsersAndPosts.reduce((acc, user) => {
 		user.posts.forEach((post) => {
@@ -43,7 +42,7 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 				mode: post.mode,
 				userid: user._id,
 				key: post._id,
-				chatId: user.chatId
+				chatId: user.chatId,
 			});
 		});
 		return acc;
