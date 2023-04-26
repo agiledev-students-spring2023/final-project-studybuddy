@@ -81,7 +81,7 @@ export default function Filters() {
 				</div>
 				<br />
 				<h4> Flexibility </h4>
-				<select id="flexibility"> 
+				<select id="flexibility">
 					<option value="1"> This Day Only </option>
 					<option value="2"> Around This Day </option>
 					<option value="3"> Any Day </option>
