@@ -32,7 +32,7 @@ const ProfilePic = ({ profilepic, onSuccess }) => {
 
 		const options = {
 			method: "POST",
-			url: "/Profile",
+			url: process.env.REACT_APP_BACK_URL + "/Profile",
 			headers: {
 				authorization: getToken(),
 				"Content-Type": "multipart/form-data",
@@ -141,7 +141,7 @@ const Profile = () => {
 	const loadFilteredPosts = () => {
 		const options = {
 			method: "GET",
-			url: "/profile",
+			url: process.env.REACT_APP_BACK_URL + "/profile",
 			headers: {
 				authorization: getToken(),
 			},

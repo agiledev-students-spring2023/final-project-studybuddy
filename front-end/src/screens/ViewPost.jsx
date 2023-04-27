@@ -96,7 +96,7 @@ const ViewPost = () => {
 
 		const options = {
 			method: "post",
-			url: `/comment/${postId}`,
+			url: process.env.REACT_APP_BACK_URL + `/comment/${postId}`,
 			headers: {
 				"Content-Type": "application/json",
 				authorization: getToken(),
@@ -125,7 +125,7 @@ const ViewPost = () => {
 
 	const loadFilteredPosts = (postId) => {
 		console.log(postId);
-		const options = `/post/${postId}`;
+		const options = process.env.REACT_APP_BACK_URL + `/post/${postId}`;
 
 		axios
 			.get(options)

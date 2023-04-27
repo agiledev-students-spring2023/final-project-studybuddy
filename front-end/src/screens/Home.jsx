@@ -18,7 +18,7 @@ export default function Home() {
 			method: "GET",
 			// url: "https://my.api.mockaroo.com/posts.json",
 			// params: { key: "fb86de30" },
-			url: `/allposts?sort_by=date&order=desc`,
+			url: process.env.REACT_APP_BACK_URL + `/allposts?sort_by=date&order=desc`,
 			headers: {
 				authorization: getToken(),
 			},

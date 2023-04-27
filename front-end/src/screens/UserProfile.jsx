@@ -40,7 +40,7 @@ const UserProfile = () => {
 	const loadFilteredPosts = (userId) => {
 		const options = {
 			method: "GET",
-			url: `/userprofile/${userId}`,
+			url: process.env.REACT_APP_BACK_URL + `/userprofile/${userId}`,
 		};
 		axios
 			.request(options)
@@ -57,7 +57,7 @@ const UserProfile = () => {
 
 	const fetchChatId = async (userId) => {
 		try {
-			const chatIdAPI = `/_chat`;
+			const chatIdAPI = process.env.REACT_APP_BACK_URL + `/_chat`;
 
 			const {
 				data: { chat_id },
