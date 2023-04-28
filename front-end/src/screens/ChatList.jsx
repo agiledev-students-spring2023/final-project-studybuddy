@@ -19,7 +19,7 @@ export default function ChatList() {
 			try {
 				const options = {
 					method: "GET",
-					url: "/_chat",
+					url: process.env.REACT_APP_BACK_URL + "/_chat",
 					headers: {
 						authorization: getToken(),
 					},

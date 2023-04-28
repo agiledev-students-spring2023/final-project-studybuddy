@@ -10,7 +10,7 @@ const cors = require("cors"); // package for 'cors' setting
 
 app.use(
 	cors({
-		origin: "http://localhost:3000", // domain that approves to access / it will be our front-end domain
+		origin: process.env.DOMAIN, // domain that approves to access / it will be our front-end domain
 		credentials: true, // add 'Access-Control-Allow-Credentials' to the responding header.
 		optionsSuccessStatus: 200, // setting the responding status as 200.
 	})

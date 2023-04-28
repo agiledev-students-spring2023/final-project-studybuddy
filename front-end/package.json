@@ -9,7 +9,9 @@
     "axios": "^1.3.4",
     "bootstrap": "^5.2.3",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.0.3",
     "format": "^0.2.2",
+    "http-proxy-middleware": "^2.0.6",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
@@ -23,6 +25,7 @@
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
     "react-toastify": "^9.1.2",
+    "serve": "^14.2.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -31,7 +34,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format-front-end": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "format": "npm run format-front-end"
+    "format": "npm run format-front-end",
+    "brun": "npm run build && serve -s build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +57,5 @@
   },
   "devDependencies": {
     "prettier": "2.8.4"
-  },
-  "proxy": "http://localhost:4000/"
+  }
 }

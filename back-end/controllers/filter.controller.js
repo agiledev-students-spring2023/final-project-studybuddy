@@ -13,7 +13,7 @@ const fetch_Results = async (req, res) => {
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({ mode: req[2]});
+				const allPosts = await PostModel.find({ mode: req[2] });
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {
@@ -25,7 +25,7 @@ const fetch_Results = async (req, res) => {
 			}
 		} else {
 			const allPosts = await PostModel.find({});
-			if (req[4] === "none") { 	
+			if (req[4] === "none") {
 				const allPosts = await PostModel.find({});
 				filteredPosts.push(...allPosts);
 			} else {
@@ -43,12 +43,18 @@ const fetch_Results = async (req, res) => {
 		}
 	} else {
 		if (req[2] !== "no preference") {
-			if (req[4] === "none") { 	
-				const allPosts = await PostModel.find({ mode: req[2], subject: req[3]});
+			if (req[4] === "none") {
+				const allPosts = await PostModel.find({
+					mode: req[2],
+					subject: req[3],
+				});
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({ mode: req[2], subject: req[3]});
+				const allPosts = await PostModel.find({
+					mode: req[2],
+					subject: req[3],
+				});
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {
@@ -59,12 +65,12 @@ const fetch_Results = async (req, res) => {
 				});
 			}
 		} else {
-			if (req[4] === "none") { 	
-				const allPosts = await PostModel.find({subject: req[3]});
+			if (req[4] === "none") {
+				const allPosts = await PostModel.find({ subject: req[3] });
 				filteredPosts.push(...allPosts);
 			} else {
 				// check if value is included in post description
-				const allPosts = await PostModel.find({subject: req[3]});
+				const allPosts = await PostModel.find({ subject: req[3] });
 				allPosts.forEach((post) => {
 					// if there is a description, check if it includes the value
 					if (post.description !== undefined) {
@@ -92,7 +98,11 @@ const fetch_Results = async (req, res) => {
 				i--;
 			}
 		} else if (req[1] === "2") {
-			if (postDate.getDate() < selectedDate.getDate() - 7 || postDate.getDate() > selectedDate.getDate() + 7 || postDate.getDate() < today.getDate()) {
+			if (
+				postDate.getDate() < selectedDate.getDate() - 7 ||
+				postDate.getDate() > selectedDate.getDate() + 7 ||
+				postDate.getDate() < today.getDate()
+			) {
 				filteredPosts.splice(i, 1);
 				i--;
 			}

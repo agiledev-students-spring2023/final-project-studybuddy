@@ -7,8 +7,8 @@ const CommentSchema = new Schema({
 	dateAndTime: Date,
 	post_id: String,
 	content: String,
-	author_name: String,
-    author_major: String,
+	author_name: String, // username of the author
+	author_major: String,
 });
 
 module.exports = {

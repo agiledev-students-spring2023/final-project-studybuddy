@@ -45,35 +45,13 @@ export const FilteredItem = ({
 	user_id,
 	isTrue,
 	old,
-	chatId
+	chatId,
 }) => {
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
 	const post_url = `/viewPost/${id}`;
 	const shortDescrip = `${descrip}`;
-
-	// const [chatId, setChatId] = useState("");
-	// useEffect(() => {
-	// 	fetchChatId(user_id);
-	// }, [user_id]);
-
-	// const fetchChatId = async (user_id) => {
-	// 	try {
-	// 		const chatIdAPI = `/_chat`;
-
-	// 		const {
-	// 			data: { chat_id },
-	// 		} = await axios.post(
-	// 			chatIdAPI,
-	// 			{ buddy_id: user_id },
-	// 			{ headers: { authorization: getToken() } }
-	// 		);
-	// 		setChatId(chat_id);
-	// 	} catch {
-	// 		setChatId("undefined");
-	// 	}
-	// };
 
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
@@ -113,7 +91,10 @@ export const FilteredItem = ({
 					</a>
 				</div>
 				<div className="col-4 text-center">
-					<a href={`/chat/${chatId}`} className="btn btn-md btn-secondary">
+					<a
+						href={`/chat/${chatId}`}
+						className="btn btn-md btn-secondary"
+					>
 						Message
 					</a>
 				</div>
@@ -132,15 +113,13 @@ export default function FilteredScreen() {
 	}, []);
 
 	const loadFilteredPosts = () => {
-
 		const options = {
 			method: "GET",
-			url: `filtered/${date}/${env}/${subject}/${subfield}`,
+			url: process.env.REACT_APP_BACK_URL + `filtered/${date}/${env}/${subject}/${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},
-		}
-
+		};
 
 		axios
 			.request(options)
