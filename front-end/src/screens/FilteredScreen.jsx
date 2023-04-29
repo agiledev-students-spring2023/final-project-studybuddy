@@ -53,28 +53,6 @@ export const FilteredItem = ({
 	const post_url = `/viewPost/${id}`;
 	const shortDescrip = `${descrip}`;
 
-	// const [chatId, setChatId] = useState("");
-	// useEffect(() => {
-	// 	fetchChatId(user_id);
-	// }, [user_id]);
-
-	// const fetchChatId = async (user_id) => {
-	// 	try {
-	// 		const chatIdAPI = `/_chat`;
-
-	// 		const {
-	// 			data: { chat_id },
-	// 		} = await axios.post(
-	// 			chatIdAPI,
-	// 			{ buddy_id: user_id },
-	// 			{ headers: { authorization: getToken() } }
-	// 		);
-	// 		setChatId(chat_id);
-	// 	} catch {
-	// 		setChatId("undefined");
-	// 	}
-	// };
-
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
 			<p className={"mb-1 " + (old ? "bg-light text-secondary" : "")}>
@@ -137,7 +115,7 @@ export default function FilteredScreen() {
 	const loadFilteredPosts = () => {
 		const options = {
 			method: "GET",
-			url: `filtered/${date}/${env}/${subject}/${subfield}`,
+			url: process.env.REACT_APP_BACK_URL + `filtered/${date}/${env}/${subject}/${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},

@@ -22,7 +22,7 @@ export default function Chat() {
 	const [lastMsg, setLastMsg] = useState("");
 	const [loading, setLoading] = useState(true);
 
-	const chatAPI = `/_message/${chatId}`;
+	const chatAPI = process.env.REACT_APP_BACK_URL + `/_message/${chatId}`;
 
 	async function fetchChatData() {
 		if (sending) {
@@ -57,7 +57,7 @@ export default function Chat() {
 	}
 
 	async function updateLastRead() {
-		const updateAPI = "/_chat";
+		const updateAPI = process.env.REACT_APP_BACK_URL + "/_chat";
 		const { data } = await axios.put(
 			updateAPI,
 			{ chatId },

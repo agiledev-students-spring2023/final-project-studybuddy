@@ -21,7 +21,7 @@ export default function Filters() {
 	}, []);
 
 	const getMajors = async () => {
-		const url = `/allmajors`;
+		const url = process.env.REACT_APP_BACK_URL + `/allmajors`;
 
 		axios.get(url).then(function (response) {
 			setMAJORS(response.data);
@@ -46,8 +46,8 @@ export default function Filters() {
 			online && !inPerson
 				? "online"
 				: !online && inPerson
-				? "in-person"
-				: "no preference";
+					? "in-person"
+					: "no preference";
 		const subject = document.querySelector("#this_major").value;
 		const input_subfield =
 			document.querySelector(".specific-subject").value;
