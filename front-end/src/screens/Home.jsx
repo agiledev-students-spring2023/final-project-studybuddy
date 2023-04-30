@@ -14,6 +14,11 @@ export default function Home() {
 	}, []);
 
 	const loadFilteredPosts = () => {
+		if (!getToken()) {
+			window.location.href = "/login";
+			return
+		}
+
 		const options = {
 			method: "GET",
 			// url: "https://my.api.mockaroo.com/posts.json",

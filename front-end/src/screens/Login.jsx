@@ -19,9 +19,10 @@ export default function Login() {
 	const onSubmit = (data) => {
 		const { user_id, password } = data;
 		const url = URL.LOGIN;
+		console.log(url)
 		axios
 			.post(url, { username: user_id, password })
-			.then((res) => {
+			.then(async (res) => {
 				if (res.status === 200) {
 					const token = res.data.user.token;
 					saveToken(token);
