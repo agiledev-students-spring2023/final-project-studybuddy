@@ -75,7 +75,7 @@
 	background-color: none;
 	object-fit: fill;
 }
-.Postgrid {
+/* .Postgrid {
 	display: grid;
 	grid-template-columns: 0.5fr 0.5fr 0.5fr;
 	grid-auto-rows: minmax(200px, auto);
@@ -84,9 +84,9 @@
 	padding: 1em;
 	border: 1px solid #ffd6ff;
 	text-align: center;
-}
+} */
 
-.Postgrid a {
+/* .Postgrid a {
 	width: 100%;
 	height: 100%;
 	border-radius: 5px;
@@ -94,17 +94,17 @@
 	color: rgb(137, 126, 126);
 	text-align: center;
 	background-color: #bbd0ff;
-}
+}*/
 
-.Post h2 {
+.MyPosts h2 {
 	font-size: 25px;
 	color: black;
 	margin-bottom: 20px;
 	text-align: center;
 	font-weight: 600;
-}
+} 
 
-.Post-preview h5 {
+/* .Post-preview h5 {
 	color: black;
 	margin-top: 50%;
 	text-align: center;
@@ -114,13 +114,13 @@
 
 .Postgrid a:hover {
 	background-color: #c1c8ff;
-}
+} */
 
-.Postgrid p {
+/* .Postgrid p {
 	margin-top: 20px;
 	margin-left: 20px;
 	font-size: 20px;
 	font-weight: bold;
 	color: rgb(180, 179, 187);
 	text-transform: uppercase;
-}
+} */
