@@ -44,11 +44,9 @@ jobs:
           apt update
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
-          apt install gh
-          gh auth login --with-token < echo "${{ secrets.TOKEN_GITHUB }}"
-          gh repo clone ${{ secrets.REPO_URL }}
-          git checkout cd
+          git clone ${{ secrets.REPO_URL }}
           cd ${{ secrets.REPO_NAME }}
+          git checkout cd
           cd back-end
           echo "${{ steps.read_file.outputs.content }}" > .env
           cd ..
