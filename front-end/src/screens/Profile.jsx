@@ -58,7 +58,10 @@ const ProfilePic = ({ profilepic, onSuccess }) => {
 	return (
 		<div className="Pic">
 			<div className="Picture01">
-				<img src={profilepic} alt="" />
+				<img
+					src={`${process.env.REACT_APP_BACK_URL}/${profilepic}`}
+					alt=""
+				/>
 			</div>
 			<form onSubmit={handleSubmit}>
 				<div className="input-group mb-3">
@@ -92,7 +95,7 @@ const UserName = ({ name, major, picture, onUploadSuccess }) => {
 					onClick={handleShow}
 				>
 					<img
-						src={picture}
+						src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
 						className="Picture"
 						alt="ProfilePicture"
 					/>
@@ -151,6 +154,7 @@ const Profile = () => {
 			.then(function (response) {
 				const user = response.data.user;
 				const posts = response.data.posts;
+				console.log(user);
 				setMyprofile(user);
 				setMyposts(posts);
 			})
