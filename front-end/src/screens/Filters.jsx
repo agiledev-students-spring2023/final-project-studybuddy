@@ -46,8 +46,8 @@ export default function Filters() {
 			online && !inPerson
 				? "online"
 				: !online && inPerson
-					? "in-person"
-					: "no preference";
+				? "in-person"
+				: "no preference";
 		const subject = document.querySelector("#this_major").value;
 		const input_subfield =
 			document.querySelector(".specific-subject").value;

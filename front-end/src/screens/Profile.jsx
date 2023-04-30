@@ -58,7 +58,10 @@ const ProfilePic = ({ profilepic, onSuccess }) => {
 	return (
 		<div className="Pic">
 			<div className="Picture01">
-				<img src={`${process.env.REACT_APP_BACK_URL}/${profilepic}`} alt="" />
+				<img
+					src={`${process.env.REACT_APP_BACK_URL}/${profilepic}`}
+					alt=""
+				/>
 			</div>
 			<form onSubmit={handleSubmit}>
 				<div className="input-group mb-3">
