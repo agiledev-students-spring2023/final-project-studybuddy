@@ -1,0 +1,57 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - cd
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+        envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        envkey_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        envkey_CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+        envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        envkey_REACT_APP_BACK_URL: ${{ secrets.REACT_APP_BACK_URL }}
+        envkey_DOMAIN: ${{ secrets.DOMAIN }}
+        file_name: .env
+        fail_on_empty: true
+    - name: Read file contents
+      id: read_file
+      uses: andstor/file-reader-action@v1
+      with:
+        path: ".env"
+    - name: Deploy to Digital Ocean Droplet
+      uses: appleboy/ssh-action@master
+      env:
+        TOKEN_GITHUB: ${{ secrets.TOKEN_GITHUB }}
+        REPO_URL: ${{ secrets.REPO_URL }}
+        REPO_NAME: ${{ secrets.REPO_NAME }}
+      with:
+        host: ${{ secrets.VM_SSH_HOST }}
+        username: ${{ secrets.VM_SSH_USERNAME }}
+        password: ${{ secrets.VM_SSH_PASSWORD }}
+        envs: TOKEN_GITHUB,REPO_URL,REPO_NAME
+        script: |
+          mkdir -p /app
+          cd /app
+          apt update
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          apt install gh
+          gh auth login --with-token < echo $TOKEN_GITHUB
+          gh repo clone $REPO_URL
+          cd $REPO_NAME
+          cd back-end
+          echo "${{ steps.read_file.outputs.content }}" > .env
+          cd ..
+          cd front-end
+          echo "${{ steps.read_file.outputs.content }}" > .env
+          cd ..
+          docker-compose up --build
