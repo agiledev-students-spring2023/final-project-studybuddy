@@ -14,7 +14,6 @@ jobs:
       uses: SpicyPizza/create-envfile@v1.3
       with:
         envkey_ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-        envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
         envkey_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         envkey_CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
         envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
