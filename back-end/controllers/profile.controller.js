@@ -9,7 +9,7 @@ const ProfileController = async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);
 		const postID = user.posts;
-		const posts = await PostModel.find({ _id: { $in: postID } });
+		const posts = await PostModel.find({ _id: { $in: postID } }).sort({ dateAndTime: -1 });
 		return res.json({ user, posts });
 	} catch (error) {
 		console.log(error);

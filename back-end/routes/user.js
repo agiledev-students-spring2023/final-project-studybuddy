@@ -13,7 +13,7 @@ router.get("/:userId", async (req, res) => {
 			return res.status(404).send("User not found");
 		}
 		const postIDs = user.posts;
-		const posts = await PostModel.find({ _id: { $in: postIDs } });
+		const posts = await PostModel.find({ _id: { $in: postIDs } }).sort({ dateAndTime: -1 });
 		return res.json({ posts, user });
 	} catch (error) {
 		console.log(error);
