@@ -9,12 +9,12 @@
 	text-decoration: none;
 	padding: 6px;
 	color: white;
-	background-color: #c8b6ff;
+	background-color: rgb(184, 192, 255);
 	border-radius: 10px;
 }
 
 .Logout a:hover {
-	color: rgb(86, 86, 170);
+	background-color:rgb(187, 208, 255);
 }
 
 .UserInfo {
@@ -75,26 +75,6 @@
 	background-color: none;
 	object-fit: fill;
 }
-/* .Postgrid {
-	display: grid;
-	grid-template-columns: 0.5fr 0.5fr 0.5fr;
-	grid-auto-rows: minmax(200px, auto);
-	column-gap: 10px;
-	row-gap: 10px;
-	padding: 1em;
-	border: 1px solid #ffd6ff;
-	text-align: center;
-} */
-
-/* .Postgrid a {
-	width: 100%;
-	height: 100%;
-	border-radius: 5px;
-	text-decoration: none;
-	color: rgb(137, 126, 126);
-	text-align: center;
-	background-color: #bbd0ff;
-}*/
 
 .MyPosts h2 {
 	font-size: 25px;
@@ -104,23 +84,19 @@
 	font-weight: 600;
 } 
 
-/* .Post-preview h5 {
-	color: black;
-	margin-top: 50%;
-	text-align: center;
-	font-weight: 450;
-	font-size: 15px;
+.eachpost {
+	border:1px solid rgb(200, 182, 255);
+	margin: 5px;
+	border-radius: 5px;
 }
 
-.Postgrid a:hover {
-	background-color: #c1c8ff;
-} */
+.eachpost a{
+	background-color:rgb(184, 192, 255);
+	border: 3px solid rgb(184, 192, 255);
+	color: black;
+}
 
-/* .Postgrid p {
-	margin-top: 20px;
-	margin-left: 20px;
-	font-size: 20px;
-	font-weight: bold;
-	color: rgb(180, 179, 187);
-	text-transform: uppercase;
-} */
+.eachpost a:hover{
+	background-color:rgb(187, 208, 255);
+	border: 3px solid rgb(187, 208, 255);
+}

@@ -6,41 +6,34 @@ import TitleBar from "../components/TitleBar";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { getToken, removeToken } from "../auth/auth";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
 
 const PostPreview = ({ id, subject,descrip,date_time }) => {
-	// <Link to={`/viewPost/${id}`} state={{ from: "/profile" }}>
-	// 	<div className="Post-preview">
-	// 		<h5>{subject}</h5>
-	// 	</div>
-	// </Link>
-	const navigate = useNavigate();
 	const shortDescrip = `${descrip}`;
 	return (
-	<div className="row border p-1 pt-2 pb-2 m-1">
-			<p className="mb-2">{subject}</p>
-			{/* <p className="m-0">
+		<div className="eachpost">
+	<div className="row p-1 pt-1 pb-30 m-1">
+			<h5 className="mb-2">{subject}</h5>
+			<p className="m-0 date">
 				{format("MM/dd/yyyy", new Date(date_time))}
-			</p> */}
-			<p className="m-0">
+			</p>
+			<p className="m-1">
 				{/* format description to only include first 50 characters then "..." */}
 
 				{shortDescrip.length > 50
 					? shortDescrip.slice(0, 50) + "..."
 					: shortDescrip}
 			</p>
-			<div className="row pt-2 pb-2">
+			<div className="row pt-3 pb-2">
 				<div className="col-4 text-center">
 					<a href={`/viewPost/${id}`} className="btn btn-md btn-primary">
 						View Post
 					</a>
 				</div>
 			</div>
+		</div>
 		</div>
 );
 };
@@ -188,9 +181,9 @@ const Profile = () => {
 
 	const onLogout = () => {
 		removeToken();
-		window.location.href = "/Login";
 	};
 	
+
 	return (
 		<div>
 			<div className="title-bar">
@@ -200,7 +193,7 @@ const Profile = () => {
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Logout">
-						<a href="#" onClick={onLogout}>
+						<a href="/Login" onClick={onLogout}>
 							Log out
 						</a>
 						
@@ -213,7 +206,7 @@ const Profile = () => {
 						onUploadSuccess={loadFilteredPosts}
 					/>
 
-					<div className="Posts">
+					<div className="MyPosts">
 						<h2>Posts</h2>
 						<div>
 							{myposts && myposts.length > 0 ? (
@@ -223,7 +216,7 @@ const Profile = () => {
 										id={post._id}
 										key={post._id}
 										descrip={post.description}
-										date_time={post.date_time}
+										date_time={post.dateAndTime}
 									/>
 								))
 							) : (
