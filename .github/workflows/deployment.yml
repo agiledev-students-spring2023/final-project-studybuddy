@@ -46,6 +46,7 @@ jobs:
           apt install gh
           gh auth login --with-token < echo $TOKEN_GITHUB
           gh repo clone $REPO_URL
+          git checkout cd
           cd $REPO_NAME
           cd back-end
           echo "${{ steps.read_file.outputs.content }}" > .env
