@@ -40,6 +40,7 @@ jobs:
         script: |
           mkdir -p /app
           cd /app
+          DEBIAN_FRONTEND=noninteractive
           apt update
           sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
