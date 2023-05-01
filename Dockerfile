@@ -7,7 +7,7 @@ COPY front-end/package.json front-end/package-lock.json ./
 RUN npm install
 
 COPY front-end/ ./
-COPY .env ./
+RUN echo "REACT_APP_BACK_URL=/api" > .env
 
 RUN npm run build
 
