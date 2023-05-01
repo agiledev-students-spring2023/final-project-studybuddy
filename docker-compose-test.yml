@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
   studybuddy:
-    image: bishnudev/study-buddy:production
+    image: bishnudev/study-buddy:latest
     ports:
-      - 80:4000
+      - 4000:4000
     env_file:
       - .env
   watchtower:

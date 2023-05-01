@@ -19,7 +19,21 @@ The idea for Study Buddy came from our own experiences as students. We often fou
 If you would like to contribute to Study Buddy, please read our [CONTRIBUTING.md](./CONTRIBUTING.md) document. We welcome all contributions, including bug reports, feature requests, and pull requests.
 
 ## Building and Testing
-Instructions for building and testing the project will be added once the project reaches that stage.
+To run the tests, run `npm test` from back-end folder.
+
+To build the project:
+1. Ensure the `.env` files are in place
+2. Run `cd front-end && npm install && npm run build && cd ..`: This will build the react app
+3. Run `cd back-end && rm -r -f client && cd .. && mv front-end/build back-end/client`: This will move the react build files to the back-end folder
+4. Run `cd back-end && npm install && npm start`: This will start the server
 
 ## Additional Resources
-Additional resources will be added as we progress through the project. 
+
+### Deployment
+1. We have two versions of the app, one "dev" which is the latest version of the app containing the feature still under review.
+2. We also have a "prod" version of the app which is the latest stable version of the app.
+
+
+<center>
+    <img src="deployment-setup.png" alt="Deployment Setup" width="500"/>
+</center>
