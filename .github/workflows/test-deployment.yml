@@ -1,9 +1,9 @@
-name: Deploy
+name: Deploy To Test Server
 
 on:
-  push:
-    branches:
-      - cd
+  pull_request:
+    types: [ opened ]
+    branches: [ main ]
 
 jobs:
   deploy:
