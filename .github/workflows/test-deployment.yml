@@ -3,7 +3,7 @@ name: Deploy To Test Server
 on:
   pull_request:
     types: [ opened ]
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   deploy:
