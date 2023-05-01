@@ -2,7 +2,7 @@ FROM node:14.15.4-alpine3.12 AS build
 
 WORKDIR /app
 
-COPY front-end/package.json front-end/package-lock.json ./
+COPY front-end/package.json ./
 
 RUN npm install
 
@@ -18,7 +18,7 @@ ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /app
 
-COPY back-end/package.json back-end/package-lock.json ./
+COPY back-end/package.json ./
 
 RUN npm install --only=production
 
