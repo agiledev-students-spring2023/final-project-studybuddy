@@ -20,10 +20,11 @@ const PostPreview = ({ id, subject,descrip,date_time }) => {
 			<p className="m-1">
 				{/* format description to only include first 50 characters then "..." */}
 
-				{shortDescrip.length > 50
-					? shortDescrip.slice(0, 50) + "..."
+				{shortDescrip.length > 20
+					? shortDescrip.slice(0, 20) + "..."
 					: shortDescrip}
 			</p>
+			</div>
 			<div className="row pt-3 pb-2">
 				<div className="col-4 text-center">
 					<a href={`/viewPost/${id}`} className="btn btn-md btn-primary">
@@ -31,7 +32,7 @@ const PostPreview = ({ id, subject,descrip,date_time }) => {
 					</a>
 				</div>
 			</div>
-		</div>
+		
 		</div>
 );
 };
@@ -98,6 +99,7 @@ const UserProfile = () => {
 					className="cursor_pointer back_icon_"
 					onClick={() => window.history.back()}
 				/>
+				<h5><strong>User Account</strong></h5>
 			</div>
 
 			<div className="content-body">

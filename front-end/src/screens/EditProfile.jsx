@@ -35,7 +35,6 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 			data: form,
 		};
 
-        console.log(options);
 		axios
 			.request(options)
 			.then((res) => {
@@ -54,13 +53,11 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 
 	return (
 		<div>
-			    <div className="UserPic">
+			    <div className="UserEdit">
                     <img
                             src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
-                            className="Picture"
                             alt="ProfilePicture"
                         />
-                        
                     <button
                     onClick={handleShow}
                     >Edit Picture</button>
@@ -191,7 +188,6 @@ export default function EditProfile() {
 			});
 	};
 
-   // console.log(profile);
     const {
 		register,
 		handleSubmit,
@@ -201,7 +197,8 @@ export default function EditProfile() {
 
     
 	return (
-		<>
+	<>
+		<div className="content-body">
 			<div className="container-fluid pageLayout">
             <div className="title-bar">
 				{" "}
@@ -322,6 +319,7 @@ export default function EditProfile() {
 						</form>
 					</div>
 				</div>
+			</div>
 			</div>
 			<Navbar user="Post" />
 		</>

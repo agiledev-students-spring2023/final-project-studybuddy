@@ -72,12 +72,19 @@
 	border:1px solid rgb(200, 182, 255);
 	margin: 5px;
 	border-radius: 5px;
+	display: flex;
+	justify-content: column;
 }
 
 .eachpost a{
 	background-color:rgb(184, 192, 255);
 	border: 3px solid rgb(184, 192, 255);
 	color: black;
+	width: 150px;
+	margin: 10px;
+}
+.eachpost p{
+	color: rgb(109, 104, 104);
 }
 
 .eachpost a:hover{

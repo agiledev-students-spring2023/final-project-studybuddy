@@ -12,7 +12,7 @@ const PostPreview = ({ id, subject,descrip,date_time }) => {
 	const shortDescrip = `${descrip}`;
 	return (
 		<div className="eachpost">
-	<div className="row p-1 pt-1 pb-30 m-1">
+			<div className="row p-1 pt-1 pb-30 m-1">
 			<h5 className="mb-2">{subject}</h5>
 			<p className="m-0 date">
 				{format("MM/dd/yyyy", new Date(date_time))}
@@ -20,28 +20,29 @@ const PostPreview = ({ id, subject,descrip,date_time }) => {
 			<p className="m-1">
 				{/* format description to only include first 50 characters then "..." */}
 
-				{shortDescrip.length > 50
-					? shortDescrip.slice(0, 50) + "..."
+				{shortDescrip.length > 20
+					? shortDescrip.slice(0, 20) + "..."
 					: shortDescrip}
 			</p>
-			<div className="row pt-3 pb-2">
+			</div>
+			<div className="my row row pt-3 pb-2">
 				<div className="col-4 text-center">
 					<a href={`/viewPost/${id}`} className="btn btn-md btn-primary">
 						View Post
 					</a>
 				</div>
 			</div>
-		</div>
+		
 		</div>
 );
 };
 
-const UserName = ({ name, major, picture, onUploadSuccess }) => {
+const UserName = ({ name, major, picture }) => {
 	return (
 		<div className="UserInfo">
 			<div>
 					<img
-						src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
+						src={picture}
 						className="Picture"
 						alt="ProfilePicture"
 					/>
@@ -75,7 +76,6 @@ const Profile = () => {
 			.then(function (response) {
 				const user = response.data.user;
 				const posts = response.data.posts;
-				console.log(user);
 				setMyprofile(user);
 				setMyposts(posts);
 			})
