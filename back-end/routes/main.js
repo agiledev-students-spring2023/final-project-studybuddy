@@ -7,10 +7,6 @@ const { isAuthenticated } = require("../middlewares/auth.middleware");
 const { search_chatId } = require("../utilities/chat.utils");
 
 // route for HTTP GET requests to the root document
-router.get("/", (req, res) => {
-	res.send("home!");
-});
-
 router.get("/allposts", isAuthenticated, async (req, res) => {
 	const soryBy = req.query.sort_by || "date";
 	const sort_order = req.query.order === "asc" ? -1 : 1;

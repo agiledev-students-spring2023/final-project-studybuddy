@@ -1,0 +1,6 @@
+back-end/node_modules
+front-end/node_modules
+ux-design
+*.md
+front-end/.env
+back-end/.env
