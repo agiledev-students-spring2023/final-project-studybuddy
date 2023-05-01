@@ -17,6 +17,7 @@ import SignUp from "./screens/SignUp.jsx";
 import UploadPost from "./screens/UploadPost.jsx";
 import UserProfile from "./screens/UserProfile.jsx";
 import ViewPost from "./screens/ViewPost.jsx";
+import EditProfile from "./screens/EditProfile.jsx";
 
 function App() {
 	return (
@@ -43,6 +44,7 @@ function App() {
 						element={<FilteredScreen />}
 					/>
 					<Route path="/viewPost/:postId" element={<ViewPost />} />
+					<Route path="/editProfile" element={<EditProfile />} />
 				</Routes>
 			</Router>
 		</div>

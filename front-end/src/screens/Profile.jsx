@@ -4,8 +4,6 @@ import "./Profile.css";
 import Navbar from "../components/Navbar";
 import TitleBar from "../components/TitleBar";
 import axios from "axios";
-import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import { getToken, removeToken } from "../auth/auth";
 import { format } from "date-fns/fp";
@@ -38,109 +36,15 @@ const PostPreview = ({ id, subject,descrip,date_time }) => {
 );
 };
 
-const ProfilePic = ({ profilepic, onSuccess }) => {
-	const [image, setImage] = useState();
-
-	function handleImage(e) {
-		setImage(e.target.files[0]);
-	}
-
-	function handleSubmit(e) {
-		e.preventDefault();
-		const form = new FormData();
-		form.append("Profile_pic", image);
-
-		const options = {
-			method: "POST",
-			url: process.env.REACT_APP_BACK_URL + "/Profile",
-			headers: {
-				authorization: getToken(),
-				"Content-Type": "multipart/form-data",
-			},
-			data: form,
-		};
-
-		axios
-			.request(options)
-			.then((res) => {
-				if (res.status === 200) {
-					toast.success("Profile picture uploaded successfully!");
-					onSuccess();
-				} else {
-					toast.error(res.data.message);
-				}
-			})
-			.catch((err) => {
-				console.log(err);
-				toast.error(err.response.data.message);
-			});
-	}
-	return (
-		<div className="Pic">
-			<div className="Picture01">
-				<img src={profilepic} alt="" />
-			</div>
-			<form onSubmit={handleSubmit}>
-				<div className="input-group mb-3">
-					<input
-						className="form-control"
-						type="file"
-						id="formFile"
-						onChange={handleImage}
-					/>
-					<button>Upload</button>
-				</div>
-			</form>
-		</div>
-	);
-};
-
 const UserName = ({ name, major, picture, onUploadSuccess }) => {
-	const [show, setShow] = useState(false);
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 	return (
 		<div className="UserInfo">
 			<div>
-				<button
-					style={{
-						border: "none",
-						background: "none",
-						padding: 0,
-						cursor: "pointer",
-					}}
-					onClick={handleShow}
-				>
 					<img
-						src={picture}
+						src={picture} roundedCircle thumbnail width={100}
 						className="Picture"
 						alt="ProfilePicture"
 					/>
-				</button>
-				<div className="Mymodal">
-					<Modal
-						show={show}
-						onHide={handleClose}
-						backdrop="static"
-						keyboard={false}
-					>
-						<Modal.Header closeButton>
-							<Modal.Title>Upload Profile Picture</Modal.Title>
-						</Modal.Header>
-						<Modal.Body>
-							<ProfilePic
-								profilepic={picture}
-								onSuccess={onUploadSuccess}
-							/>
-						</Modal.Body>
-						<Modal.Footer>
-							<Button variant="secondary" onClick={handleClose}>
-								{" "}
-								Close{" "}
-							</Button>
-						</Modal.Footer>
-					</Modal>
-				</div>
 			</div>
 			<div>
 				<h5> {name}</h5>
@@ -180,8 +84,37 @@ const Profile = () => {
 	};
 
 	const onLogout = () => {
+		toast.success(
+			"Successfully Logged out, redirecting to Login..."
+		);
 		removeToken();
+		window.location.href = "/Login";
 	};
+
+	const onDeleteAccount = () => {
+		const options = {
+		  method: 'DELETE',
+		  url: process.env.REACT_APP_BACK_URL + '/profile',
+		  headers: {
+			authorization: getToken(),
+		  },
+		};
+	  
+		axios.request(options)
+		  .then(response => {
+			// Handle success response here, such as redirecting the user to the login page
+			toast.success(
+				"Successfully Deleted account, redirecting to Login..."
+			);
+			removeToken();
+			window.location.href = "/Login";
+			
+		  })
+		  .catch(error => {
+			// Handle error response here, such as displaying an error message to the user
+			console.error(error);
+		  });
+	  };
 	
 
 	return (
@@ -202,9 +135,15 @@ const Profile = () => {
 					<UserName
 						name={profile.name}
 						major={profile.major}
-						picture={profile.Profile_pic}
+						picture={`${process.env.REACT_APP_BACK_URL}/${profile.Profile_pic}`}
 						onUploadSuccess={loadFilteredPosts}
 					/>
+					<div className="edit">
+						<a href="/editProfile">
+							Edit Profile
+						</a>
+					</div>
+
 
 					<div className="MyPosts">
 						<h2>Posts</h2>
@@ -223,6 +162,9 @@ const Profile = () => {
 								<p> No posts</p>
 							)}
 						</div>
+					</div>
+					<div className="Delete">
+						<button onClick={onDeleteAccount}>Delete Account</button>
 					</div>
 				</div>
 			</div>

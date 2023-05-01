@@ -31,7 +31,13 @@ router.post("/:postId", isAuthenticated, async (req, res) => {
 	});
 
 	await comment.save();
+
+	user.comments.push(comment);
+		await user.save();
+
 	return res.send(comment);
+
+	
 });
 
 module.exports = router;

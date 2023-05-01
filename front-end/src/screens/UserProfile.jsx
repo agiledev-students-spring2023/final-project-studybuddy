@@ -105,7 +105,7 @@ const UserProfile = () => {
 					<UserName
 						name={profile.name}
 						major={profile.major}
-						picture={profile.Profile_pic}
+						picture={`${process.env.REACT_APP_BACK_URL}/${profile.Profile_pic}`}
 					/>
 
 					<div className="Message">
