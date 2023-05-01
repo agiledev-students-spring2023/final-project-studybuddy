@@ -115,7 +115,9 @@ export default function FilteredScreen() {
 	const loadFilteredPosts = () => {
 		const options = {
 			method: "GET",
-			url: process.env.REACT_APP_BACK_URL + `filtered/${date}/${env}/${subject}/${subfield}`,
+			url:
+				process.env.REACT_APP_BACK_URL +
+				`filtered/${date}/${env}/${subject}/${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},

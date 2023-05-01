@@ -41,7 +41,7 @@ const UserName = ({ name, major, picture, onUploadSuccess }) => {
 		<div className="UserInfo">
 			<div>
 					<img
-						src={picture} roundedCircle thumbnail width={100}
+						src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
 						className="Picture"
 						alt="ProfilePicture"
 					/>
@@ -75,6 +75,7 @@ const Profile = () => {
 			.then(function (response) {
 				const user = response.data.user;
 				const posts = response.data.posts;
+				console.log(user);
 				setMyprofile(user);
 				setMyposts(posts);
 			})

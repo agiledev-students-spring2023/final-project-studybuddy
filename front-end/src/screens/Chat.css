@@ -5,6 +5,20 @@
 	color: #495057;
 }
 
+.chat_delete {
+	align-items: center;
+	display: flex;
+	cursor: pointer;
+}
+
+.chat_icon_grey {
+	color: #616161;
+}
+
+.chat_icon_red {
+	color: #D50000;
+}
+
 .bubble_container {
 	padding: 10px;
 	display: flex;
