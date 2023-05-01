@@ -1,4 +1,4 @@
-name: Deploy To Test Server
+name: Deploy To Production Server
 
 on:
   pull_request:
