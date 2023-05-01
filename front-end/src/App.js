@@ -17,6 +17,7 @@ import SignUp from "./screens/SignUp.jsx";
 import UploadPost from "./screens/UploadPost.jsx";
 import UserProfile from "./screens/UserProfile.jsx";
 import ViewPost from "./screens/ViewPost.jsx";
+import EditProfile from "./screens/EditProfile.jsx";
 import { getToken } from "./auth/auth";
 
 function App() {
@@ -42,12 +43,27 @@ function App() {
 								element={<FilteredScreen />}
 							/>
 							<Route path="/viewPost/:postId" element={<ViewPost />} />
+							<Route path="/editProfile" element={<EditProfile />} />
 						</>}
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signUp" element={<SignUp />} />
 					<Route path="/forgotPw" element={<ForgotPW />} />
 					<Route path="/resetPw" element={<ResetPW />} />
+					<Route path="/chatList" element={<ChatList />} />
+					<Route path="/chat/:chatId" element={<Chat />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route
+						path="/userprofile/:userId"
+						element={<UserProfile />}
+					/>
+					<Route path="/uploadPost" element={<UploadPost />} />
+					<Route
+						path="/filteredScreen"
+						element={<FilteredScreen />}
+					/>
+					<Route path="/viewPost/:postId" element={<ViewPost />} />
+					<Route path="/editProfile" element={<EditProfile />} />
 					<Route path="*" element={<Navigate replace to="/login" />} />
 				</Routes>
 			</Router>

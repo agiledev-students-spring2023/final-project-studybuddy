@@ -10,7 +10,7 @@ export default function MessagePreview({ chat }) {
 	return (
 		<Card className="m-3" onClick={() => (window.location.href = chat_url)}>
 			<div className="message_card">
-				<Image src={img_url} roundedCircle thumbnail width={100} />
+				<Image src={`${process.env.REACT_APP_BACK_URL}/${img_url}`} roundedCircle thumbnail width={100} />
 				<Card.Body>
 					<Card.Title>{name}</Card.Title>
 					<Card.Text>{preview}</Card.Text>

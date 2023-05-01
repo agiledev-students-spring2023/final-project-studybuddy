@@ -11,6 +11,7 @@ const filters = require("./filter.js");
 const post = require("./post.js");
 const general = require("./general.js");
 const comment = require("./comment.js");
+const editprofile=require("./editprofile.js");
 
 //ADD routes here:
 router.use("/", main);
@@ -22,6 +23,7 @@ router.use("/auth", auth);
 router.use("/filtered", filters);
 router.use("/post", post);
 router.use("/general", general);
+router.use("/editprofile", editprofile);
 router.use("/comment", comment);
 
 module.exports = router;
