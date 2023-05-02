@@ -8,44 +8,42 @@ import { toast } from "react-toastify";
 import { getToken, removeToken } from "../auth/auth";
 import { format } from "date-fns/fp";
 
-const PostPreview = ({ id, subject,descrip,date_time }) => {
+const PostPreview = ({ id, subject, descrip, date_time }) => {
 	const shortDescrip = `${descrip}`;
 	return (
 		<div className="eachpost">
 			<div className="row p-1 pt-1 pb-30 m-1">
-			<h5 className="mb-2">{subject}</h5>
-			<p className="m-0 date">
-				{format("MM/dd/yyyy", new Date(date_time))}
-			</p>
-			<p className="m-1">
-				{/* format description to only include first 50 characters then "..." */}
+				<h5 className="mb-2">{subject}</h5>
+				<p className="m-0 date">
+					{format("MM/dd/yyyy", new Date(date_time))}
+				</p>
+				<p className="m-1">
+					{/* format description to only include first 50 characters then "..." */}
 
-				{shortDescrip.length > 20
-					? shortDescrip.slice(0, 20) + "..."
-					: shortDescrip}
-			</p>
+					{shortDescrip.length > 20
+						? shortDescrip.slice(0, 20) + "..."
+						: shortDescrip}
+				</p>
 			</div>
 			<div className="my row row pt-3 pb-2">
 				<div className="col-4 text-center">
-					<a href={`/viewPost/${id}`} className="btn btn-md btn-primary">
+					<a
+						href={`/viewPost/${id}`}
+						className="btn btn-md btn-primary"
+					>
 						View Post
 					</a>
 				</div>
 			</div>
-		
 		</div>
-);
+	);
 };
 
 const UserName = ({ name, major, picture }) => {
 	return (
 		<div className="UserInfo">
 			<div>
-					<img
-						src={picture}
-						className="Picture"
-						alt="ProfilePicture"
-					/>
+				<img src={picture} className="Picture" alt="ProfilePicture" />
 			</div>
 			<div>
 				<h5> {name}</h5>
@@ -85,38 +83,35 @@ const Profile = () => {
 	};
 
 	const onLogout = () => {
-		toast.success(
-			"Successfully Logged out, redirecting to Login..."
-		);
+		toast.success("Successfully Logged out, redirecting to Login...");
 		removeToken();
 		window.location.href = "/Login";
 	};
 
 	const onDeleteAccount = () => {
 		const options = {
-		  method: 'DELETE',
-		  url: process.env.REACT_APP_BACK_URL + '/profile',
-		  headers: {
-			authorization: getToken(),
-		  },
+			method: "DELETE",
+			url: process.env.REACT_APP_BACK_URL + "/profile",
+			headers: {
+				authorization: getToken(),
+			},
 		};
-	  
-		axios.request(options)
-		  .then(response => {
-			// Handle success response here, such as redirecting the user to the login page
-			toast.success(
-				"Successfully Deleted account, redirecting to Login..."
-			);
-			removeToken();
-			window.location.href = "/Login";
-			
-		  })
-		  .catch(error => {
-			// Handle error response here, such as displaying an error message to the user
-			console.error(error);
-		  });
-	  };
-	
+
+		axios
+			.request(options)
+			.then((response) => {
+				// Handle success response here, such as redirecting the user to the login page
+				toast.success(
+					"Successfully Deleted account, redirecting to Login..."
+				);
+				removeToken();
+				window.location.href = "/Login";
+			})
+			.catch((error) => {
+				// Handle error response here, such as displaying an error message to the user
+				console.error(error);
+			});
+	};
 
 	return (
 		<div>
@@ -130,7 +125,6 @@ const Profile = () => {
 						<a href="/Login" onClick={onLogout}>
 							Log out
 						</a>
-						
 					</div>
 
 					<UserName
@@ -140,11 +134,8 @@ const Profile = () => {
 						onUploadSuccess={loadFilteredPosts}
 					/>
 					<div className="edit">
-						<a href="/editProfile">
-							Edit Profile
-						</a>
+						<a href="/editProfile">Edit Profile</a>
 					</div>
-
 
 					<div className="MyPosts">
 						<h2>Posts</h2>
@@ -165,7 +156,9 @@ const Profile = () => {
 						</div>
 					</div>
 					<div className="Delete">
-						<button onClick={onDeleteAccount}>Delete Account</button>
+						<button onClick={onDeleteAccount}>
+							Delete Account
+						</button>
 					</div>
 				</div>
 			</div>

@@ -29,7 +29,7 @@
 }
 
 .Message a:hover {
-	background-color:rgb(187, 208, 255);
+	background-color: rgb(187, 208, 255);
 }
 
 .UserInfo img {
@@ -67,27 +67,27 @@
 	margin-bottom: 20px;
 	text-align: center;
 	font-weight: 600;
-} 
+}
 
 .eachpost {
-	border:1px solid rgb(200, 182, 255);
+	border: 1px solid rgb(200, 182, 255);
 	margin: 5px;
 	border-radius: 5px;
 	display: flex;
 	justify-content: column;
 }
 
-.eachpost a{
-	background-color:rgb(184, 192, 255);
+.eachpost a {
+	background-color: rgb(184, 192, 255);
 	border: 3px solid rgb(184, 192, 255);
 	color: black;
 }
 
-.eachpost p{
+.eachpost p {
 	color: rgb(109, 104, 104);
 }
 
-.eachpost a:hover{
-	background-color:rgb(187, 208, 255);
+.eachpost a:hover {
+	background-color: rgb(187, 208, 255);
 	border: 3px solid rgb(187, 208, 255);
 }

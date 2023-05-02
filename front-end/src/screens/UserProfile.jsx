@@ -8,33 +8,35 @@ import { MdArrowBack } from "react-icons/md";
 import { getToken } from "../auth/auth";
 import { format } from "date-fns/fp";
 
-const PostPreview = ({ id, subject,descrip,date_time }) => {
+const PostPreview = ({ id, subject, descrip, date_time }) => {
 	const shortDescrip = `${descrip}`;
 	return (
 		<div className="eachpost">
-	<div className="row p-1 pt-1 pb-30 m-1">
-			<h5 className="mb-2">{subject}</h5>
-			<p className="m-0 date">
-				{format("MM/dd/yyyy", new Date(date_time))}
-			</p>
-			<p className="m-1">
-				{/* format description to only include first 50 characters then "..." */}
+			<div className="row p-1 pt-1 pb-30 m-1">
+				<h5 className="mb-2">{subject}</h5>
+				<p className="m-0 date">
+					{format("MM/dd/yyyy", new Date(date_time))}
+				</p>
+				<p className="m-1">
+					{/* format description to only include first 50 characters then "..." */}
 
-				{shortDescrip.length > 20
-					? shortDescrip.slice(0, 20) + "..."
-					: shortDescrip}
-			</p>
+					{shortDescrip.length > 20
+						? shortDescrip.slice(0, 20) + "..."
+						: shortDescrip}
+				</p>
 			</div>
 			<div className="row pt-3 pb-2">
 				<div className="col-4 text-center">
-					<a href={`/viewPost/${id}`} className="btn btn-md btn-primary">
+					<a
+						href={`/viewPost/${id}`}
+						className="btn btn-md btn-primary"
+					>
 						View Post
 					</a>
 				</div>
 			</div>
-		
 		</div>
-);
+	);
 };
 
 const UserName = ({ name, major, picture }) => (
@@ -99,7 +101,9 @@ const UserProfile = () => {
 					className="cursor_pointer back_icon_"
 					onClick={() => window.history.back()}
 				/>
-				<h5><strong>User Account</strong></h5>
+				<h5>
+					<strong>User Account</strong>
+				</h5>
 			</div>
 
 			<div className="content-body">
@@ -127,11 +131,11 @@ const UserProfile = () => {
 							{posts && posts.length > 0 ? (
 								posts.map((post) => (
 									<PostPreview
-									subject={post.subject}
-									id={post._id}
-									key={post._id}
-									descrip={post.description}
-									date_time={post.dateAndTime}
+										subject={post.subject}
+										id={post._id}
+										key={post._id}
+										descrip={post.description}
+										date_time={post.dateAndTime}
 									/>
 								))
 							) : (

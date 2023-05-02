@@ -14,7 +14,7 @@
 }
 
 .Logout a:hover {
-	background-color:rgb(187, 208, 255);
+	background-color: rgb(187, 208, 255);
 }
 
 .edit {
@@ -33,7 +33,7 @@
 }
 
 .edit a:hover {
-	background-color:rgb(187, 208, 255);
+	background-color: rgb(187, 208, 255);
 }
 
 .UserInfo {
@@ -66,34 +66,34 @@
 	margin-bottom: 20px;
 	text-align: center;
 	font-weight: 600;
-} 
+}
 
 .eachpost {
-	border:1px solid rgb(200, 182, 255);
+	border: 1px solid rgb(200, 182, 255);
 	margin: 5px;
 	border-radius: 5px;
 	display: flex;
 	justify-content: column;
 }
 
-.eachpost a{
-	background-color:rgb(184, 192, 255);
+.eachpost a {
+	background-color: rgb(184, 192, 255);
 	border: 3px solid rgb(184, 192, 255);
 	color: black;
 	width: 150px;
 	margin: 10px;
 }
-.eachpost p{
+.eachpost p {
 	color: rgb(109, 104, 104);
 }
 
-.eachpost a:hover{
-	background-color:rgb(187, 208, 255);
+.eachpost a:hover {
+	background-color: rgb(187, 208, 255);
 	border: 3px solid rgb(187, 208, 255);
 }
 
-.Delete{
-text-align:center;
+.Delete {
+	text-align: center;
 }
 .Delete button {
 	text-align: center;
@@ -106,6 +106,6 @@ text-align:center;
 }
 
 .Delete button:hover {
-	background-color:rgb(219, 32, 54);
+	background-color: rgb(219, 32, 54);
 	border: 3px solid rgb(219, 32, 54);
 }

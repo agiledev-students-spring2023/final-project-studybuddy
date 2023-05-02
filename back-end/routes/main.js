@@ -28,7 +28,6 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 
 	let postsWithUser = allUsersAndPosts.reduce((acc, user) => {
 		user.posts.forEach((post) => {
-			// acc.push({ id: post._id, author: user.name, major: user.major, subject: post.subject, descrip: post.description, date_time: post.dateAndTime, istrue: false, mode: post.mode, key: post._id });
 			acc.push({
 				id: post._id,
 				author: user.name,
@@ -45,12 +44,6 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 		});
 		return acc;
 	}, []);
-
-	// let thirtyDaysAgo = new Date();
-	// thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-	// postsWithUser = postsWithUser.filter((post) => {
-	// 	return post.date_time > thirtyDaysAgo;
-	// });
 
 	let olderPosts = postsWithUser.filter((post) => {
 		return post.date_time < Date.now();

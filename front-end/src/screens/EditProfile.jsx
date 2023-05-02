@@ -14,7 +14,7 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-    const [image, setImage] = useState();
+	const [image, setImage] = useState();
 
 	function handleImage(e) {
 		setImage(e.target.files[0]);
@@ -53,47 +53,42 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 
 	return (
 		<div>
-			    <div className="UserEdit">
-                    <img
-                            src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
-                            alt="ProfilePicture"
-                        />
-                    <button
-                    onClick={handleShow}
-                    >Edit Picture</button>
-                   
-                </div>
+			<div className="UserEdit">
+				<img
+					src={`${process.env.REACT_APP_BACK_URL}/${picture}`}
+					alt="ProfilePicture"
+				/>
+				<button onClick={handleShow}>Edit Picture</button>
+			</div>
 
-				<div className="modal">
-					<Modal
-						show={show}
-						onHide={handleClose}
-						backdrop="static"
-						keyboard={false}
-					>
-						<Modal.Header closeButton>
-							<Modal.Title>Upload Profile Picture</Modal.Title>
-						</Modal.Header>
-						<Modal.Body>
-                                <div className="MyPic">
-                                    <form onSubmit={handleSubmitPicture}>
-                                        <div className="input-group mb-4">
-                                            <input
-                                                className="form-control"
-                                                type="file"
-                                                id="formFile"
-                                                onChange={handleImage}
-                                            />
-                                            <button>Upload</button>
-                                        </div>
-                                    </form>
-                                </div>
-						</Modal.Body>
-						<Modal.Footer>
-						</Modal.Footer>
-					</Modal>
-				</div>
-			
+			<div className="modal">
+				<Modal
+					show={show}
+					onHide={handleClose}
+					backdrop="static"
+					keyboard={false}
+				>
+					<Modal.Header closeButton>
+						<Modal.Title>Upload Profile Picture</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<div className="MyPic">
+							<form onSubmit={handleSubmitPicture}>
+								<div className="input-group mb-4">
+									<input
+										className="form-control"
+										type="file"
+										id="formFile"
+										onChange={handleImage}
+									/>
+									<button>Upload</button>
+								</div>
+							</form>
+						</div>
+					</Modal.Body>
+					<Modal.Footer></Modal.Footer>
+				</Modal>
+			</div>
 		</div>
 	);
 };
@@ -101,12 +96,11 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 export default function EditProfile() {
 	const navigate = useNavigate();
 	const [MAJORS, setMAJORS] = useState([]);
-    const [profile, setMyprofile] = useState([]);
-
+	const [profile, setMyprofile] = useState([]);
 
 	useEffect(() => {
 		getMajors();
-        loadUserInfo();
+		loadUserInfo();
 	}, []);
 
 	const getMajors = async () => {
@@ -128,23 +122,23 @@ export default function EditProfile() {
 			toast.error("Passwords do not match");
 			return;
 		}
-        
+
 		const options = {
 			url: process.env.REACT_APP_BACK_URL + "/editprofile",
 			method: "POST",
-            headers: {
+			headers: {
 				authorization: getToken(),
 				"Content-Type": "application/json",
 			},
 			data: {
-                username: data.username ? data.username : profile.username,
-                password: data.password ? data.password : profile.password,
-                name: data.name ? data.name : profile.name,
-                major: data.major ? data.major : profile.major,
-                email: data.email ? data.email : profile.email,
-              },
+				username: data.username ? data.username : profile.username,
+				password: data.password ? data.password : profile.password,
+				name: data.name ? data.name : profile.name,
+				major: data.major ? data.major : profile.major,
+				email: data.email ? data.email : profile.email,
+			},
 		};
-    
+
 		axios(options)
 			.then(function (response) {
 				console.log(response);
@@ -158,16 +152,14 @@ export default function EditProfile() {
 			})
 			.catch(function (error) {
 				console.error(error);
-				// Notify user that they have failed to update their info 
+				// Notify user that they have failed to update their info
 				if (error.response) {
 					toast.error(error.response.data.message);
 				}
 			});
 	};
 
-    
-
-    const loadUserInfo = () => {
+	const loadUserInfo = () => {
 		const options = {
 			method: "GET",
 			url: process.env.REACT_APP_BACK_URL + "/editprofile",
@@ -188,138 +180,141 @@ export default function EditProfile() {
 			});
 	};
 
-    const {
+	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
 
-
-    
 	return (
-	<>
-		<div className="content-body">
-			<div className="container-fluid pageLayout">
-            <div className="title-bar">
-				{" "}
-				<TitleBar title="Edit Profile" backpage="/Profile" />{" "}
-                <ProfilePic
-						picture={profile.Profile_pic}
-						onUploadSuccess={loadUserInfo}
-					/>
-			</div>
-				<div className="row">
-					<div className="col-md-12">
-						<form onSubmit={handleSubmit(onSubmit)}>
-							<div className="form-floating mb-3">
-								<input
-									type="text"
-									className={
-										"form-control " +
-										(errors.username ? "is-invalid" : "")
-									}
-									id="username"
-									placeholder="Username"
-                                    defaultValue={profile.username}
-									{...register("username")}
-								/>
-								<label htmlFor="username">Username</label>
-							</div>
-							{/* password */}
-							<div className="form-floating mb-3">
-								<input
-									type="password"
-									className={
-										"form-control " +
-										(errors.password ? "is-invalid" : "")
-									}
-									id="password"
-									placeholder="Password"
-									{...register("password")}
-								/>
-								<label htmlFor="password">New Password</label>
-							</div>
-							{/* confirm password */}
-							<div className="form-floating mb-3">
-								<input
-									type="password"
-									className={
-										"form-control " +
-										(errors.confirm_password
-											? "is-invalid"
-											: "")
-									}
-									id="confirm_password"
-									placeholder="Confirm Password"
-									{...register("confirm_password")}
-								/>
-								<label htmlFor="confirm_password">
-									Confirm New Password
-								</label>
-							</div>
-							{/* Name */}
-							<div className="form-floating mb-3">
-								<input
-									type="text"
-									className={
-										"form-control " +
-										(errors.name ? "is-invalid" : "")
-									}
-									id="name"
-                                    defaultValue={profile.name}
-									placeholder="Name"
-									{...register("name")}
-								/>
-								<label htmlFor="name">Name</label>
-							</div>
-							{/* Major, Dropdown */}
-							<div className="form-floating mb-3">
-								<select
-									className={
-										"form-select " +
-										(errors.major ? "is-invalid" : "")
-									}
-									id="major"
-                                    defaultValue={profile.major}
-									aria-label="Floating label select example"
-									{...register("major")}
-								>
-									<option value="">Select a major</option>
-									{MAJORS.map((major) => (
-										<option key={major} value={major}>
-											{major}
-										</option>
-									))}
-								</select>
-								<label htmlFor="major">Major</label>
-							</div>
-							{/* email */}
-							<div className="form-floating mb-3">
-								<input
-									type="email"
-									className={
-										"form-control " +
-										(errors.email ? "is-invalid" : "")
-									}
-									id="email"
-									placeholder="Email"
-                                    defaultValue={profile.email}
-									{...register("email")}
-								/>
-								<label htmlFor="email">Email</label>
-							</div>
-							{/* Submit */}
-							<div className="d-grid gap-2">
-                            <button
-									type="submit"
-								>
-									Done 
-								</button>
-							</div>
-						</form>
+		<>
+			<div className="content-body">
+				<div className="container-fluid pageLayout">
+					<div className="title-bar">
+						{" "}
+						<TitleBar
+							title="Edit Profile"
+							backpage="/Profile"
+						/>{" "}
+						<ProfilePic
+							picture={profile.Profile_pic}
+							onUploadSuccess={loadUserInfo}
+						/>
+					</div>
+					<div className="row">
+						<div className="col-md-12">
+							<form onSubmit={handleSubmit(onSubmit)}>
+								<div className="form-floating mb-3">
+									<input
+										type="text"
+										className={
+											"form-control " +
+											(errors.username
+												? "is-invalid"
+												: "")
+										}
+										id="username"
+										placeholder="Username"
+										defaultValue={profile.username}
+										{...register("username")}
+									/>
+									<label htmlFor="username">Username</label>
+								</div>
+								{/* password */}
+								<div className="form-floating mb-3">
+									<input
+										type="password"
+										className={
+											"form-control " +
+											(errors.password
+												? "is-invalid"
+												: "")
+										}
+										id="password"
+										placeholder="Password"
+										{...register("password")}
+									/>
+									<label htmlFor="password">
+										New Password
+									</label>
+								</div>
+								{/* confirm password */}
+								<div className="form-floating mb-3">
+									<input
+										type="password"
+										className={
+											"form-control " +
+											(errors.confirm_password
+												? "is-invalid"
+												: "")
+										}
+										id="confirm_password"
+										placeholder="Confirm Password"
+										{...register("confirm_password")}
+									/>
+									<label htmlFor="confirm_password">
+										Confirm New Password
+									</label>
+								</div>
+								{/* Name */}
+								<div className="form-floating mb-3">
+									<input
+										type="text"
+										className={
+											"form-control " +
+											(errors.name ? "is-invalid" : "")
+										}
+										id="name"
+										defaultValue={profile.name}
+										placeholder="Name"
+										{...register("name")}
+									/>
+									<label htmlFor="name">Name</label>
+								</div>
+								{/* Major, Dropdown */}
+								<div className="form-floating mb-3">
+									<select
+										className={
+											"form-select " +
+											(errors.major ? "is-invalid" : "")
+										}
+										id="major"
+										defaultValue={profile.major}
+										aria-label="Floating label select example"
+										{...register("major")}
+									>
+										<option value="">Select a major</option>
+										{MAJORS.map((major) => (
+											<option key={major} value={major}>
+												{major}
+											</option>
+										))}
+									</select>
+									<label htmlFor="major">Major</label>
+								</div>
+								{/* email */}
+								<div className="form-floating mb-3">
+									<input
+										type="email"
+										className={
+											"form-control " +
+											(errors.email ? "is-invalid" : "")
+										}
+										id="email"
+										placeholder="Email"
+										defaultValue={profile.email}
+										{...register("email")}
+									/>
+									<label htmlFor="email">Email</label>
+								</div>
+								{/* Submit */}
+								<div className="d-grid gap-2">
+									<button type="submit">Done</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 			<Navbar user="Post" />
 		</>
