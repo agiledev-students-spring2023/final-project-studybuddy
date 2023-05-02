@@ -1,14 +1,22 @@
 version: '3.7'
 
 services:
-  studybuddy:
+  studybuddy-prod:
     image: bishnudev/study-buddy:production
     ports:
       - 80:4000
     env_file:
-      - .env
+      - prod.env
     volumes:
-      - uploads:/app/uploads
+      - uploads-prod:/app/uploads
+  studybuddy-test:
+    image: bishnudev/study-buddy:latest
+    ports:
+      - 4000:4000
+    env_file:
+      - test.env
+    volumes:
+      - uploads-test:/app/uploads
   watchtower:
     image: containrrr/watchtower:latest
     volumes:
@@ -16,4 +24,5 @@ services:
     command: --interval 30
 
 volumes:
-  uploads:
+  uploads-prod:
+  uploads-test:
