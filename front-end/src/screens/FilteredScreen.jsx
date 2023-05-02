@@ -84,7 +84,7 @@ export const FilteredItem = ({
 			<p className={"mb-1 " + (old ? "bg-light text-secondary" : "")}>
 				{author} studies {major}
 			</p>
-			<p className="mb-2">{subject}</p>
+			<p className="post_subject">{subject}</p>
 			<h5
 				className="mb-1 cursor-pointer"
 				onClick={() =>
