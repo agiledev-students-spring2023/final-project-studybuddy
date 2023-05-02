@@ -54,8 +54,8 @@ export default function ChatList() {
 				<>
 					<div className="screen_header">Chats</div>
 					<div className="screen_body">
-						{chatList.map((e, i) => (
-							<MessagePreview key={i} chat={e} />
+						{chatList.map(e => (
+							<MessagePreview key={e.id} chat={e} />
 						))}
 					</div>
 				</>

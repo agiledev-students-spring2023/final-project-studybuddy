@@ -32,6 +32,8 @@ const fetch_chatList = async (user_id) => {
 				last_read = chat[i].last_read[1];
 			}
 			const user = await User.findById(buddy_id);
+			// buddy membership withdrawal
+			if (!user) continue
 
 			// find message chat_id
 			const messageList = await Message.find({
@@ -40,7 +42,7 @@ const fetch_chatList = async (user_id) => {
 				timestamp: 1,
 			});
 
-			count = 0;
+			let count = 0;
 			for (var j = 0; j < messageList.length; j++) {
 				if (
 					messageList[j].timestamp > last_read &&
@@ -49,19 +51,27 @@ const fetch_chatList = async (user_id) => {
 					count = count + 1;
 				}
 			}
-			const preview = messageList.length
-				? messageList[messageList.length - 1].content
-				: "";
+			let preview = undefined
+			if (messageList.length == 0) {
+				preview = ""
+				last_msg_timestamp = 0
+			} else {
+				last_msg = messageList[messageList.length - 1]
+				preview = last_msg.content
+				last_msg_timestamp = last_msg.timestamp
+			}
 			const chat_info = {
 				name: user.name,
 				img_url: user.Profile_pic,
 				unread: count,
 				id: chat[i]._id,
 				preview,
+				last_msg_timestamp
 			};
 
 			chatlist.push(chat_info);
 		}
+		chatlist.sort((a, b) => b.last_msg_timestamp - a.last_msg_timestamp)
 		status = 200;
 	} catch (err) {
 		console.log(err);
@@ -130,8 +140,21 @@ const update_last_read = async (user_id, chat_id) => {
 	return 200;
 };
 
+const get_buddy_id = async (chat_id, user_id) => {
+	const validId = ObjectId.isValid(chat_id);
+	if (!validId) return 404;
+
+	const chat = await Chat.findById(chat_id);
+	if (!chat) return 404;
+
+	if (chat.members[0] == user_id)
+		return chat.members[1];
+	else
+		return chat.members[0];
+}
+
 module.exports = {
 	fetch_chatList,
 	search_chatId,
-	update_last_read,
+	update_last_read
 };

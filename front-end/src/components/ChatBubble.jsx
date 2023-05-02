@@ -1,7 +1,6 @@
-import axios from "axios";
 import React, { useState } from "react";
 import { MdCancel, MdDelete } from "react-icons/md";
-import { getToken } from "../auth/auth";
+
 
 const formatTime = (ts) => {
 	if (typeof ts === "string") ts = Number(ts);
@@ -15,27 +14,33 @@ const formatTime = (ts) => {
 	return formattedTime;
 };
 
-function ChatBubble({ chat }) {
+function ChatBubble({ chat, requestDeleteMsg }) {
 	const { _id, isMe, content, timestamp } = chat;
 	const type = isMe ? "chat_me" : "chat_other";
 	const time = formatTime(timestamp);
 	const [confirm, setConfirm] = useState(false);
+	const [visible, setVisible] = useState(false)
 
-	async function deleteMessage() {
-		const deleteAPI = process.env.REACT_APP_BACK_URL + `/_message/${_id}`;
-		const { data } = await axios.delete(deleteAPI, {
-			headers: {
-				authorization: getToken(),
-			},
-		});
-		console.log(data);
+	const deleteMsg = () => {
+		requestDeleteMsg(_id);
+	}
+	const handleMouseEnter = () => {
+		setVisible(true)
+	}
+	const handleMouseLeave = () => {
+		setVisible(false)
+		setConfirm(false)
 	}
 
 	return (
-		<div className={`${type}_container bubble_container`}>
+		<div
+			className={`${type}_container bubble_container`}
+			onMouseEnter={() => handleMouseEnter()}
+			onMouseLeave={() => handleMouseLeave()}
+		>
 			<div className={`chat_bubble ${type}`}>{content}</div>
 			<div className="chat_time">{time}</div>
-			{isMe && (
+			{isMe && visible && (
 				<div className="chat_delete">
 					{confirm && (
 						<MdCancel
@@ -45,7 +50,7 @@ function ChatBubble({ chat }) {
 					)}
 					<MdDelete
 						onClick={() => {
-							if (confirm) deleteMessage();
+							if (confirm) deleteMsg()
 							else setConfirm(true);
 						}}
 						className={confirm ? "chat_icon_red" : "chat_icon_grey"}

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ChatBubble from "../components/ChatBubble";
 import Form from "react-bootstrap/Form";
 import { MdArrowBack, MdSend } from "react-icons/md";
 import "./Chat.css";
-import axios from "axios";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import ChatError from "../components/ChatError";
@@ -13,111 +12,168 @@ import Loader from "../components/Loader";
 export default function Chat() {
 	const [buddyName, setBuddyName] = useState("");
 	const [buddyId, setBuddyId] = useState("");
-	const [messages, setMessages] = useState([]);
+	const [msgList, setMessages] = useState([]);
 	const [input, setInput] = useState("");
 	const [success, setSuccess] = useState(true);
 	const { chatId } = useParams();
 
 	const [sending, setSending] = useState(false);
 	const [lastMsg, setLastMsg] = useState("");
-	const [loading, setLoading] = useState(true);
 
-	const chatAPI = process.env.REACT_APP_BACK_URL + `/_message/${chatId}`;
+	const [connect, setConnect] = useState(false)
 
-	async function fetchChatData() {
+	const ws = useRef()
+
+	// [x] sendWebSocket
+
+	// [x] requestGetMsgList
+	// [x] requestCreateMsg
+	// [x] requestDeleteMsg
+
+	// [x] renderMessageList
+
+	const requestGetMsgList = () => {
 		if (sending) {
 			console.log("not fetch");
 			return;
 		}
 
-		try {
-			const options = {
-				method: "GET",
-				url: chatAPI,
-				headers: {
-					authorization: getToken(),
-				},
-			};
-			const { data } = await axios.request(options);
+		const api_type = 'msg/get'
+		const body = {
+			chat_id: chatId
+		}
+		sendWebSocket(api_type, body)
+	}
 
-			const { success, messages, buddyName, buddyId } = data;
+	const requestCreateMsg = () => {
+		const api_type = 'msg/create'
+		const body = {
+			chat_id: chatId,
+			content: input
+		}
+
+		sendWebSocket(api_type, body)
+	}
+
+	const requestDeleteMsg = (msg_id) => {
+		const api_type = 'msg/delete'
+		const body = {
+			msg_id,
+			chat_id: chatId
+		}
+
+		sendWebSocket(api_type, body)
+	}
+
+
+	function renderNewMessage(success, body) {
+		if (success) {
+			const { message } = body
+			setMessages(msgList => [...msgList, message]);
+			setLastMsg(message);
+		}
+	}
+
+	const renderMessageList = (success, body) => {
+		if (success) {
+			const { success, messages, buddyName, buddyId } = body;
 
 			setSuccess(success);
 			setMessages(messages);
 			setBuddyName(buddyName);
 			setBuddyId(buddyId);
-			setLoading(false);
 			if (messages.length) {
 				setLastMsg(messages[messages.length - 1]._id);
 			}
-		} catch (err) {
+		} else {
 			setSuccess(false);
-			setLoading(false);
+		}
+	}
+	const renderDeleted = (success, body) => {
+		if (success) {
+			const { msg_id } = body
+
+			setMessages(oldMessages => {
+				return oldMessages.filter(msg => msg._id !== msg_id);
+			});
 		}
 	}
 
-	async function updateLastRead() {
-		const updateAPI = process.env.REACT_APP_BACK_URL + "/_chat";
-		const { data } = await axios.put(
-			updateAPI,
-			{ chatId },
-			{
-				headers: {
-					authorization: getToken(),
-				},
-			}
-		);
+	const handleResponse = (data) => {
+		const { api_type, status, body } = data
+		const success = status === 200
+
+		console.log("receive msg", api_type)
+
+		switch (api_type) {
+			case 'msg/new':
+				renderNewMessage(success, body)
+				break
+			case 'msg/get':
+				renderMessageList(success, body)
+				break
+			case 'msg/create':
+				console.log("there is no response in", api_type)
+				break
+			case 'msg/delete':
+				renderDeleted(success, body)
+				break
+			default:
+				console.log("invalid api_type", api_type)
+		}
 	}
+
+
 	useEffect(() => {
 		scrollToBottom();
 	}, [lastMsg]);
 
-	useEffect(() => {
-		// this function will be called just once.
-		setLoading(true);
-		updateLastRead();
+	const sendWebSocket = (api_type, body) => {
+		const token = getToken()
+		ws.current.send(
+			JSON.stringify({
+				api_type,
+				token,
+				body
+			})
+		);
+	}
 
-		let interval = setInterval(() => {
-			fetchChatData();
-		}, 1000);
+	useEffect(() => {
+		let socketurl = process.env.REACT_APP_WEBSOCKET_URL
+		ws.current = new WebSocket(socketurl);
+
+		ws.current.onopen = () => {
+			console.log("Connection opened");
+			setConnect(true)
+			requestGetMsgList()
+		};
+		ws.current.onclose = () => {
+			console.log("Connection closed");
+		};
+		ws.current.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+
+			handleResponse(data)
+		};
 
 		return () => {
-			// updateLastRead()
 
-			clearInterval(interval);
+			console.log("Cleaning up...");
+
 		};
 		// eslint-disable-next-line
 	}, []);
-
-	const sendMessageToBack = async (input) => {
-		const {
-			data: { success },
-		} = await axios.post(
-			chatAPI,
-			{
-				content: input,
-				timestamp: Date.now(),
-			},
-			{
-				headers: {
-					authorization: getToken(),
-				},
-			}
-		);
-
-		fetchChatData();
-	};
 
 	const sendMessage = async () => {
 		if (input.length === 0) return; // empty input
 
 		setSending(true);
 
-		await sendMessageToBack(input);
+		await requestCreateMsg()
 
 		/* reset input */
 		setInput("");
-
 		setSending(false);
 	};
 
@@ -137,14 +193,19 @@ export default function Chat() {
 
 	return (
 		<div className="screen">
-			{loading ? (
+			{!connect ? (
 				<Loader />
 			) : success ? (
 				<>
 					<div className="chat_screen_header">
 						<MdArrowBack
 							className="cursor_pointer back_icon_"
-							onClick={() => window.history.back()}
+							onClick={() =>
+							// window.history.back()
+							{
+								window.location.href = document.referrer
+							}
+							}
 						/>
 						<p
 							className="cursor_pointer"
@@ -157,8 +218,8 @@ export default function Chat() {
 					</div>
 					<div className="chat_screen">
 						<div className="chat_screen_body" id="chat_body">
-							{messages.map((e, i) => (
-								<ChatBubble key={i} chat={e} />
+							{msgList.map((e) => (
+								<ChatBubble key={e._id} chat={e} requestDeleteMsg={requestDeleteMsg} />
 							))}
 						</div>
 						<div className="chat_input_container">
