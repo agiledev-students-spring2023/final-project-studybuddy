@@ -1,8 +1,11 @@
 const { Message, Chat } = require("../models/chat.model");
 const User = require("../models/user.model");
 const mongoose = require("mongoose");
-const { fetch_msgList, create_message, delete_message } = require("../utilities/message.utils");
-
+const {
+	fetch_msgList,
+	create_message,
+	delete_message,
+} = require("../utilities/message.utils");
 
 const { ObjectId } = mongoose.Types;
 
