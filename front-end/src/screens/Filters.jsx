@@ -6,14 +6,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { format } from 'date-fns';
 
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
-	const [date, setDate] = useState("");
-	const [flex, setFlex] = useState("");
-	const [env, setEnv] = useState("");
-	const [subject, setSubject] = useState("");
-	const [subfield, setSubfield] = useState("");
 	const navigate = useNavigate();
 	const [MAJORS, setMAJORS] = useState([]);
 
@@ -37,16 +33,25 @@ export default function Filters() {
 
 	const onSubmit = (data) => {
 		console.log(data);
+		const selecteddate=format(new Date(value), 'MMM dd yyyy');
 		const sub = data.specificSubject === "" ? "none" : data.specificSubject;
-
-		setDate(value);
-		setEnv(data.mode);
-		setSubject(data.subject);
-		setSubfield(sub);
-		setFlex(data.flexibility);
+		const online=data.online;
+		const inPerson=data.inPerson;
+		const mode =
+			online && !inPerson
+				? "online"
+				: !online && inPerson
+				? "in-person"
+				: "no preference";
+		const subj=data.subject;
+		const flexib=data.flexibility;
 
 		navigate("/filteredScreen", {
-			state: { date, flex, env, subject, subfield },
+			state: { date: selecteddate, 
+				flex:flexib,
+				 env:mode, 
+				 subject:subj,
+				  subfield:sub },
 		});
 	};
 
@@ -112,9 +117,9 @@ export default function Filters() {
 										"env-pref " + (errors.mode ? "is-invalid" : "")
 									}
 									type="checkbox"
-									id="in-person"
-									value="in-person"
-									{...register("mode")}
+									id="inPerson"
+									value="inPerson"
+									{...register("inPerson")}
 									/>
 									<label className="env-pref-label" htmlFor="in-person">
 									In-person
@@ -127,8 +132,8 @@ export default function Filters() {
 									}
 									type="checkbox"
 									id="online"
-									value="no-preference"
-									{...register("mode")}
+									value="online"
+									{...register("online")}
 									/>
 									<label className="env-pref-label" htmlFor="online">
 									Online
@@ -172,7 +177,7 @@ export default function Filters() {
 													}
 													id="specificSubject"
 													placeholder="specificSubject"
-													{...register("specific-subject")}
+													{...register("specificSubject")}
 												/>
 												<label htmlFor="specificSubject">Keyword</label>
 							</div>
