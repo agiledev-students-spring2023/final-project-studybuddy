@@ -22,18 +22,17 @@ const createMsgController = async (req, res) => {
 	res.status(status).send({ success: status == 200 });
 };
 
-
 const deleteMsgController = async (req, res) => {
-	const userId = req.user.id
-	const msgId = req.params.msgId
-	let status = 200
+	const userId = req.user.id;
+	const msgId = req.params.msgId;
+	let status = 200;
 
 	// find Message by msgId
-	// 
+	//
 	await Message.deleteOne({ _id: msgId });
 
-	res.status(status).send({ hello: true })
-}
+	res.status(status).send({ hello: true });
+};
 
 /* 2. fetch message list in chat */
 // input: user_id, chatId
@@ -138,5 +137,5 @@ module.exports = {
 	create_message,
 	MsgListController,
 	createMsgController,
-	deleteMsgController
+	deleteMsgController,
 };

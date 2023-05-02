@@ -6,30 +6,22 @@ const {
 	ProfilePictureController,
 	upload,
 	ProfileController,
-    EditProfileInfo,
+	EditProfileInfo,
 } = require("../controllers/profile.controller");
 
-const {
-	userRegisterSchema,
-} = require("../validators/auth.validator");
-
+const { userRegisterSchema } = require("../validators/auth.validator");
 
 const { isAuthenticated } = require("../middlewares/auth.middleware");
 
 router.get("/", isAuthenticated, ProfileController);
 
-router.post(
-	"/",
-	isAuthenticated,
-	EditProfileInfo,
-);
+router.post("/", isAuthenticated, EditProfileInfo);
 
 router.post(
 	"/picture",
 	isAuthenticated,
 	upload.single("Profile_pic"),
-	ProfilePictureController,
+	ProfilePictureController
 );
-
 
 module.exports = router;

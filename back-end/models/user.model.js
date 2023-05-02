@@ -11,7 +11,7 @@ const UserSchema = new Schema({
 	password: { type: String, required: true },
 	Profile_pic: { type: String, default: "../uploads/avatar.png" },
 	posts: [{ type: ObjectId, ref: "Post" }],
-	comments:[{ type: ObjectId, ref: "Comment" }],
+	comments: [{ type: ObjectId, ref: "Comment" }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

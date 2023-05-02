@@ -3,7 +3,7 @@ const router = express.Router();
 const {
 	MsgListController,
 	createMsgController,
-	deleteMsgController
+	deleteMsgController,
 } = require("../controllers/message.controller");
 
 const { isAuthenticated } = require("../middlewares/auth.middleware");

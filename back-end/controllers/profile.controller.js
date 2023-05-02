@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const { PostModel } = require("../models/post.model");
 const { CommentModel } = require("../models/comments.model");
 const bcrypt = require("bcrypt");
-const fs = require('fs');
+const fs = require("fs");
 
 const SALT_ROUNDS = 10;
 
@@ -14,7 +14,9 @@ const ProfileController = async (req, res) => {
 	try {
 		const user = await User.findById(req.user.id);
 		const postID = user.posts;
-		const posts = await PostModel.find({ _id: { $in: postID } }).sort({ dateAndTime: -1 });
+		const posts = await PostModel.find({ _id: { $in: postID } }).sort({
+			dateAndTime: -1,
+		});
 		return res.json({ user, posts });
 	} catch (error) {
 		console.log(error);
@@ -76,7 +78,7 @@ const EditProfileInfo = async (req, res) => {
 		user.name = req.body.name;
 		user.major = req.body.major;
 		user.email = req.body.email;
-		
+
 		// Check if password has changed
 		if (req.body.password !== user.password) {
 			// Encrypt the new password
@@ -87,47 +89,46 @@ const EditProfileInfo = async (req, res) => {
 
 		// Save updated user to the database
 		await user.save();
-		
+
 		return res.json({ user });
 	} catch (error) {
 		console.log(error);
 		return res.status(500).send("Error updating user information");
 	}
-}
-
+};
 
 const DeleteProfile = async (req, res) => {
 	try {
-	  // Find the user account to be deleted
-	  const user = await User.findById(req.user.id);
-  
-	  // Remove all posts made by the user from the database
-	  await PostModel.deleteMany({ _id: { $in: user.posts } });
-		console.log("Deleted all post")
-	// Delete all comments made by the user
-	await CommentModel.deleteMany({ _id: { $in: user.comments } });
-	  console.log("Deleted all comments")
-  	  
-	  // Remove any uploaded images associated with the user account
+		// Find the user account to be deleted
+		const user = await User.findById(req.user.id);
+
+		// Remove all posts made by the user from the database
+		await PostModel.deleteMany({ _id: { $in: user.posts } });
+		console.log("Deleted all post");
+		// Delete all comments made by the user
+		await CommentModel.deleteMany({ _id: { $in: user.comments } });
+		console.log("Deleted all comments");
+
+		// Remove any uploaded images associated with the user account
 		const imagePath = user.Profile_pic;
 		console.log(imagePath);
 		fs.unlink(imagePath, (err) => {
 			if (err) {
-			  console.error("can't delete the picture");
-			  return;
+				console.error("can't delete the picture");
+				return;
 			}
 			console.log(`${imagePath} was deleted`);
-		  });
-		console.log("Deleted all pictures")
+		});
+		console.log("Deleted all pictures");
 		// Remove the user account from the database
 		await User.findByIdAndDelete(req.user.id);
-		console.log("Deleted the account")
-  
-	  res.status(200).json({ message: "User account deleted" });
+		console.log("Deleted the account");
+
+		res.status(200).json({ message: "User account deleted" });
 	} catch (error) {
-	  res.status(500).json({ message: "Error deleting user account", error });
+		res.status(500).json({ message: "Error deleting user account", error });
 	}
-  }
+};
 
 module.exports = {
 	ProfilePictureController,

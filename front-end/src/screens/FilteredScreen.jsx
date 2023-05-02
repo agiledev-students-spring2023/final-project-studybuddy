@@ -1,5 +1,4 @@
 import axios from "axios";
-import { format } from "date-fns/fp";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Navbar from "../components/Navbar";
@@ -8,6 +7,33 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "./FilteredScreen.css";
 import { getToken } from "../auth/auth";
+const {
+	format,
+	isToday,
+	isYesterday,
+	isSameDay,
+	addDays,
+} = require("date-fns");
+
+const isTomorrow = (date) => {
+	const tomorrow = addDays(new Date(), 1);
+	return isSameDay(date, tomorrow);
+};
+
+const formatDate = (date) => {
+	if (isToday(date)) {
+		return `Today at ${format(date, "h:mm a")}`;
+	} else if (isYesterday(date)) {
+		return `Yesterday at ${format(date, "h:mm a")}`;
+	} else if (isTomorrow(date)) {
+		return `Tomorrow at ${format(date, "h:mm a")}`;
+	} else {
+		return `${format(date, "h:mm a")}, ${format(date, "MMMM d")}, ${format(
+			date,
+			"yyyy"
+		)}`;
+	}
+};
 
 // test to see if config is working
 const SearchBtnWithFilter = () => {
@@ -69,7 +95,7 @@ export const FilteredItem = ({
 			</h5>
 			<p className="m-0">
 				{/* format date as MM/DD/YYYY */}
-				{format("MM/dd/yyyy", new Date(date_time))}
+				{formatDate(new Date(date_time))}
 			</p>
 			<p className="m-0">{mode}</p>
 			<p className="m-0">

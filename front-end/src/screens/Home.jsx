@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { MdSearch } from "react-icons/md";
+import InfiniteScroll from "react-infinite-scroll-component";
 import Navbar from "../components/Navbar";
 import { FilteredItem } from "./FilteredScreen";
 import "./Home.css";
@@ -8,6 +9,7 @@ import { getToken } from "../auth/auth";
 
 export default function Home() {
 	const [posts, setPosts] = useState([]);
+	const [noMorePosts, setNoMorePosts] = useState(false);
 
 	useEffect(() => {
 		loadFilteredPosts();
@@ -16,16 +18,14 @@ export default function Home() {
 	const loadFilteredPosts = () => {
 		if (!getToken()) {
 			window.location.href = "/login";
-			return
+			return;
 		}
 
 		const options = {
 			method: "GET",
-			// url: "https://my.api.mockaroo.com/posts.json",
-			// params: { key: "fb86de30" },
 			url:
 				process.env.REACT_APP_BACK_URL +
-				`/allposts?sort_by=date&order=desc`,
+				`/allposts?sort_by=date&order=desc&limit=5&offset=${posts.length}`,
 			headers: {
 				authorization: getToken(),
 			},
@@ -34,7 +34,12 @@ export default function Home() {
 		axios
 			.request(options)
 			.then(function (response) {
-				setPosts(response.data);
+				setTimeout(() => {
+					setPosts([...posts, ...response.data]);
+					if (response.data.length === 0) {
+						setNoMorePosts(true);
+					}
+				}, 1000);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -44,7 +49,7 @@ export default function Home() {
 	return (
 		<div className="screen">
 			<div className="screen_header">Study Buddy</div>
-			<div className="screen_body home_container">
+			<div className="screen_body home_container" id="home-content">
 				<div
 					className="home_search_btn"
 					onClick={() => (window.location.href = "/filters")}
@@ -52,22 +57,40 @@ export default function Home() {
 					<div className="search_text">Search Post</div>
 					<MdSearch />
 				</div>
-				{posts.map((post) => (
-					<FilteredItem
-						id={post.id}
-						major={post.major}
-						author={post.author}
-						subject={post.subject}
-						descrip={post.descrip}
-						mode={post.mode}
-						date_time={post.date_time}
-						istrue={false}
-						user_id={post.userid}
-						key={post.id}
-						old={new Date(post.date_time) < new Date()}
-						chatId={post.chatId}
-					/>
-				))}
+				<div className="pb-4">
+					<InfiniteScroll
+						dataLength={posts.length}
+						next={loadFilteredPosts}
+						hasMore={!noMorePosts}
+						loader={
+							<div className="d-flex justify-content-center">
+								<div className="spinner-border" role="status">
+									<span className="sr-only">Loading...</span>
+								</div>
+							</div>
+						}
+						scrollableTarget="home-content"
+						className="overflow-hidden"
+					>
+						{posts.map((post) => (
+							<FilteredItem
+								id={post.id}
+								major={post.major}
+								author={post.author}
+								subject={post.subject}
+								descrip={post.descrip}
+								mode={post.mode}
+								date_time={post.date_time}
+								istrue={false}
+								user_id={post.userid}
+								key={post.id}
+								old={new Date(post.date_time) < new Date()}
+								chatId={post.chatId}
+							/>
+						))}
+					</InfiniteScroll>
+				</div>
+
 				<Navbar user="Others" />
 			</div>
 		</div>

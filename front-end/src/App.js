@@ -1,5 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navigate, Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+	Navigate,
+	Route,
+	BrowserRouter as Router,
+	Routes,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
@@ -21,13 +26,13 @@ import EditProfile from "./screens/EditProfile.jsx";
 import { getToken } from "./auth/auth";
 
 function App() {
-	const isLogin = getToken()
+	const isLogin = getToken();
 	return (
 		<div className="App container-fluid ps-0 pe-0">
 			<ToastContainer position="top-center" />
 			<Router>
 				<Routes>
-					{isLogin &&
+					{isLogin && (
 						<>
 							<Route path="/profile" element={<Profile />} />
 							<Route path="/chatList" element={<ChatList />} />
@@ -37,14 +42,24 @@ function App() {
 								path="/userprofile/:userId"
 								element={<UserProfile />}
 							/>
-							<Route path="/uploadPost" element={<UploadPost />} />
+							<Route
+								path="/uploadPost"
+								element={<UploadPost />}
+							/>
 							<Route
 								path="/filteredScreen"
 								element={<FilteredScreen />}
 							/>
-							<Route path="/viewPost/:postId" element={<ViewPost />} />
-							<Route path="/editProfile" element={<EditProfile />} />
-						</>}
+							<Route
+								path="/viewPost/:postId"
+								element={<ViewPost />}
+							/>
+							<Route
+								path="/editProfile"
+								element={<EditProfile />}
+							/>
+						</>
+					)}
 					<Route path="/" element={<Home />} />
 					<Route path="/login" element={<Login />} />
 					<Route path="/signUp" element={<SignUp />} />
@@ -64,7 +79,10 @@ function App() {
 					/>
 					<Route path="/viewPost/:postId" element={<ViewPost />} />
 					<Route path="/editProfile" element={<EditProfile />} />
-					<Route path="*" element={<Navigate replace to="/login" />} />
+					<Route
+						path="*"
+						element={<Navigate replace to="/login" />}
+					/>
 				</Routes>
 			</Router>
 		</div>

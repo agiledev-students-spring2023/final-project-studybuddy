@@ -19,7 +19,7 @@ export default function Login() {
 	const onSubmit = (data) => {
 		const { user_id, password } = data;
 		const url = URL.LOGIN;
-		console.log(url)
+		console.log(url);
 		axios
 			.post(url, { username: user_id, password })
 			.then(async (res) => {
