@@ -6,8 +6,12 @@ COPY front-end/package.json ./
 
 RUN npm install
 
+ARG REACT_APP_BACK_URL
+ENV REACT_APP_BACK_URL=${REACT_APP_BACK_URL}
+ARG REACT_APP_WEBSOCKET_URL
+ENV REACT_APP_WEBSOCKET_URL=${REACT_APP_WEBSOCKET_URL}
+
 COPY front-end/ ./
-RUN echo "REACT_APP_BACK_URL=/api" > .env
 
 RUN npm run build
 
