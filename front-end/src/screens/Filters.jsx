@@ -33,7 +33,7 @@ export default function Filters() {
 
 	const onSubmit = (data) => {
 		console.log(data);
-		const selecteddate=format(new Date(value), 'MMM dd yyyy');
+		const selecteddate=format(new Date(value), 'MMM dd, yyyy');
 		const sub = data.specificSubject === "" ? "none" : data.specificSubject;
 		const online=data.online;
 		const inPerson=data.inPerson;
