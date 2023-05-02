@@ -24,13 +24,29 @@ const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	</div>
 );
 
-const Item = ({ title, date_time }) => {
+const Item = ({ title, date_time, mode }) => {
+	const formatted_day = date_time ? date_time.substring(5, 7) + "/" + date_time.substring(8, 10) + "/" + date_time.substring(0, 4) : "";
+	const time = date_time ? date_time.substring(11, 16) : "";
+	// convert time to 12 hour format
+	const formatTime = (time) => {
+		let hour = time.substring(0, 2);
+		let minute = time.substring(3, 5);
+		let suffix = "AM";
+		if (hour >= 12) {
+			suffix = "PM";
+			hour = hour - 12;
+		}
+		if (hour == 0) {
+			hour = 12;
+		}
+		return hour + ":" + minute + " " + suffix;
+	};
+	const time_12 = formatTime(time);
 	return (
 		<div className="Post-info">
-			<h1> {title} </h1>
-			{/* format date time as "MM/DD/YYYY" and "HH:MM" */}
-			<p> {date_time} </p>
-			{/* <p> {format("MM/dd/yyyy HH:MM")(new Date(date_time))}</p> */}
+			<p className="post_subject"> {title} </p>
+			<p> {formatted_day} at {time_12} </p>
+			<p> Open to meeting {mode} </p>
 		</div>
 	);
 };
@@ -149,7 +165,7 @@ const ViewPost = () => {
 	};
 
 	return (
-		<div className="View Post">
+		<div className="ViewPost">
 			<TitleBar title="View Post" backpage={handleGoBack} />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
@@ -182,7 +198,7 @@ const ViewPost = () => {
 						</div>
 					</div>
 
-					<Item title={post.subject} date_time={post.dateAndTime} />
+					<Item title={post.subject} date_time={post.dateAndTime} mode={post.mode}/>
 
 					<div className="Description">
 						<p>{post.description}</p>
@@ -217,7 +233,7 @@ const ViewPost = () => {
 					</div>
 				</div>
 			</div>
-
+							
 			<Navbar user="Post" />
 		</div>
 	);
