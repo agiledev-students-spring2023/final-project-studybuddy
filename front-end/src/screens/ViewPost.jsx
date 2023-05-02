@@ -25,7 +25,13 @@ const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 );
 
 const Item = ({ title, date_time, mode }) => {
-	const formatted_day = date_time ? date_time.substring(5, 7) + "/" + date_time.substring(8, 10) + "/" + date_time.substring(0, 4) : "";
+	const formatted_day = date_time
+		? date_time.substring(5, 7) +
+		  "/" +
+		  date_time.substring(8, 10) +
+		  "/" +
+		  date_time.substring(0, 4)
+		: "";
 	const time = date_time ? date_time.substring(11, 16) : "";
 	// convert time to 12 hour format
 	const formatTime = (time) => {
@@ -45,7 +51,10 @@ const Item = ({ title, date_time, mode }) => {
 	return (
 		<div className="Post-info">
 			<p className="post_subject"> {title} </p>
-			<p> {formatted_day} at {time_12} </p>
+			<p>
+				{" "}
+				{formatted_day} at {time_12}{" "}
+			</p>
 			<p> Open to meeting {mode} </p>
 		</div>
 	);
@@ -173,7 +182,11 @@ const ViewPost = () => {
 						<div className="profile">
 							<div>
 								<img
-									src={process.env.REACT_APP_BACK_URL + '/' + author.userpic}
+									src={
+										process.env.REACT_APP_BACK_URL +
+										"/" +
+										author.userpic
+									}
 									className="Picture rounded-circle"
 									alt="ProfilePicture"
 								/>
@@ -198,7 +211,11 @@ const ViewPost = () => {
 						</div>
 					</div>
 
-					<Item title={post.subject} date_time={post.dateAndTime} mode={post.mode}/>
+					<Item
+						title={post.subject}
+						date_time={post.dateAndTime}
+						mode={post.mode}
+					/>
 
 					<div className="Description">
 						<p>{post.description}</p>
@@ -234,7 +251,7 @@ const ViewPost = () => {
 					</div>
 				</div>
 			</div>
-							
+
 			<Navbar user="Post" />
 		</div>
 	);

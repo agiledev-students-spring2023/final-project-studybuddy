@@ -20,9 +20,9 @@ export default function Chat() {
 	const [sending, setSending] = useState(false);
 	const [lastMsg, setLastMsg] = useState("");
 
-	const [connect, setConnect] = useState(false)
+	const [connect, setConnect] = useState(false);
 
-	const ws = useRef()
+	const ws = useRef();
 
 	// [x] sendWebSocket
 
@@ -38,38 +38,37 @@ export default function Chat() {
 			return;
 		}
 
-		const api_type = 'msg/get'
-		const body = {
-			chat_id: chatId
-		}
-		sendWebSocket(api_type, body)
-	}
-
-	const requestCreateMsg = () => {
-		const api_type = 'msg/create'
+		const api_type = "msg/get";
 		const body = {
 			chat_id: chatId,
-			content: input
-		}
+		};
+		sendWebSocket(api_type, body);
+	};
 
-		sendWebSocket(api_type, body)
-	}
+	const requestCreateMsg = () => {
+		const api_type = "msg/create";
+		const body = {
+			chat_id: chatId,
+			content: input,
+		};
+
+		sendWebSocket(api_type, body);
+	};
 
 	const requestDeleteMsg = (msg_id) => {
-		const api_type = 'msg/delete'
+		const api_type = "msg/delete";
 		const body = {
 			msg_id,
-			chat_id: chatId
-		}
+			chat_id: chatId,
+		};
 
-		sendWebSocket(api_type, body)
-	}
-
+		sendWebSocket(api_type, body);
+	};
 
 	function renderNewMessage(success, body) {
 		if (success) {
-			const { message } = body
-			setMessages(msgList => [...msgList, message]);
+			const { message } = body;
+			setMessages((msgList) => [...msgList, message]);
 			setLastMsg(message);
 		}
 	}
@@ -88,65 +87,64 @@ export default function Chat() {
 		} else {
 			setSuccess(false);
 		}
-	}
+	};
 	const renderDeleted = (success, body) => {
 		if (success) {
-			const { msg_id } = body
+			const { msg_id } = body;
 
-			setMessages(oldMessages => {
-				return oldMessages.filter(msg => msg._id !== msg_id);
+			setMessages((oldMessages) => {
+				return oldMessages.filter((msg) => msg._id !== msg_id);
 			});
 		}
-	}
+	};
 
 	const handleResponse = (data) => {
-		const { api_type, status, body } = data
-		const success = status === 200
+		const { api_type, status, body } = data;
+		const success = status === 200;
 
-		console.log("receive msg", api_type)
+		console.log("receive msg", api_type);
 
 		switch (api_type) {
-			case 'msg/new':
-				renderNewMessage(success, body)
-				break
-			case 'msg/get':
-				renderMessageList(success, body)
-				break
-			case 'msg/create':
-				console.log("there is no response in", api_type)
-				break
-			case 'msg/delete':
-				renderDeleted(success, body)
-				break
+			case "msg/new":
+				renderNewMessage(success, body);
+				break;
+			case "msg/get":
+				renderMessageList(success, body);
+				break;
+			case "msg/create":
+				console.log("there is no response in", api_type);
+				break;
+			case "msg/delete":
+				renderDeleted(success, body);
+				break;
 			default:
-				console.log("invalid api_type", api_type)
+				console.log("invalid api_type", api_type);
 		}
-	}
-
+	};
 
 	useEffect(() => {
 		scrollToBottom();
 	}, [lastMsg]);
 
 	const sendWebSocket = (api_type, body) => {
-		const token = getToken()
+		const token = getToken();
 		ws.current.send(
 			JSON.stringify({
 				api_type,
 				token,
-				body
+				body,
 			})
 		);
-	}
+	};
 
 	useEffect(() => {
-		let socketurl = process.env.REACT_APP_WEBSOCKET_URL
+		let socketurl = process.env.REACT_APP_WEBSOCKET_URL;
 		ws.current = new WebSocket(socketurl);
 
 		ws.current.onopen = () => {
 			console.log("Connection opened");
-			setConnect(true)
-			requestGetMsgList()
+			setConnect(true);
+			requestGetMsgList();
 		};
 		ws.current.onclose = () => {
 			console.log("Connection closed");
@@ -154,13 +152,11 @@ export default function Chat() {
 		ws.current.onmessage = (event) => {
 			const data = JSON.parse(event.data);
 
-			handleResponse(data)
+			handleResponse(data);
 		};
 
 		return () => {
-
 			console.log("Cleaning up...");
-
 		};
 		// eslint-disable-next-line
 	}, []);
@@ -170,7 +166,7 @@ export default function Chat() {
 
 		setSending(true);
 
-		await requestCreateMsg()
+		await requestCreateMsg();
 
 		/* reset input */
 		setInput("");
@@ -201,10 +197,10 @@ export default function Chat() {
 						<MdArrowBack
 							className="cursor_pointer back_icon_"
 							onClick={() =>
-							// window.history.back()
-							{
-								window.location.href = document.referrer
-							}
+								// window.history.back()
+								{
+									window.location.href = document.referrer;
+								}
 							}
 						/>
 						<p
@@ -219,7 +215,11 @@ export default function Chat() {
 					<div className="chat_screen">
 						<div className="chat_screen_body" id="chat_body">
 							{msgList.map((e) => (
-								<ChatBubble key={e._id} chat={e} requestDeleteMsg={requestDeleteMsg} />
+								<ChatBubble
+									key={e._id}
+									chat={e}
+									requestDeleteMsg={requestDeleteMsg}
+								/>
 							))}
 						</div>
 						<div className="chat_input_container">
