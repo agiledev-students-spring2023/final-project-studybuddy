@@ -133,7 +133,7 @@ export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
 	const { date, flex, env, subject, subfield } = state;
-
+	
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
@@ -143,7 +143,7 @@ export default function FilteredScreen() {
 			method: "GET",
 			url:
 				process.env.REACT_APP_BACK_URL +
-				`filtered/${date}/${env}/${subject}/${subfield}`,
+				`/filtered/${date}/${env}/${subject}/${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},

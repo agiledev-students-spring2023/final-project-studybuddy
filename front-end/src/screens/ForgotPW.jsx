@@ -4,15 +4,22 @@ import URL from "../api/endpoints";
 import "./ForgotPW.css";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
+import { useForm } from "react-hook-form";
 
 export default function ForgotHW() {
-	const handleSubmit = (e) => {
-		e.preventDefault();
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+
+	const OnSubmit = (data) => {
+		const options = {
+			username: data.username,
+			email: data.email
+		  };
 		axios
-			.post(URL.FORGOT_PASSWORD, {
-				username: e.target.username.value,
-				email: e.target.email.value,
-			})
+			.post(URL.FORGOT_PASSWORD, options)
 			.then((res) => {
 				console.log(res.data.message);
 				toast.success(res.data.message);
@@ -24,26 +31,59 @@ export default function ForgotHW() {
 	};
 
 	return (
-		<div className="FP-container">
-			<h1>
-				{" "}
-				<strong>Study Buddy</strong>
-			</h1>
-			<h2>Password Retrieval</h2>
-
-			<form onSubmit={handleSubmit}>
-				<div className="FP-form-group">
-					<label className="FP-form-label"> User ID </label>
-					<input type="text" name="username" />
-					<br />
-					<label className="FP-form-label"> Email </label>
-					<input type="text" name="email" />
-					<br />
-					<input className="FP-submit-form" type="submit" />
+		<>
+		<div className="container-fluid pageLayout">
+				<div className="row pt-5 pb-4">
+					<h1 className="text-center">
+					<strong>Study Buddy</strong>
+					</h1>
+					<h2 className="text-center">Forgot Password</h2>
+				</div>
+	<div className="row mb-4">
+		<div className="col-md-12">
+			<form onSubmit={handleSubmit(OnSubmit)}>
+				{/* username */}
+				<div className="form-floating mb-3">
+								<input
+									type="text"
+									className={
+										"form-control " +
+										(errors.username ? "is-invalid" : "")
+									}
+									id="username"
+									placeholder="Username"
+									{...register("username", { required: true })}
+								/>
+								<label htmlFor="username">Username</label>
+				</div>
+				{/* email */}
+				<div className="form-floating mb-3">
+								<input
+									type="email"
+									className={
+										"form-control " +
+										(errors.email ? "is-invalid" : "")
+									}
+									id="email"
+									placeholder="Email"
+									{...register("email", { required: true })}
+								/>
+								<label htmlFor="email">Email</label>
+							</div>
+				<div className="mybutton d-grid gap-2 ">
+						<button
+							className="btn btn-primary"
+							type="submit"
+							>
+							Submit
+						</button>
 				</div>
 			</form>
-
-			<Navbar />
+			</div>
 		</div>
+		</div>
+			<Navbar />
+		
+		</>
 	);
 }
