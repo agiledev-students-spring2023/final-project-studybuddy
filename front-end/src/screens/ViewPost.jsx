@@ -154,7 +154,7 @@ const ViewPost = () => {
 				const post = response.data.postInfo;
 				const author = response.data.authorInfo;
 				const comments = response.data.allComments;
-
+				console.log(post);
 				setPost(post);
 				setAuthor(author);
 				setComments(comments);
@@ -173,8 +173,8 @@ const ViewPost = () => {
 						<div className="profile">
 							<div>
 								<img
-									src={author.userpic}
-									className="Picture"
+									src={process.env.REACT_APP_BACK_URL + '/' + author.userpic}
+									className="Picture rounded-circle"
 									alt="ProfilePicture"
 								/>
 							</div>
@@ -223,9 +223,10 @@ const ViewPost = () => {
 							placeholder="Enter Comment"
 							onChange={(e) => setInput(e.target.value)}
 							onKeyDown={handleKeyDown}
+							className="mt-0"
 						/>
 						<button
-							className="btn_chatsend"
+							className="btn_chatsend mt-0"
 							onClick={handleButtonClick}
 						>
 							<MdSend />

@@ -37,7 +37,7 @@ router.get("/:postId", async (req, res) => {
 		_id: postAuthor._id,
 		username: postAuthor.name,
 		usermajor: postAuthor.major,
-		userpic: postAuthor.profilePic,
+		userpic: postAuthor.Profile_pic,
 	};
 	console.log(authorInfo);
 

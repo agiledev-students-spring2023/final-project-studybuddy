@@ -10,13 +10,13 @@ const close = () => {
 	listener.close();
 };
 
-ws = require('websocket').server
+ws = require("websocket").server;
 const ws_server = new ws({
-	httpServer: listener
-})
-ws_controller = require('./socket.js').ws_controller
+	httpServer: listener,
+});
+ws_controller = require("./socket.js").ws_controller;
 
-ws_server.on('request', ws_controller)
+ws_server.on("request", ws_controller);
 
 module.exports = {
 	close: close,
