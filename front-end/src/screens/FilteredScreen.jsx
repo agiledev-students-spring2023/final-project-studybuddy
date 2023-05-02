@@ -28,7 +28,10 @@ const formatDate = (date) => {
 	} else if (isTomorrow(date)) {
 		return `Tomorrow at ${format(date, "h:mm a")}`;
 	} else {
-		return `${format(date, "h:mm a")}, ${format(date, "MMMM d")}, ${format(date, "yyyy")}`;
+		return `${format(date, "h:mm a")}, ${format(date, "MMMM d")}, ${format(
+			date,
+			"yyyy"
+		)}`;
 	}
 };
 
