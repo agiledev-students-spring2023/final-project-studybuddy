@@ -7,6 +7,8 @@ services:
       - 4000:4000
     env_file:
       - .env
+    volumes:
+      - ./uploads:/app/uploadss
   watchtower:
     image: containrrr/watchtower:latest
     volumes:
