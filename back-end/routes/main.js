@@ -10,6 +10,8 @@ const { search_chatId } = require("../utilities/chat.utils");
 router.get("/allposts", isAuthenticated, async (req, res) => {
 	const soryBy = req.query.sort_by || "date";
 	const sort_order = req.query.order === "asc" ? -1 : 1;
+	const limit = parseInt(req.query.limit) || 10;
+	const offset = parseInt(req.query.offset) || 0;
 
 	let allUsersAndPosts = await UserModel.find({}).populate("posts");
 
@@ -44,11 +46,11 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 		return acc;
 	}, []);
 
-	let thirtyDaysAgo = new Date();
-	thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-	postsWithUser = postsWithUser.filter((post) => {
-		return post.date_time > thirtyDaysAgo;
-	});
+	// let thirtyDaysAgo = new Date();
+	// thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+	// postsWithUser = postsWithUser.filter((post) => {
+	// 	return post.date_time > thirtyDaysAgo;
+	// });
 
 	let olderPosts = postsWithUser.filter((post) => {
 		return post.date_time < Date.now();
@@ -68,7 +70,9 @@ router.get("/allposts", isAuthenticated, async (req, res) => {
 		});
 	}
 
-	return res.send([...newerPosts, ...olderPosts]);
+	return res.send(
+		[...newerPosts, ...olderPosts].slice(offset, offset + limit)
+	);
 });
 
 router.get("/allmajors", async (req, res) => {
