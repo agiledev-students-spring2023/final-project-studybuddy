@@ -6,15 +6,21 @@ import { useNavigate } from "react-router-dom";
 import "./ResetPW.css";
 import { toast } from "react-toastify";
 import Navbar from "../components/Navbar";
+import { useForm } from "react-hook-form";
 
 export default function ResetPW() {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		const password = e.target.password.value;
-		const confirmPassword = e.target["confirm-password"].value;
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
+
+	const OnSubmit = (data) => {
+		const password = data.password;
+    	const confirmPassword = data.confirm_password;
 		const token = searchParams.get("token");
 		const username = searchParams.get("username");
 		if (!token || !username) {
@@ -55,15 +61,51 @@ export default function ResetPW() {
 			</h1>
 			<h2>Reset Password</h2>
 
-			<form onSubmit={handleSubmit}>
-				<div className="RP-form-group">
-					<label className="RP-form-label"> New Password </label>
-					<input type="password" name="password" />
-					<br />
-					<label className="RP-form-label"> Confirm Password </label>
-					<input type="password" name="confirm-password" />
-					<br />
-					<input type="submit" className="RP-submit-form" />
+			<form onSubmit={handleSubmit(OnSubmit)}>
+				{/* confirm password */}
+							<div className="form-floating mb-3">
+								<input
+									type="password"
+									className={
+										"form-control " +
+										(errors.password ? "is-invalid" : "")
+									}
+									id="password"
+									placeholder="Password"
+									{...register("password", {
+										required: true,
+									})}
+								/>
+								<label htmlFor="password">Password</label>
+							</div>
+							{/* confirm password */}
+							<div className="form-floating mb-3">
+								<input
+									type="password"
+									className={
+										"form-control " +
+										(errors.confirm_password
+											? "is-invalid"
+											: "")
+									}
+									id="confirm_password"
+									placeholder="Confirm Password"
+									{...register("confirm_password", {
+										required: true,
+									})}
+								/>
+								<label htmlFor="confirm_password">
+									Confirm Password
+								</label>
+							</div>
+
+							<div className="mybutton d-grid gap-2 ">
+						<button
+							className="btn btn-primary"
+							type="submit"
+							>
+							Submit
+						</button>
 				</div>
 			</form>
 

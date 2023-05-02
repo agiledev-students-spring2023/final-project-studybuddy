@@ -3,7 +3,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: #f5f5f5;
+
 }
 
 .title-bar {
@@ -26,10 +26,19 @@
 	background-color: #f5f5f5;
 	margin-bottom: 20px;
 	margin-top: 20px;
+
 }
 
 .env-container {
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+}
+
+.env-container div{
+	margin-bottom: 5px;
+	align-items: center;
+	display: flex;
+	justify-content: left;
+	margin-left: 50px;
 }
 
 .env-container * {
@@ -41,14 +50,19 @@
 	padding: 7px;
 }
 
-.submit-filters {
-	font-weight: bolder;
+.submit-filters button{
 	background-color: #c8b6ff;
 	color: white;
 	border: 1px solid #c8b6ff;
 	padding: 10px;
-	margin-bottom: 100px;
+	margin-bottom: 20px;
 	text-decoration: none;
+}
+
+.submit-filters button:hover {
+	color: white;
+	background-color: rgb(187, 208, 255);
+	border: 1px solid rgb(187, 208, 255);
 }
 
 .react-calendar {
@@ -168,4 +182,14 @@
 }
 .react-calendar--selectRange .react-calendar__tile--hover {
 	background-color: #e6e6e6;
+}
+
+
+.filters-container-form-floating{
+	width: 300px;
+	margin-left: 20px;
+	align-items: center;
+	text-align: center;
+	display:flex;
+	justify-content: center;
 }

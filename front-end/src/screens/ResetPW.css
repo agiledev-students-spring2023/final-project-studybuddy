@@ -40,3 +40,12 @@ h2 {
 	padding: 10px;
 	text-decoration: none;
 }
+
+.mybutton{
+	display: flex;
+	justify-content: center;
+}
+
+.FP-container button{
+	width: 100px;
+}

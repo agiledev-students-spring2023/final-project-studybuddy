@@ -304,6 +304,7 @@ export default function EditProfile() {
 										placeholder="Email"
 										defaultValue={profile.email}
 										{...register("email")}
+										disabled 
 									/>
 									<label htmlFor="email">Email</label>
 								</div>
