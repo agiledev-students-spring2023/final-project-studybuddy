@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { MdCancel, MdDelete } from "react-icons/md";
 
-
 const formatTime = (ts) => {
 	if (typeof ts === "string") ts = Number(ts);
 	let date = new Date(ts);
@@ -19,18 +18,18 @@ function ChatBubble({ chat, requestDeleteMsg }) {
 	const type = isMe ? "chat_me" : "chat_other";
 	const time = formatTime(timestamp);
 	const [confirm, setConfirm] = useState(false);
-	const [visible, setVisible] = useState(false)
+	const [visible, setVisible] = useState(false);
 
 	const deleteMsg = () => {
 		requestDeleteMsg(_id);
-	}
+	};
 	const handleMouseEnter = () => {
-		setVisible(true)
-	}
+		setVisible(true);
+	};
 	const handleMouseLeave = () => {
-		setVisible(false)
-		setConfirm(false)
-	}
+		setVisible(false);
+		setConfirm(false);
+	};
 
 	return (
 		<div
@@ -50,7 +49,7 @@ function ChatBubble({ chat, requestDeleteMsg }) {
 					)}
 					<MdDelete
 						onClick={() => {
-							if (confirm) deleteMsg()
+							if (confirm) deleteMsg();
 							else setConfirm(true);
 						}}
 						className={confirm ? "chat_icon_red" : "chat_icon_grey"}
