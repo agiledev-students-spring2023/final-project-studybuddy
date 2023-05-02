@@ -54,13 +54,16 @@ export default function ResetPW() {
 	};
 
 	return (
-		<div className="RP-container">
-			<h1>
-				{" "}
-				<strong>Study Buddy</strong>
-			</h1>
-			<h2>Reset Password</h2>
-
+		<>
+		<div className="container-fluid pageLayout">
+				<div className="row pt-5 pb-4">
+					<h1 className="text-center">
+					<strong>Study Buddy</strong>
+					</h1>
+					<h2 className="text-center">Reset Password</h2>
+				</div>
+		<div className="row">
+		<div className="col-md-12">
 			<form onSubmit={handleSubmit(OnSubmit)}>
 				{/* confirm password */}
 							<div className="form-floating mb-3">
@@ -108,8 +111,10 @@ export default function ResetPW() {
 						</button>
 				</div>
 			</form>
-
-			<Navbar />
+			</div>
 		</div>
+		</div>
+			<Navbar />
+		</>
 	);
 }
