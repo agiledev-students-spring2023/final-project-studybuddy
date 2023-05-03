@@ -23,6 +23,7 @@ import UploadPost from "./screens/UploadPost.jsx";
 import UserProfile from "./screens/UserProfile.jsx";
 import ViewPost from "./screens/ViewPost.jsx";
 import EditProfile from "./screens/EditProfile.jsx";
+import EmailConfirmation from "./screens/EmailConfirmation";
 import { getToken } from "./auth/auth";
 
 function App() {
@@ -79,6 +80,10 @@ function App() {
 					/>
 					<Route path="/viewPost/:postId" element={<ViewPost />} />
 					<Route path="/editProfile" element={<EditProfile />} />
+					<Route
+						path="/verify-email"
+						element={<EmailConfirmation />}
+					/>
 					<Route
 						path="*"
 						element={<Navigate replace to="/login" />}

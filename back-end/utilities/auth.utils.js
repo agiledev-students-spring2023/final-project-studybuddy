@@ -55,7 +55,7 @@ const sendResetPasswordEmail = async (email, token, username) => {
 };
 
 const sendVerificationEmail = async (email, token, username) => {
-	const verifyLink = `${process.env.DOMAIN}/api/auth/verify-email?token=${token}&username=${username}`;
+	const verifyLink = `${process.env.DOMAIN}/verify-email?token=${token}&username=${username}`;
 	const filePath = "../email_templates/EmailConfirmation.html";
 	let template = fs.readFileSync(path.resolve(__dirname, filePath), "utf8");
 	template = template.replace("{{username}}", username);

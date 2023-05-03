@@ -203,7 +203,7 @@ const verifyEmailController = async (req, res) => {
 		});
 		emailConfirmation.confirmed = true;
 		await emailConfirmation.save();
-		return res.redirect(`${process.env.DOMAIN}/Login`);
+		return res.status(200).json({ message: "Email verified successfully" });
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ message: "Something went wrong" });
