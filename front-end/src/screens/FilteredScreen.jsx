@@ -143,7 +143,7 @@ export default function FilteredScreen() {
 			method: "GET",
 			url:
 				process.env.REACT_APP_BACK_URL +
-				`/filtered/${date}/${env}/${subject}/${subfield}`,
+				`/filtered/?date=${date}&flexibility=${flex}&env=${env}&subject=${subject}&searchKeyword=${subfield}`,
 			headers: {
 				authorization: getToken(),
 			},
