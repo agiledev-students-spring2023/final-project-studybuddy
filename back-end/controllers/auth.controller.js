@@ -188,17 +188,18 @@ const verifyEmailController = async (req, res) => {
 		return res.status(400).json({ message: "User doesn't exist" });
 	}
 
+	const user = await UserModel.findOne({ username });
+
 	// Check if the token is valid
-	if (!(await EmailConfirmation.exists({ username, token }))) {
+	if (!(await EmailConfirmation.exists({ userid: user._id, confirmation_token: token }))) {
 		return res.status(400).json({ message: "User doesn't exist" });
 	}
 
 	// Update the status of the user
 	try {
-		const user = await UserModel.findOne({ username });
 		const emailConfirmation = await EmailConfirmation.findOne({
 			userid: user._id,
-			token,
+			confirmation_token: token,
 		});
 		emailConfirmation.confirmed = true;
 		await emailConfirmation.save();
