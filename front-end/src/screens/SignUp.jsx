@@ -57,7 +57,7 @@ export default function SignUp() {
 				console.log(response);
 				// Notify user that they have successfully signed up
 				toast.success(
-					"Successfully signed up, redirecting to login..."
+					"Please check your email to confirm your account."
 				);
 				setTimeout(() => {
 					navigate("/Login");
@@ -84,7 +84,7 @@ export default function SignUp() {
 					<h2 className="text-center">Sign Up</h2>
 				</div>
 				<div className="row">
-					<div className="col-md-12">
+					<div className="col-md-12 pb-4">
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<div className="form-floating mb-3">
 								<input

@@ -12,6 +12,7 @@ const {
 	forgotPasswordController,
 	resetPasswordController,
 	registerController,
+	verifyEmailController
 } = require("../controllers/auth.controller");
 
 // ############### AUTHENTICATION ROUTES ###############
@@ -23,5 +24,7 @@ router.post("/forgot-password", validate(userForgotPasswordSchema), forgotPasswo
 router.post("/reset-password", validate(userResetPasswordSchema), resetPasswordController);
 // prettier-ignore
 router.post("/register", validate(userRegisterSchema), registerController);
+// prettier-ignore
+router.get("/verify-email", verifyEmailController);
 
 module.exports = router;
