@@ -40,6 +40,5 @@ To build the project:
 3. The pipeline is triggered when a pull request is opened into the master branch. The pipeline builds the project, and deploys the app to the test server.
 4. When the pull request is merged into the master branch, the pipeline builds the project, and deploys the app to the production server.
 
-<center>
-    <img src="deployment-setup.png" alt="Deployment Setup" width="500"/>
-</center>
+
+<img src="deployment-setup.png" alt="Deployment Setup" width="100%"/>
