@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { format } from "date-fns";
+import { MdArrowBack } from "react-icons/md";
 
 export default function Filters() {
 	const [value, onChange] = useState(new Date());
@@ -54,9 +55,14 @@ export default function Filters() {
 
 	return (
 		<div>
-			<div className="title-bar">
-				{" "}
-				<TitleBar title="Find a Study Buddy" backpage="/" />{" "}
+			<div className="user_profile_header">
+			<MdArrowBack
+					className="cursor_pointer back_icon_"
+					onClick={() => navigate("/")}
+				/>
+				<h5>
+					<strong>Find A study Buddy</strong>
+				</h5>
 			</div>
 
 			<div className="content-body">
