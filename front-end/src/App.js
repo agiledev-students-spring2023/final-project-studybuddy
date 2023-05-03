@@ -65,7 +65,7 @@ function App() {
 					<Route path="/signUp" element={<SignUp />} />
 					<Route path="/forgotPw" element={<ForgotPW />} />
 					<Route path="/resetPw" element={<ResetPW />} />
-					<Route path="/chatList" element={<ChatList />} />
+					{/* <Route path="/chatList" element={<ChatList />} />
 					<Route path="/chat/:chatId" element={<Chat />} />
 					<Route path="/profile" element={<Profile />} />
 					<Route
@@ -78,7 +78,7 @@ function App() {
 						element={<FilteredScreen />}
 					/>
 					<Route path="/viewPost/:postId" element={<ViewPost />} />
-					<Route path="/editProfile" element={<EditProfile />} />
+					<Route path="/editProfile" element={<EditProfile />} /> */}
 					<Route
 						path="*"
 						element={<Navigate replace to="/login" />}
