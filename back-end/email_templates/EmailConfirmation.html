@@ -1,0 +1,37 @@
+<html>
+	<head>
+		<style>
+			.container {
+				max-width: 600px;
+				margin: 0 auto;
+				font-family: Arial, sans-serif;
+			}
+
+			.button {
+				display: inline-block;
+				padding: 10px 20px;
+				background-color: #4caf50;
+				color: white;
+				text-decoration: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>Welcome to Study Buddy!</h1>
+			<p>Hi {{username}},</p>
+			<p>
+				Thank you for signing up for Study Buddy. We are excited to have
+				you as a member of our community.
+			</p>
+			<p>To activate your account, please click the button below:</p>
+			<a href="{{link}}" class="button">Activate Account</a>
+			<p>
+				If you have any questions or feedback, please feel free to
+				contact us at {{ADMIN_EMAIL}}.
+			</p>
+			<p>Cheers,</p>
+			<p>The Study Buddy Team</p>
+		</div>
+	</body>
+</html>
