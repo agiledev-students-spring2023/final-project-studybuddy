@@ -23,7 +23,7 @@ const fetch_chatList = async (user_id) => {
 	const chatlist = [];
 
 	// await update_legacy()
-	// return {status,chatlist}
+	// return { status, chatlist }
 
 	try {
 		const user = await User.findById(user_id);
@@ -79,55 +79,6 @@ const fetch_chatList = async (user_id) => {
 			chatlist.push(chat_info);
 		}
 
-		// const chat = await Chat.find({ members: user_id });
-		// for (var i = 0; i < chat.length; i++) {
-		// 	if (chat[i].members[0] == user_id) {
-		// 		buddy_id = chat[i].members[1];
-		// 		last_read = chat[i].last_read[0];
-		// 	} else {
-		// 		buddy_id = chat[i].members[0];
-		// 		last_read = chat[i].last_read[1];
-		// 	}
-		// 	const user = await User.findById(buddy_id);
-		// 	// buddy membership withdrawal
-		// 	if (!user) continue;
-
-		// 	// find message chat_id
-		// 	const messageList = await Message.find({
-		// 		chat_id: chat[i]._id,
-		// 	}).sort({
-		// 		timestamp: 1,
-		// 	});
-
-		// 	let count = 0;
-		// 	for (var j = 0; j < messageList.length; j++) {
-		// 		if (
-		// 			messageList[j].timestamp > last_read &&
-		// 			messageList[j].sender_id != user_id
-		// 		) {
-		// 			count = count + 1;
-		// 		}
-		// 	}
-		// 	let preview = undefined;
-		// 	if (messageList.length == 0) {
-		// 		preview = "";
-		// 		last_msg_timestamp = 0;
-		// 	} else {
-		// 		last_msg = messageList[messageList.length - 1];
-		// 		preview = last_msg.content;
-		// 		last_msg_timestamp = last_msg.timestamp;
-		// 	}
-		// 	const chat_info = {
-		// 		name: user.name,
-		// 		img_url: user.Profile_pic,
-		// 		unread: count,
-		// 		id: chat[i]._id,
-		// 		preview,
-		// 		last_msg_timestamp,
-		// 	};
-
-		// 	chatlist.push(chat_info);
-		// }
 		chatlist.sort((a, b) => b.last_msg_timestamp - a.last_msg_timestamp);
 		status = 200;
 	} catch (err) {
@@ -148,6 +99,11 @@ const search_chatId = async (user_id, buddy_id) => {
 	// - [o] if there is chat, return chat_id
 	// - [o] else: create chat & return created chat_id
 	// - [o] return chat_id
+
+	if (user_id == buddy_id) {
+		console.log("you cannot chat with yourself")
+		return { status: 404, chat_id: "itsme" };
+	}
 
 	try {
 		const buddy = await User.findById(buddy_id);
@@ -208,67 +164,17 @@ const update_last_read = async (user_id, chat_id) => {
 
 const update_legacy = async () => {
 	const chats = await Chat.find({})
-	console.log('total chats:', chats.length)
 	for (var i = 0; i < chats.length; i++) {
 		const chat = chats[i]
-		const chat_id = chat._id
-		// const msgs = await Message.find({chat_id: chat_id}).sort({timestamp: 1})
-		// const msg_list = msgs.map(e => e._id)
-		// await Chat.updateOne({_id: chat_id}, {msg_ids: msg_list})
-		// await Chat.updateOne({_id: chat_id}, {msg_ids: []})
-
-		console.log(`[after] inseting msg_ids to chat ${chat.members[0]}, ${chat.members[1]}`)
-		let updated_chat = await Chat.findById(chat_id)
-		let updated_msgs = updated_chat.msg_ids
-		console.log(updated_msgs)
-
+		const user1 = chat.members[0]
+		const user2 = chat.members[1]
+		if (user1 == user2) {
+			console.log("this chat is me and me", chat._id)
+			console.log(user1, user2)
+			await Chat.deleteOne({ _id: chat._id })
+		}
 	}
-	// const users = await User.find({});
-	// console.log('total users:',users.length)
-	// for (var i = 0; i < users.length; i++) {
-	// 	const user = users[i]
-	// 	const user_id = user._id
-	// 	const chatList = await Chat.find({ members: user_id });
-	// 	// console.log(chat)
-
-	// 	// const newchats = chatList.map(chat => chat._id)
-	// 	// console.log(newchats)
-	// 	// const _ = await Chat.updateOne({ _id: chat_id }, { last_read: last_read });
-
-	// 	// await User.updateOne({_id: user_id}, {chats: newchats})
-
-	// 	console.log(">>>", user.name,"<<<")
-	// 	// continue
-	// 	const chat_buddys = []
-	// 	for (var j =0; j< chatList.length; j++) {
-	// 		const chat = chatList[j]
-
-
-	// 		if (chat.members[0] == user_id) {
-	// 			buddy_id = chat.members[1];
-	// 			last_read = chat.last_read[0];
-	// 		} else {
-	// 			buddy_id = chat.members[0];
-	// 			last_read = chat.last_read[1];
-	// 		}
-	// 		const buddy = await User.findById(buddy_id);
-	// 		if (buddy) {
-	// 			if (user.name == "Tom")
-	// 				console.log(buddy.name, buddy_id)
-	// 			// chat_buddys.push(buddy.name)
-	// 		}
-	// 		// buddy membership withdrawal
-	// 		if (!buddy) {
-	// 			console.log("no buddy", buddy_id, 'chat_id', chat._id)
-	// 			// await Chat.deleteOne({_id: chat._id})
-	// 			// await Chat.deleteOne({ _id: chat._id });
-	// 		}
-
-	// 	}
-	// console.log("buddy list: ", chat_buddys)
-	// }
 }
-
 
 module.exports = {
 	fetch_chatList,
