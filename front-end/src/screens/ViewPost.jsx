@@ -9,6 +9,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
 import { getToken, getUser } from "../auth/auth";
+import { MdArrowBack } from "react-icons/md";
 
 const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -188,7 +189,16 @@ const ViewPost = () => {
 
 	return (
 		<div className="ViewPost">
-			<TitleBar title="View Post" backpage={handleGoBack} />
+			{/* <TitleBar title="View Post" backpage={handleGoBack} /> */}
+			<div className="user_profile_header">
+								<MdArrowBack
+									className="cursor_pointer back_icon_"
+									onClick={() => window.history.back()}
+								/>
+								<h5>
+									<strong>View Post</strong>
+								</h5>
+						</div>
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Buddy">

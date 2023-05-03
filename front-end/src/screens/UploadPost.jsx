@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import TitleBar from "../components/TitleBar";
 import "./UploadPost.css";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -81,10 +80,7 @@ const UploadPost = () => {
 
 	return (
 		<div>
-			<div className="title-bar">
-				{" "}
-				<TitleBar title="Create Post" backpage="/" />{" "}
-			</div>
+			<div className="screen_header">Upload Post</div>
 			<br />
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
@@ -172,25 +168,6 @@ const UploadPost = () => {
 										Subject/Topic
 									</label>
 								</div>
-
-								{/* Subject
-								<div className="form-floating mb-3 custom-01">
-									<input
-										type="text"
-										className={
-											"form-control " +
-											(errors.subject ? "is-invalid" : "")
-										}
-										id="subject"
-										placeholder="subject"
-										{...register("subject", {
-											required: true,
-										})}
-									/>
-									<label htmlFor="subject">
-										Subject/Topic
-									</label>
-								</div> */}
 
 								{/* Description */}
 								<div className="form-floating mb-3 custom02">
