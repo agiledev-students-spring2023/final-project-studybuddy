@@ -36,7 +36,8 @@ export default function Filters() {
 		const selecteddate = format(new Date(value), "MMM dd, yyyy");
 		const searchKeyword = data.searchKeyword
 		const online = data.online;
-		const mode = online ? "online" : "in-person";
+		const inPerson = data["in-person"];
+		const mode = ((online && inPerson) || (!online && !inPerson)) ? "both" : online ? "online" : "in-person";
 		const subj = data.subject;
 		const flexib = data.flexibility === "" ? "3" : data.flexibility;
 
