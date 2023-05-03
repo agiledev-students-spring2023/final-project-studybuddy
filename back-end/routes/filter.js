@@ -37,6 +37,13 @@ router.get("/", isAuthenticated, async (req, res) => {
 		dateUpperBound.setHours(23, 59, 59, 999);
 	}
 
+	let modeFilter = {};
+	if (env !== "both") {
+		modeFilter = env;
+	} else {
+		modeFilter = { $in: ["online", "in-person"] };
+	}
+
 	let myPosts;
 	if (subject === "any") {
 		myPosts = await PostModel.find({
@@ -44,7 +51,7 @@ router.get("/", isAuthenticated, async (req, res) => {
 				$gte: dateLowerBound,
 				$lte: dateUpperBound,
 			},
-			mode: env,
+			mode: modeFilter,
 			description: { $regex: searchKeyword, $options: "i" },
 		});
 	} else {
@@ -53,7 +60,7 @@ router.get("/", isAuthenticated, async (req, res) => {
 				$gte: dateLowerBound,
 				$lte: dateUpperBound,
 			},
-			mode: env,
+			mode: modeFilter,
 			subject: subject,
 			description: { $regex: searchKeyword, $options: "i" },
 		});
