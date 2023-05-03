@@ -6,7 +6,7 @@ import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "./FilteredScreen.css";
-import { getToken } from "../auth/auth";
+import { getToken, getUser } from "../auth/auth";
 import InfiniteScroll from "react-infinite-scroll-component";
 const {
 	format,
@@ -37,7 +37,7 @@ const formatDate = (date) => {
 };
 
 // test to see if config is working
-const SearchBtnWithFilter = ({searchdate, searchflex, searchenv, searchsubject, searchsubfield}) => {
+const SearchBtnWithFilter = ({ searchdate, searchflex, searchenv, searchsubject, searchsubfield }) => {
 	const navigate = useNavigate();
 	const flexText = searchflex == 3 ? 'Any day ,' : searchdate + ',';
 	const searchsummary = `${searchsubject ? searchsubject.slice(0, 12) + ',' : ''}
@@ -45,18 +45,18 @@ const SearchBtnWithFilter = ({searchdate, searchflex, searchenv, searchsubject, 
                   ${flexText}
                   ${searchenv ? searchenv : ''}`;
 
-				  console.log(flexText);
-				  console.log(searchsummary);
+	console.log(flexText);
+	console.log(searchsummary);
 	return (
 		<div className="row p-2 text-center mt-4">
-		<div
-					className="filters_search_btn"
-					onClick={() => (window.location.href = "/filters")}
-				>
-					<div className="search_text">{searchsummary}</div>
-					<MdSearch />
-				</div>
+			<div
+				className="filters_search_btn"
+				onClick={() => (window.location.href = "/filters")}
+			>
+				<div className="search_text">{searchsummary}</div>
+				<MdSearch />
 			</div>
+		</div>
 	);
 };
 
@@ -79,6 +79,8 @@ export const FilteredItem = ({
 	const previous = isTrue ? "/filteredScreen" : "/";
 	const post_url = `/viewPost/${id}?userId=${user_id}`;
 	const shortDescrip = `${descrip}`;
+
+	const msgButtonEnabled = user_id != getUser().id
 
 	return (
 		<div className="row border p-1 pt-2 pb-2 m-1">
@@ -117,14 +119,16 @@ export const FilteredItem = ({
 						View Profile
 					</a>
 				</div>
-				<div className="col-4 text-center">
-					<a
-						href={`/chat/${chatId}`}
-						className="btn btn-md btn-secondary"
-					>
-						Message
-					</a>
-				</div>
+				{msgButtonEnabled &&
+					<div className="col-4 text-center">
+						<a
+							href={`/chat/${chatId}`}
+							className="btn btn-md btn-secondary"
+						>
+							Message
+						</a>
+					</div>
+				}
 			</div>
 		</div>
 	);
@@ -135,7 +139,7 @@ export default function FilteredScreen() {
 	const { state } = useLocation();
 	const [noMorePosts, setNoMorePosts] = useState(false);
 	const { date, flex, env, subject, subfield } = state;
-	
+
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);
@@ -154,12 +158,12 @@ export default function FilteredScreen() {
 		axios
 			.request(options)
 			.then(function (response) {
-				setTimeout(() => {setPosts(response.data);
-				if (response.data.length === 0) 
-				{
-					setNoMorePosts(true);
-				}
-			}, 1000);
+				setTimeout(() => {
+					setPosts(response.data);
+					if (response.data.length === 0) {
+						setNoMorePosts(true);
+					}
+				}, 1000);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -169,26 +173,26 @@ export default function FilteredScreen() {
 	return (
 		<>
 			<div className="title-bar">
-			<div className="user_profile_header">
-				<MdArrowBack
-					className="cursor_pointer back_icon_"
-					onClick={() => window.history.back()}
-				/>
-				<h5>
-					<strong>Related Post</strong>
-				</h5>
-			</div>
+				<div className="user_profile_header">
+					<MdArrowBack
+						className="cursor_pointer back_icon_"
+						onClick={() => window.history.back()}
+					/>
+					<h5>
+						<strong>Related Post</strong>
+					</h5>
+				</div>
 			</div>
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<SearchBtnWithFilter searchdate={date}
-					searchflex={flex}
-					searchenv={env}
-					searchsubject={subject}
-					searchsubfield={subfield} />
+						searchflex={flex}
+						searchenv={env}
+						searchsubject={subject}
+						searchsubfield={subfield} />
 
-				<InfiniteScroll
+					<InfiniteScroll
 						dataLength={posts.length}
 						next={loadFilteredPosts}
 						hasMore={!noMorePosts}
@@ -204,25 +208,25 @@ export default function FilteredScreen() {
 					>
 						{posts.map((post) => (
 							<FilteredItem
-							className="post-result"
-							id={post.id}
-							author={post.author}
-							major={post.major}
-							subject={post.subject}
-							descrip={post.descrip}
-							mode={post.mode}
-							date_time={post.date_time}
-							istrue={false}
-							user_id={post.userid}
-							key={post.id}
-							chatId={post.chatId}
+								className="post-result"
+								id={post.id}
+								author={post.author}
+								major={post.major}
+								subject={post.subject}
+								descrip={post.descrip}
+								mode={post.mode}
+								date_time={post.date_time}
+								istrue={false}
+								user_id={post.userid}
+								key={post.id}
+								chatId={post.chatId}
 							/>
 						))}
 						{posts.length === 0 && noMorePosts && (
 							<h4>No matching results</h4>
 						)}
-			</InfiniteScroll>
-			</div>
+					</InfiniteScroll>
+				</div>
 			</div>
 			<Navbar user="test" />
 		</>
