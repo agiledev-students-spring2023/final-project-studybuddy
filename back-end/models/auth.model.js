@@ -10,6 +10,19 @@ const ResetPasswordSchema = new Schema({
 	reset_token_expiration: Date,
 });
 
+const EmailConfirmationSchema = new Schema({
+	_id: ObjectId,
+	userid: {
+		type: ObjectId,
+		ref: "User",
+		unique: true,
+		required: true,
+	},
+	confirmation_token: String,
+	confirmed: Boolean,
+});
+
 module.exports = {
 	ResetPassword: mongoose.model("ResetPassword", ResetPasswordSchema),
+	EmailConfirmation: mongoose.model("EmailConfirmation", EmailConfirmationSchema),
 };
