@@ -12,6 +12,7 @@ const UserSchema = new Schema({
 	Profile_pic: { type: String, default: "../uploads/avatar.png" },
 	posts: [{ type: ObjectId, ref: "Post" }],
 	comments: [{ type: ObjectId, ref: "Comment" }],
+	chats: [{ type: ObjectId, ref: "Chat" }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

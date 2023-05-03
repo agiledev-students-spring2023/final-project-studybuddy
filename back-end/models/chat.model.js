@@ -6,6 +6,7 @@ const ObjectId = Schema.ObjectId;
 const ChatSchema = new Schema({
 	members: [String],
 	last_read: [Number],
+	msg_ids: [{ type: ObjectId, ref: "Message" }],
 });
 
 const MessageSchema = new Schema({
