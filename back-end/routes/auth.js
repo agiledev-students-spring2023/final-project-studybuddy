@@ -25,6 +25,6 @@ router.post("/reset-password", validate(userResetPasswordSchema), resetPasswordC
 // prettier-ignore
 router.post("/register", validate(userRegisterSchema), registerController);
 // prettier-ignore
-router.post("/verify-email", verifyEmailController);
+router.get("/verify-email", verifyEmailController);
 
 module.exports = router;
