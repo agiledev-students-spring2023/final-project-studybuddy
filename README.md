@@ -1,4 +1,9 @@
 # Study Buddy Project Repository
+
+Live Version: [Study Buddy](http://146.190.199.157/)
+
+Test Version: [Study Buddy Test](http://146.190.199.157:4000/)
+
 ## Project Description 
 Study Buddy is an application designed to help students connect and collaborate with others for exam preparation. By finding study partners who share the same course and exam schedule, students can form study groups and enhance their learning experience.
 
@@ -30,10 +35,10 @@ To build the project:
 ## Additional Resources
 
 ### Deployment
-1. We have two versions of the app, one "dev" which is the latest version of the app containing the feature still under review.
-2. We also have a "prod" version of the app which is the latest stable version of the app.
+1. Our app has two versions: a development version ("test") that contains the latest features under review, and a production one ("prod") that is the most stable and reliable release.
+2. We use a continuous integration and deployment (CI/CD) pipeline to automate the deployment process. 
+3. The pipeline is triggered when a pull request is opened into the master branch. The pipeline builds the project, and deploys the app to the test server.
+4. When the pull request is merged into the master branch, the pipeline builds the project, and deploys the app to the production server.
 
 
-<center>
-    <img src="deployment-setup.png" alt="Deployment Setup" width="500"/>
-</center>
+<img src="deployment-setup.png" alt="Deployment Setup" width="100%"/>
