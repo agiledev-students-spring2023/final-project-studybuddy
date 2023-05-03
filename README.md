@@ -2,7 +2,7 @@
 
 Live Version: [Study Buddy](http://146.190.199.157/)
 
-Test Version: [Study Buddy Test](http://http://146.190.199.157:4000/)
+Test Version: [Study Buddy Test](http://146.190.199.157:4000/)
 
 ## Project Description 
 Study Buddy is an application designed to help students connect and collaborate with others for exam preparation. By finding study partners who share the same course and exam schedule, students can form study groups and enhance their learning experience.
