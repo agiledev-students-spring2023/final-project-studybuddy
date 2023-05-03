@@ -20,7 +20,6 @@ router.get("/:postId", async (req, res) => {
 	// const response = await viewPostController(req.params.postId);
 	const postid = req.params.postId;
 	const response = await PostModel.findById(postid);
-	console.log("RESPONSE: " + response);
 	// const { postInfo, authorInfo } = response;
 	const postInfo = {
 		_id: response._id,
@@ -29,7 +28,6 @@ router.get("/:postId", async (req, res) => {
 		subject: response.subject,
 		description: response.description,
 	};
-	console.log(postInfo);
 
 	// Fetch author data from database by finding the user with post id equal to the post id of the post
 	const postAuthor = await UserModel.findOne({ posts: postid });
@@ -39,11 +37,9 @@ router.get("/:postId", async (req, res) => {
 		usermajor: postAuthor.major,
 		userpic: postAuthor.Profile_pic,
 	};
-	console.log(authorInfo);
 
 	// Fetch comments data from database by finding the comments with post id equal to the post id of the post
 	const comments = await CommentModel.find({ post_id: postid });
-	console.log(comments);
 	const allComments = [];
 	for (let i = 0; i < comments.length; i++) {
 		const commentInfo = {

@@ -8,7 +8,7 @@ import { MdSend } from "react-icons/md";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
-import { getToken } from "../auth/auth";
+import { getToken, getUser } from "../auth/auth";
 
 const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -98,12 +98,24 @@ const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [author, setAuthor] = useState([]);
 	const [comments, setComments] = useState([]);
+	const [isMyPost, setIsMyPost] = useState(false);
 	const { postId } = useParams();
 	const message_url = `/chat/${postId}`;
 	const [input, setInput] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
 	const previousPath = location.state?.from || "/";
+
+	const handleOwnership = (author) => {
+		const user_id = getUser()._id;
+		const author_id = author._id;
+
+		if (user_id === author_id) {
+			setIsMyPost(true);
+		} else {
+			setIsMyPost(false);
+		}
+	}
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
@@ -167,6 +179,7 @@ const ViewPost = () => {
 				setPost(post);
 				setAuthor(author);
 				setComments(comments);
+				handleOwnership(author);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -199,16 +212,17 @@ const ViewPost = () => {
 								</h3>
 							</div>
 						</div>
-						<div className="MessageBuddy">
-							<a
-								href={message_url}
-								style={{
-									textDecoration: "none",
-								}}
-							>
-								Direct Message
-							</a>
-						</div>
+
+						{isMyPost ? (
+							<div className="MessageBuddy">
+								<a href={message_url} style = {{textDecoration: "none"}}> Direct Message </a>
+							</div>
+							) : (
+							<div className="DeletePost">
+								<a> Delete Post</a>
+							</div>
+						)}
+							
 					</div>
 
 					<Item
