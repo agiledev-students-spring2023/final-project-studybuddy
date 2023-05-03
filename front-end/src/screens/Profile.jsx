@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Profile.css";
 import Navbar from "../components/Navbar";
-import TitleBar from "../components/TitleBar";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { getToken, removeToken } from "../auth/auth";
@@ -115,10 +114,7 @@ const Profile = () => {
 
 	return (
 		<div>
-			<div className="title-bar">
-				{" "}
-				<TitleBar title="My Account" backpage="/" />{" "}
-			</div>
+			<div className="screen_header">My Profile</div>
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Logout">

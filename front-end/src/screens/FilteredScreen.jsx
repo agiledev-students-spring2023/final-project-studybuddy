@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
+import { MdSearch } from "react-icons/md";
 import Navbar from "../components/Navbar";
-import TitleBar from "../components/TitleBar";
+import { MdArrowBack } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import "./FilteredScreen.css";
 import { getToken } from "../auth/auth";
+import InfiniteScroll from "react-infinite-scroll-component";
 const {
 	format,
 	isToday,
@@ -36,26 +37,26 @@ const formatDate = (date) => {
 };
 
 // test to see if config is working
-const SearchBtnWithFilter = () => {
+const SearchBtnWithFilter = ({searchdate, searchflex, searchenv, searchsubject, searchsubfield}) => {
 	const navigate = useNavigate();
+	const flexText = searchflex == 3 ? 'Any day ,' : searchdate + ',';
+	const searchsummary = `${searchsubject ? searchsubject.slice(0, 12) + ',' : ''}
+                  ${searchsubfield ? searchsubfield.slice(0, 5) + ',' : ''}
+                  ${flexText}
+                  ${searchenv ? searchenv : ''}`;
+
+				  console.log(flexText);
+				  console.log(searchsummary);
 	return (
 		<div className="row p-2 text-center mt-4">
-			<div className="col-4 p-1">
-				<Button
-					variant="secondary"
-					size="sm"
-					onClick={() => navigate("/filters")}
+		<div
+					className="filters_search_btn"
+					onClick={() => (window.location.href = "/filters")}
 				>
-					Search
-				</Button>
+					<div className="search_text">{searchsummary}</div>
+					<MdSearch />
+				</div>
 			</div>
-			<div
-				className="col-8 border p-1 cursor-pointer"
-				onClick={() => navigate("/filters")}
-			>
-				CS, Agile..., March 12, Online
-			</div>
-		</div>
 	);
 };
 
@@ -132,6 +133,7 @@ export const FilteredItem = ({
 export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
+	const [noMorePosts, setNoMorePosts] = useState(false);
 	const { date, flex, env, subject, subfield } = state;
 	
 	useEffect(() => {
@@ -152,7 +154,12 @@ export default function FilteredScreen() {
 		axios
 			.request(options)
 			.then(function (response) {
-				setPosts(response.data);
+				setTimeout(() => {setPosts(response.data);
+				if (response.data.length === 0) 
+				{
+					setNoMorePosts(true);
+				}
+			}, 1000);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -162,15 +169,41 @@ export default function FilteredScreen() {
 	return (
 		<>
 			<div className="title-bar">
-				{" "}
-				<TitleBar title="Related Post" backpage="/filters" />{" "}
+			<div className="user_profile_header">
+				<MdArrowBack
+					className="cursor_pointer back_icon_"
+					onClick={() => window.history.back()}
+				/>
+				<h5>
+					<strong>Related Post</strong>
+				</h5>
+			</div>
 			</div>
 
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
-					<SearchBtnWithFilter />
-					{posts.map((post) => (
-						<FilteredItem
+					<SearchBtnWithFilter searchdate={date}
+					searchflex={flex}
+					searchenv={env}
+					searchsubject={subject}
+					searchsubfield={subfield} />
+
+				<InfiniteScroll
+						dataLength={posts.length}
+						next={loadFilteredPosts}
+						hasMore={!noMorePosts}
+						loader={
+							<div className="d-flex justify-content-center">
+								<div className="spinner-border" role="status">
+									<span className="sr-only">Loading...</span>
+								</div>
+							</div>
+						}
+						scrollableTarget="home-content"
+						className="overflow-hidden"
+					>
+						{posts.map((post) => (
+							<FilteredItem
 							className="post-result"
 							id={post.id}
 							author={post.author}
@@ -183,11 +216,14 @@ export default function FilteredScreen() {
 							user_id={post.userid}
 							key={post.id}
 							chatId={post.chatId}
-						/>
-					))}
-				</div>
+							/>
+						))}
+						{posts.length === 0 && noMorePosts && (
+							<h4>No matching results</h4>
+						)}
+			</InfiniteScroll>
 			</div>
-
+			</div>
 			<Navbar user="test" />
 		</>
 	);

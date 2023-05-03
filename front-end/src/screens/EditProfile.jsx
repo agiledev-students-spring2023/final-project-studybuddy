@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import URL from "../api/endpoints";
 import { toast } from "react-toastify";
-import TitleBar from "../components/TitleBar";
 import { getToken } from "../auth/auth";
 import Modal from "react-bootstrap/Modal";
+import { MdArrowBack } from "react-icons/md";
 import "./EditProfile.css";
 
 const ProfilePic = ({ picture, onUploadSuccess }) => {
@@ -41,6 +41,7 @@ const ProfilePic = ({ picture, onUploadSuccess }) => {
 				if (res.status === 200) {
 					toast.success("Profile picture uploaded successfully!");
 					onUploadSuccess();
+					handleClose();
 				} else {
 					toast.error(res.data.message);
 				}
@@ -192,10 +193,15 @@ export default function EditProfile() {
 				<div className="container-fluid pageLayout">
 					<div className="title-bar">
 						{" "}
-						<TitleBar
-							title="Edit Profile"
-							backpage="/Profile"
-						/>{" "}
+						<div className="user_profile_header">
+								<MdArrowBack
+									className="cursor_pointer back_icon_"
+									onClick={() => window.history.back()}
+								/>
+								<h5>
+									<strong>User Account</strong>
+								</h5>
+						</div>
 						<ProfilePic
 							picture={profile.Profile_pic}
 							onUploadSuccess={loadUserInfo}
