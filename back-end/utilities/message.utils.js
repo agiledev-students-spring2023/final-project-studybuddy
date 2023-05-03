@@ -95,6 +95,11 @@ const create_message = async (chat_id, senderId, { content, timestamp }) => {
 			timestamp: timestamp,
 			chat_id: chat_id,
 		});
+		// const chat = await Chat.findById(chat_id)
+		// const old_msg_ids = chat.msg_ids
+		// const new_msg_ids = [...old_msg_ids, msg._id]
+		// var _ = await Chat.updateOne({ _id: chat_id }, { msg_ids: new_msg_ids })
+		await Chat.updateOne({ _id: chat_id }, { $push: { msg_ids: msg._id } })
 		return { res: 200, msg: msg };
 	} catch (err) {
 		console.log(err);
@@ -104,7 +109,10 @@ const create_message = async (chat_id, senderId, { content, timestamp }) => {
 
 const delete_message = async (msgId) => {
 	try {
+		let msg = await Message.findById(msgId)
+		let chat_id = msg.chat_id
 		await Message.deleteOne({ _id: msgId });
+		await Chat.updateOne({ _id: chat_id }, { $pull: { msg_ids: msgId } })
 		return 200;
 	} catch (err) {
 		return 404;

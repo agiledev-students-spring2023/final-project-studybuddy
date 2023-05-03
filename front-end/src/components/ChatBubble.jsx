@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MdCancel, MdDelete } from "react-icons/md";
+import PulseLoader from "react-spinners/PulseLoader";
 
 const formatTime = (ts) => {
 	if (typeof ts === "string") ts = Number(ts);
@@ -19,12 +20,16 @@ function ChatBubble({ chat, requestDeleteMsg }) {
 	const time = formatTime(timestamp);
 	const [confirm, setConfirm] = useState(false);
 	const [visible, setVisible] = useState(false);
+	const [deleting, setDeleting] = useState(false)
 
 	const deleteMsg = () => {
+		setDeleting(true)
+		setVisible(false)
 		requestDeleteMsg(_id);
 	};
 	const handleMouseEnter = () => {
-		setVisible(true);
+		if (!deleting)
+			setVisible(true);
 	};
 	const handleMouseLeave = () => {
 		setVisible(false);
@@ -56,6 +61,7 @@ function ChatBubble({ chat, requestDeleteMsg }) {
 					/>
 				</div>
 			)}
+			{deleting && <PulseLoader className="chat_delete" size="6" color="#616161" />}
 		</div>
 	);
 }

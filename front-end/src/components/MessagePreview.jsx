@@ -15,6 +15,7 @@ export default function MessagePreview({ chat }) {
 					roundedCircle
 					thumbnail
 					width={100}
+					height={100}
 				/>
 				<Card.Body>
 					<Card.Title>{name}</Card.Title>
