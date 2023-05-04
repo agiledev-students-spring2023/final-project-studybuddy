@@ -77,7 +77,7 @@ export const FilteredItem = ({
 	const navigate = useNavigate();
 	const profile_url = `/userprofile/${user_id}`;
 	const previous = isTrue ? "/filteredScreen" : "/";
-	const post_url = `/viewPost/${id}`;
+	const post_url = `/viewPost/${id}?userId=${user_id}`;
 	const shortDescrip = `${descrip}`;
 
 	return (

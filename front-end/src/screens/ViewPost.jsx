@@ -10,6 +10,7 @@ import { useLocation } from "react-router-dom";
 import { format } from "date-fns/fp";
 import { getToken, getUser } from "../auth/auth";
 import { MdArrowBack } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const UserComments = ({ username, usermajor, usercomment, comdate }) => (
 	<div className="usercomment">
@@ -99,24 +100,15 @@ const ViewPost = () => {
 	const [post, setPost] = useState([]);
 	const [author, setAuthor] = useState([]);
 	const [comments, setComments] = useState([]);
-	const [isMyPost, setIsMyPost] = useState(false);
 	const { postId } = useParams();
 	const message_url = `/chat/${postId}`;
 	const [input, setInput] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
-	const previousPath = location.state?.from || "/";
-
-	const handleOwnership = (author) => {
-		const user_id = getUser()._id;
-		const author_id = author._id;
-
-		if (user_id === author_id) {
-			setIsMyPost(true);
-		} else {
-			setIsMyPost(false);
-		}
-	}
+	const [noMorePosts, setNoMorePosts] = useState(true);
+	const [chatId, setChatId] = useState("");
+	const queryParams = new URLSearchParams(window.location.search)
+  	const userId = queryParams.get("userId")
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
@@ -124,7 +116,6 @@ const ViewPost = () => {
 
 	const handleButtonClick = () => {
 		setInput("");
-		// handle submit comment
 		const data = {
 			content: input,
 			dateAndTime: new Date(),
@@ -153,39 +144,80 @@ const ViewPost = () => {
 			});
 	};
 
-	const handleGoBack = () => {
-		window.history.back();
-	};
-
-	useEffect(() => {
-		loadFilteredPosts(postId);
-	}, [postId]);
 
 	const loadFilteredPosts = (postId) => {
-		console.log(postId);
-		const options = process.env.REACT_APP_BACK_URL + `/post/${postId}`;
-
+		const options = {
+			method: "GET",
+			url: process.env.REACT_APP_BACK_URL + `/post/${postId}`,
+			headers: {
+				authorization: getToken(),
+			},
+		};
 		axios
-			.get(options)
+			.request(options)
 			.then(function (response) {
 				console.log(response.data);
-				// const object = response.data.find((obj) => obj.id == postId);
-				// setPosts(object);
-				// organize the two retrieved objects (post and comments)
-
+				
 				const post = response.data.postInfo;
 				const author = response.data.authorInfo;
 				const comments = response.data.allComments;
-				console.log(post);
 				setPost(post);
 				setAuthor(author);
 				setComments(comments);
-				handleOwnership(author);
+				setNoMorePosts(false);
+			
 			})
 			.catch(function (error) {
 				console.error(error);
 			});
 	};
+
+	const onDeletePost = () => {
+		const options = {
+			method: "DELETE",
+			url: process.env.REACT_APP_BACK_URL + `/post/${postId}`,
+			headers: {
+				authorization: getToken(),
+			},
+		};
+
+		axios
+			.request(options)
+			.then((response) => {
+				// Handle success response here, such as redirecting the user to the login page
+				toast.success(
+					"Successfully Deleted post!"
+				);
+				window.history.back();
+			})
+			.catch((error) => {
+				// Handle error response here, such as displaying an error message to the user
+				console.error(error);
+			});
+	};
+
+	
+	const fetchChatId = async (userId) => {
+		try {
+			const chatIdAPI = process.env.REACT_APP_BACK_URL + `/_chat`;
+
+			const {
+				data: { chat_id },
+			} = await axios.post(
+				chatIdAPI,
+				{ buddy_id: userId },
+				{ headers: { authorization: getToken() } }
+			);
+			setChatId(chat_id);
+		} catch {
+			setChatId("undefined");
+		}
+	};
+
+	useEffect(() => {
+		loadFilteredPosts(postId);
+		fetchChatId(userId)
+	}, [postId,userId]);
 
 	return (
 		<div className="ViewPost">
@@ -199,6 +231,14 @@ const ViewPost = () => {
 									<strong>View Post</strong>
 								</h5>
 						</div>
+	<div>
+    {noMorePosts ? (
+      <div className="myspinner d-flex justify-content-center">
+	 	 <div className="spinner-border" role="status">
+		 	 <span className="sr-only">Loading...</span>
+	 	 </div>
+  	</div>
+    ) : post ? (
 			<div className="content-body">
 				<div className="container-fluid pageLayout">
 					<div className="Buddy">
@@ -218,20 +258,34 @@ const ViewPost = () => {
 								<h3 className="mb-3">{author.username}</h3>
 								<h3 className="mb-0">
 									{" "}
-									Student of {author.usermajor}
+									Majoring in {author.usermajor}
 								</h3>
 							</div>
 						</div>
 
-						{isMyPost ? (
-							<div className="MessageBuddy">
-								<a href={message_url} style = {{textDecoration: "none"}}> Direct Message </a>
+						{post.isOwner ? (
+							<div className="DeletePost">
+								<button
+								onClick={onDeletePost}
+								style={{
+									textDecoration: "none",
+								}}
+								>
+								Delete Post
+								</button>
 							</div>
 							) : (
-							<div className="DeletePost">
-								<a> Delete Post</a>
+							<div className=" MessageBuddy">
+								<a
+								href={message_url}
+								style={{
+									textDecoration: "none",
+								}}
+								>
+								Direct Message
+								</a>
 							</div>
-						)}
+							)}
 							
 					</div>
 
@@ -275,7 +329,10 @@ const ViewPost = () => {
 					</div>
 				</div>
 			</div>
-
+			) : (
+      <div>Post no longer exists</div>
+    )}
+		</div>
 			<Navbar user="Post" />
 		</div>
 	);

@@ -98,3 +98,9 @@
 	font-size: larger;
 	font-weight: bold;
 }
+
+.myspinner{
+	/* display: flex;
+	justify-content: center; */
+	margin-top: 150px;
+}

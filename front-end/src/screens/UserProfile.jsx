@@ -4,11 +4,11 @@ import { useParams } from "react-router-dom";
 import "./UserProfile.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
-import { MdArrowBack } from "react-icons/md";
+import { MdArrowBack, MdOutlineFormatListNumberedRtl } from "react-icons/md";
 import { getToken } from "../auth/auth";
 import { format } from "date-fns/fp";
 
-const PostPreview = ({ id, subject, descrip, date_time }) => {
+const PostPreview = ({ id, subject, descrip, date_time,user_id }) => {
 	const shortDescrip = `${descrip}`;
 	return (
 		<div className="eachpost">
@@ -28,7 +28,7 @@ const PostPreview = ({ id, subject, descrip, date_time }) => {
 			<div className="row pt-3 pb-2">
 				<div className="col-4 text-center">
 					<a
-						href={`/viewPost/${id}`}
+						href={`/viewPost/${id}?userId=${user_id}`}
 						className="btn btn-md btn-primary"
 					>
 						View Post
@@ -55,6 +55,7 @@ const UserProfile = () => {
 	const [posts, setMyposts] = useState([]);
 	const [profile, setMyprofile] = useState([]);
 	const [chatId, setChatId] = useState("");
+	const [Owner, setOwner] = useState(MdOutlineFormatListNumberedRtl);
 	useEffect(() => {
 		loadFilteredPosts(userId);
 		fetchChatId(userId);
@@ -64,14 +65,19 @@ const UserProfile = () => {
 		const options = {
 			method: "GET",
 			url: process.env.REACT_APP_BACK_URL + `/userprofile/${userId}`,
+			headers: {
+				authorization: getToken(),
+			},
 		};
 		axios
 			.request(options)
 			.then(function (response) {
 				const user = response.data.user;
 				const allposts = response.data.posts;
+				const isOwner = response.data.isOwner;
 				setMyprofile(user);
 				setMyposts(allposts);
+				setOwner(isOwner);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -94,6 +100,7 @@ const UserProfile = () => {
 			setChatId("undefined");
 		}
 	};
+
 	return (
 		<div>
 			<div className="user_profile_header">
@@ -113,7 +120,7 @@ const UserProfile = () => {
 						major={profile.major}
 						picture={`${process.env.REACT_APP_BACK_URL}/${profile.Profile_pic}`}
 					/>
-
+				{!Owner && (
 					<div className="Message">
 						<a
 							href={`/chat/${chatId}`}
@@ -123,7 +130,7 @@ const UserProfile = () => {
 						>
 							Direct Message
 						</a>
-					</div>
+					</div>)}
 
 					<div className="MyPosts">
 						<h2>Posts</h2>
