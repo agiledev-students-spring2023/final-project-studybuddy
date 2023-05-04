@@ -101,7 +101,6 @@ const ViewPost = () => {
 	const [author, setAuthor] = useState([]);
 	const [comments, setComments] = useState([]);
 	const { postId } = useParams();
-	const message_url = `/chat/${postId}`;
 	const [input, setInput] = useState("");
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -277,7 +276,7 @@ const ViewPost = () => {
 							) : (
 							<div className=" MessageBuddy">
 								<a
-								href={message_url}
+								href={`/chat/${chatId}`}
 								style={{
 									textDecoration: "none",
 								}}
