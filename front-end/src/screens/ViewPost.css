@@ -79,9 +79,28 @@
 	background-color: #c8b6ff;
 }
 
+.DeletePost {
+	margin-bottom: 5px;
+	text-align: right;
+}
+
+.DeletePost a {
+	padding: 5px;
+	border-radius: 10px;
+	padding-inline: 10px;
+	color: white;
+	background-color: #c8b6ff;
+}
+
 .post_subject {
 	background-color: #c1c8ff;
 	color: white;
 	font-size: larger;
 	font-weight: bold;
+}
+
+.myspinner{
+	/* display: flex;
+	justify-content: center; */
+	margin-top: 150px;
 }

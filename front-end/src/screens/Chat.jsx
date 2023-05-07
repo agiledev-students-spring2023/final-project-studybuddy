@@ -197,10 +197,10 @@ export default function Chat() {
 						<MdArrowBack
 							className="cursor_pointer back_icon_"
 							onClick={() =>
-								// window.history.back()
-								{
-									window.location.href = document.referrer;
-								}
+								window.history.back()
+								// {
+								// 	window.location.href = document.referrer;
+								// }
 							}
 						/>
 						<p
