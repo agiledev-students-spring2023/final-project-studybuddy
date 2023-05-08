@@ -108,7 +108,8 @@ const ViewPost = () => {
 	const [chatId, setChatId] = useState("");
 	const queryParams = new URLSearchParams(window.location.search)
   	const userId = queryParams.get("userId")
-
+	const previousurl = document.referrer;
+	console.log(previousurl);
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
 	};
@@ -187,7 +188,7 @@ const ViewPost = () => {
 				toast.success(
 					"Successfully Deleted post!"
 				);
-				window.history.back();
+				window.location.href = previousurl;
 			})
 			.catch((error) => {
 				// Handle error response here, such as displaying an error message to the user
