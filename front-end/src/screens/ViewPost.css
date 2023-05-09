@@ -1,0 +1,106 @@
+.Buddy {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.profile {
+	display: flex;
+	flex-direction: row;
+	text-align: left;
+	justify-content: left;
+	margin: 20px;
+	padding: 10px;
+	padding-bottom: 20px;
+}
+
+.profile img {
+	width: 100px;
+	height: 100px;
+	border: 3px solid #ffd6ff;
+}
+
+.mydetails {
+	margin-top: 20px;
+}
+
+.btn_chatsend {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.Post-info {
+	margin-bottom: 15px;
+	margin-top: 15px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+}
+
+.Description {
+	border-radius: 10px;
+	padding: 30px;
+	margin-bottom: 10px;
+	background-color: #bbd0ff;
+}
+
+.custom-comments {
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 50px;
+}
+
+.form-floating.custom {
+	margin-right: 10px;
+	max-width: fit-content;
+}
+
+.Comments {
+	margin-bottom: 5px;
+	margin-top: 30px;
+}
+
+.usercomment {
+	border-radius: 10px;
+	background-color: #c1c8ff;
+}
+
+.MessageBuddy {
+	margin-bottom: 5px;
+	text-align: right;
+}
+
+.MessageBuddy a {
+	padding: 5px;
+	border-radius: 10px;
+	padding-inline: 10px;
+	color: white;
+	background-color: #c8b6ff;
+}
+
+.DeletePost {
+	margin-bottom: 5px;
+	text-align: right;
+}
+
+.DeletePost a {
+	padding: 5px;
+	border-radius: 10px;
+	padding-inline: 10px;
+	color: white;
+	background-color: #c8b6ff;
+}
+
+.post_subject {
+	background-color: #c1c8ff;
+	color: white;
+	font-size: larger;
+	font-weight: bold;
+}
+
+.myspinner{
+	/* display: flex;
+	justify-content: center; */
+	margin-top: 150px;
+}

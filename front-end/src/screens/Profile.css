@@ -1,0 +1,111 @@
+.Logout {
+	margin-top: 10px;
+	text-align: right;
+	margin-bottom: 20px;
+}
+
+.Logout a {
+	text-align: right;
+	text-decoration: none;
+	padding: 6px;
+	color: white;
+	background-color: rgb(184, 192, 255);
+	border-radius: 10px;
+}
+
+.Logout a:hover {
+	background-color: rgb(187, 208, 255);
+}
+
+.edit {
+	margin-top: 10px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.edit a {
+	text-align: right;
+	text-decoration: none;
+	padding: 6px;
+	color: white;
+	background-color: rgb(184, 192, 255);
+	border-radius: 10px;
+}
+
+.edit a:hover {
+	background-color: rgb(187, 208, 255);
+}
+
+.UserInfo {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-bottom: 50px;
+}
+
+.UserInfo h5 {
+	font-size: 20px;
+	color: black;
+	text-align: left;
+	margin-left: 10px;
+}
+
+.UserInfo img {
+	width: 100px;
+	height: 100px;
+	border-radius: 1000px;
+	object-fit: cover;
+	border: 3px solid #ffd6ff;
+	margin-right: 10px;
+	border-radius: 100px;
+}
+
+.MyPosts h2 {
+	font-size: 25px;
+	color: black;
+	margin-bottom: 20px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.eachpost {
+	border: 1px solid rgb(200, 182, 255);
+	margin: 5px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: column;
+}
+
+.eachpost a {
+	background-color: rgb(184, 192, 255);
+	border: 3px solid rgb(184, 192, 255);
+	color: black;
+	width: 150px;
+	margin: 10px;
+}
+.eachpost p {
+	color: rgb(109, 104, 104);
+}
+
+.eachpost a:hover {
+	background-color: rgb(187, 208, 255);
+	border: 3px solid rgb(187, 208, 255);
+}
+
+.Delete {
+	text-align: center;
+}
+.Delete button {
+	text-align: center;
+	text-decoration: none;
+	padding: 6px;
+	color: white;
+	background-color: rgb(225, 186, 191);
+	border: 3px solid rgb(225, 186, 191);
+	border-radius: 10px;
+}
+
+.Delete button:hover {
+	background-color: rgb(219, 32, 54);
+	border: 3px solid rgb(219, 32, 54);
+}

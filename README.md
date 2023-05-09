@@ -1,19 +1,44 @@
-# Project Repository
+# Study Buddy Project Repository
 
-This repository will be used for team projects.
+Live Version: [Study Buddy](http://146.190.199.157/)
 
-Several sets of instructions are included in this repository. They should each be treated as separate assignments with their own due dates and sets of requirements.
+Test Version: [Study Buddy Test](http://146.190.199.157:4000/)
 
-1. See the [App Map & Wireframes](instructions-0a-app-map-wireframes.md) and [Prototyping](./instructions-0b-prototyping.md) instructions for the requirements of the initial user experience design of the app.
+## Project Description 
+Study Buddy is an application designed to help students connect and collaborate with others for exam preparation. By finding study partners who share the same course and exam schedule, students can form study groups and enhance their learning experience.
 
-1. Delete the contents of this file and replace with the contents of a proper README.md, as described in the [project setup instructions](./instructions-0c-project-setup.md)
+## Mission Statement
+Our vision is to provide students with an easy and efficient way to connect with each other, so they can succeed academically and feel more confident in their exam preparation.
 
-1. See the [Sprint Planning instructions](instructions-0d-sprint-planning.md) for the requirements of Sprint Planning for each Sprint.
+## Core Team Members
+* Bishnu Dev[-Github Account](https://github.com/bordernone)
+* Lukelo Luoga [-Github Account](https://github.com/Kelo2000)
+* Paula Seraphim [-Github Account](https://github.com/paulasera)
 
-1. See the [Front-End Development instructions](./instructions-1-front-end.md) for the requirements of the initial Front-End Development.
+* Yewon Song [-Github Account](https://github.com/sywu430) 
 
-1. See the [Back-End Development instructions](./instructions-2-back-end.md) for the requirements of the initial Back-End Development.
+## Project History
+The idea for Study Buddy came from our own experiences as students. We often found ourselves struggling to find study partners who were taking the same course and preparing for the same exams. We realized that there was a need for an application that would make it easy for students to connect with each other and form study groups. So, we decided to create Study Buddy.
 
-1. See the [Database Integration instructions](./instructions-3-database.md) for the requirements of integrating a database into the back-end.
+## Contributing
+If you would like to contribute to Study Buddy, please read our [CONTRIBUTING.md](./CONTRIBUTING.md) document. We welcome all contributions, including bug reports, feature requests, and pull requests.
 
-1. See the [Deployment instructions](./instructions-4-deployment.md) for the requirements of deploying an app.
+## Building and Testing
+To run the tests, run `npm test` from back-end folder.
+
+To build the project:
+1. Ensure the `.env` files are in place
+2. Run `cd front-end && npm install && npm run build && cd ..`: This will build the react app
+3. Run `cd back-end && rm -r -f client && cd .. && mv front-end/build back-end/client`: This will move the react build files to the back-end folder
+4. Run `cd back-end && npm install && npm start`: This will start the server
+
+## Additional Resources
+
+### Deployment
+1. Our app has two versions: a development version ("test") that contains the latest features under review, and a production one ("prod") that is the most stable and reliable release.
+2. We use a continuous integration and deployment (CI/CD) pipeline to automate the deployment process. 
+3. The pipeline is triggered when a pull request is opened into the master branch. The pipeline builds the project, and deploys the app to the test server.
+4. When the pull request is merged into the master branch, the pipeline builds the project, and deploys the app to the production server.
+
+
+<img src="deployment-setup.png" alt="Deployment Setup" width="100%"/>

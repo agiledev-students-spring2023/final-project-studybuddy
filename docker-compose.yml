@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_BACK_URL=/api
+        - REACT_APP_WEBSOCKET_URL=ws://localhost:4000
+    image: bishnudev/study-buddy
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env

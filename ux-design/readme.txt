@@ -1,3 +1,3 @@
-The source files and exported PNG files of the app map and wireframe diagrams should reside in this directory.
+# User Experience Design
 
-Your completed prototype will reside within the 'prototype' subdirectory.
+This repository contains instructions and files for two assignments that together comprise the user experience design phase of a web app.

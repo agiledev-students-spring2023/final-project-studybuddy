@@ -1,0 +1,10 @@
+.form-floating.custom02 input {
+	height: 100px;
+}
+
+.title-bar {
+	font-size: 20px;
+	font-weight: bold;
+	width: 100%;
+	justify-content: center;
+}

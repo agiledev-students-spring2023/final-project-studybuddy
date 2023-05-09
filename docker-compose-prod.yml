@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  studybuddy-prod:
+    image: bishnudev/study-buddy:production
+    ports:
+      - 80:4000
+    env_file:
+      - prod.env
+    volumes:
+      - uploads-prod:/app/uploads
+  studybuddy-test:
+    image: bishnudev/study-buddy:latest
+    ports:
+      - 4000:4000
+    env_file:
+      - test.env
+    volumes:
+      - uploads-test:/app/uploads
+  watchtower:
+    image: containrrr/watchtower:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
+
+volumes:
+  uploads-prod:
+  uploads-test:

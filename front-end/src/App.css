@@ -1,0 +1,9 @@
+.content-body {
+	max-width: 430px !important;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.App {
+	min-height: 100vh;
+}

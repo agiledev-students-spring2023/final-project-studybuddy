@@ -1,0 +1,93 @@
+*.UserProfile {
+	padding: 10px 16px;
+	margin: 20px 0;
+	border-bottom: 1px solid #fafafa;
+	text-align: center;
+}
+
+.UserInfo {
+	display: flex;
+	flex-direction: row;
+	align-items: left;
+	margin-left: 50px;
+	margin-top: 50px;
+}
+
+.Message {
+	text-align: left;
+	margin-left: 50px;
+	margin-bottom: 30px;
+	margin-top: 25px;
+}
+
+.Message a {
+	padding: 5px;
+	border-radius: 10px;
+	padding-inline: 10px;
+	color: white;
+	background-color: rgb(184, 192, 255);
+}
+
+.Message a:hover {
+	background-color: rgb(187, 208, 255);
+}
+
+.UserInfo img {
+	width: 100px;
+	height: 100px;
+	border-radius: 1000px;
+	object-fit: cover;
+	border: 3px solid #ffd6ff;
+	margin-right: 10px;
+	border-radius: 100px;
+}
+
+.UserInfo {
+	display: flex;
+	flex-direction: row;
+	align-items: left;
+	margin-left: 50px;
+	margin-top: 50px;
+}
+
+.user_profile_header {
+	text-align: center;
+	padding: 15px 20px 5px 20px;
+	font-size: 30px;
+	font-weight: 500;
+	line-height: 1.2;
+	border-bottom: 1px solid #ced4da;
+	display: grid;
+	grid-template-columns: 50px 1fr 50px;
+}
+
+.MyPosts h2 {
+	font-size: 25px;
+	color: black;
+	margin-bottom: 20px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.eachpost {
+	border: 1px solid rgb(200, 182, 255);
+	margin: 5px;
+	border-radius: 5px;
+	display: flex;
+	justify-content: column;
+}
+
+.eachpost a {
+	background-color: rgb(184, 192, 255);
+	border: 3px solid rgb(184, 192, 255);
+	color: black;
+}
+
+.eachpost p {
+	color: rgb(109, 104, 104);
+}
+
+.eachpost a:hover {
+	background-color: rgb(187, 208, 255);
+	border: 3px solid rgb(187, 208, 255);
+}
