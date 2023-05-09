@@ -42,15 +42,15 @@ export default function Filters() {
 		const subj = data.subject;
 		const flexib = data.flexibility === "" ? "3" : data.flexibility;
 
-		navigate("/filteredScreen", {
-			state: {
-				date: selecteddate,
-				flex: flexib,
-				env: mode,
-				subject: subj === "" ? "any" : subj,
-				subfield: searchKeyword,
-			},
-		});
+		const params = new URLSearchParams({
+			date: selecteddate,
+			flex: flexib,
+			env: mode,
+			subject: subj === "" ? "any" : subj,
+			subfield: searchKeyword,
+		  });
+
+		navigate(`/filteredScreen?${params.toString()}`);
 	};
 
 	return (
