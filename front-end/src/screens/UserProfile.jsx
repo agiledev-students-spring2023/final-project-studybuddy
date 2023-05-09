@@ -143,6 +143,7 @@ const UserProfile = () => {
 										key={post._id}
 										descrip={post.description}
 										date_time={post.dateAndTime}
+										user_id={profile._id}
 									/>
 								))
 							) : (

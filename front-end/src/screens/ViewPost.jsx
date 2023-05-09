@@ -109,7 +109,6 @@ const ViewPost = () => {
 	const queryParams = new URLSearchParams(window.location.search)
   	const userId = queryParams.get("userId")
 	const previousurl = document.referrer;
-	console.log(previousurl);
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter") setInput("");
 	};

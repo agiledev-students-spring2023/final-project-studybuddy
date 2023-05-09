@@ -138,8 +138,17 @@ export default function FilteredScreen() {
 	const [posts, setPosts] = useState([]);
 	const { state } = useLocation();
 	const [noMorePosts, setNoMorePosts] = useState(false);
-	const { date, flex, env, subject, subfield } = state;
+	// const { date, flex, env, subject, subfield } = state;
+	const location = useLocation();
 
+  const searchParams = new URLSearchParams(location.search);
+  const date = searchParams.get("date");
+  const flex = searchParams.get("flex");
+  const env = searchParams.get("env");
+  const subject = searchParams.get("subject");
+  const subfield = searchParams.get("subfield");
+
+ console.log(searchParams);
 	useEffect(() => {
 		loadFilteredPosts();
 	}, []);

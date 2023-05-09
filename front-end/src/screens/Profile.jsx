@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { getToken, removeToken } from "../auth/auth";
 import { format } from "date-fns/fp";
 
-const PostPreview = ({ id, subject, descrip, date_time }) => {
+const PostPreview = ({ id, subject, descrip, date_time, user_id }) => {
 	const shortDescrip = `${descrip}`;
 	return (
 		<div className="eachpost">
@@ -27,7 +27,7 @@ const PostPreview = ({ id, subject, descrip, date_time }) => {
 			<div className="my row row pt-3 pb-2">
 				<div className="col-4 text-center">
 					<a
-						href={`/viewPost/${id}`}
+						href={`/viewPost/${id}?userId=${user_id}`}
 						className="btn btn-md btn-primary"
 					>
 						View Post
@@ -144,6 +144,7 @@ const Profile = () => {
 										key={post._id}
 										descrip={post.description}
 										date_time={post.dateAndTime}
+										user_id={profile._id}
 									/>
 								))
 							) : (
